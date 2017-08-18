@@ -4,35 +4,28 @@ Caravan.UI = {};
 
 //show a notification in the message area
 Caravan.UI.notify = function (message, type) {
-    document.getElementById('updates-area').innerHTML = '<div class="update-' + type + '">'+R.strings.UI_DAY+' '+ Math.ceil(this.caravan.day) + ': ' + message+'</div>' + document.getElementById('updates-area').innerHTML;
+    var message = '<div class="update-' + type + '">'+R.strings.UI_DAY+' '+ Math.ceil(this.caravan.day) + ': ' + message+'</div>';
+    this.addInnerHtml('updates-area', message);
 };
 
 Caravan.UI.addInnerHtml = function (id, html) {
-    var el = this.getById(id);
-    el.innerHtml = html + el.innerHtml;
+    var el = document.getElementById(id);
+    el.innerHTML = html + el.innerHTML;
 };
 
 Caravan.UI.getById = function (id) {
-    return document.getElementById(id);
+    return ;
 };
 
 Caravan.UI.show = function (id, html) {
-    /*var el = Caravan.UI.getById(id);*/
-    console.log("id = "+id);
     document.getElementById(id).innerHTML = ""+html;
 };
 
 //refresh visual caravan stats
 Caravan.UI.update = function(worldState) {
-
-    // todo delete
-    console.log("worldState.day = "+worldState.day);
-    console.log("worldState.food = "+worldState.food);
-    console.log("worldState.distance = "+worldState.distance);
     //modify the dom
     var idS = 'stat-day';
     this.show('stat-day', Math.ceil(worldState.day));
-    //document.getElementById(idS).innerHTML = Math.ceil(worldState.day);
     this.show('stat-distance', Math.floor(worldState.distance));
     this.show('stat-crew', worldState.crew);
     this.show('stat-oxen', worldState.oxen);

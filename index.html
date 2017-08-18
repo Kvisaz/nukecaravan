@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>Караван</title>
+    <link rel="stylesheet" href="css/style.css"/>
+  </head>
+  <body>
+    <div id="home"></div>
+    <div id="journey">
+     <div id="progress-area">
+        <img id="caravan" src="images/caravan.png" />
+        <img id="trees" src="images/trees.png" />
+      </div>
+      
+      <div class="updates-area" id="updates-area"></div>
+      
+      <div id="shop" class="hidden">
+        <div id="prods">
+        </div>
+        <button>Покинуть магазин</button>
+      </div>
+      <div id="attack" class="hidden">
+        <div id="attack-description"></div>
+        <button id="fight">Сражаться</button>
+        <button id="runaway">Бежать</button>
+      </div>
+      
+      <div id="stats-area">
+        <div class="stat">День <span id="stat-day" class="stat-value"></span></div>
+        <div class="stat">Пройдено <span id="stat-distance" class="stat-value"></span></div>
+        <div class="stat">Людей <span id="stat-crew" class="stat-value"></span></div>
+        <div class="stat">Волов <span id="stat-oxen" class="stat-value"></span></div>
+        <div class="stat">Еда <span id="stat-food" class="stat-value"></span></div>
+        <div class="stat">Деньги <span id="stat-money" class="stat-value"></span></div>
+        <div class="stat">Оружие <span id="stat-firepower" class="stat-value"></span></div>
+        <div class="stat">Груз <span id="stat-weight" class="stat-value"></span><span id="stat-capacity" class="stat-value"></span></div>
+      </div>
+      
+      
+      
+    </div>
+ 
+    <div id="event"></div>
+    <!--<script src="js/raf.js"></script> старый Сафари не работает RAF -->
+    <script src="js/Strings.js"></script>
+    <script src="js/Utils.js"></script>
+    <script src="js/data/Events.js"></script>
+
+    <!-- Новая модель : мир с караваном + observable для модели -->
+    <script src="js/world/WorldState.js"></script>
+    <script src="js/world/World.js"></script>
+    <script src="js/EventHandler.js"></script>
+
+    <script src="js/Caravan.js"></script>
+    <script src="js/UI.js"></script>
+    <script src="js/Game.js"></script>
+    <!--<script src="js/build.min.js"></script>-->
+  </body>
+</html>

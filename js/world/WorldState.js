@@ -10,4 +10,9 @@ function WorldState(stats) {
     this.oxen = stats.oxen;
     this.money = stats.money;
     this.firepower = stats.firepower;
+
+    // ---- лог не инициализируется, просто сохраняется
+    // содержит события в формате
+    //  { day: "", message: "", type: "" }
+    this.log = [];
 }

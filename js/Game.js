@@ -29,7 +29,7 @@ Caravan.Game.init = function () {
         money: 300,
         firepower: 2
     });
-    this.eventHandler = new EventHandler(this.world);
+
     this.ui = Caravan.UI;
     this.world.subcribe(this.ui);
 
@@ -85,7 +85,8 @@ Caravan.Game.init = function () {
 Caravan.Game.startJourney = function () {
     this.gameActive = true;
     this.previousTime = null;
-    this.ui.notify(R.strings.START_MESSAGE, 'positive');
+    // this.ui.notify(R.strings.START_MESSAGE, 'positive');
+    // message goes to world
 
     // this.step();
     // setInterval for old Safari
@@ -119,15 +120,11 @@ Caravan.Game.step = function () {
     var progress = Caravan.Game.time - Caravan.Game.previousTime;
 
     //game update
-    console.log("Hello!");
     console.log("progress: " + progress + " / Caravan.GAME_SPEED: " + Caravan.GAME_SPEED);
     console.log("Caravan.Game.time: " + Caravan.Game.time);
     if (progress >= Caravan.GAME_SPEED) {
         Caravan.Game.previousTime = Caravan.Game.time;
-
-        // Caravan.Game.updateGame();
-        console.log("Hello!");
-        Caravan.Game.eventHandler.nextStep();
+        Caravan.Game.world.nextStep();
     }
 
     //we use "bind" so that we can refer to the context "this" inside of the step method

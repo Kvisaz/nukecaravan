@@ -1,10 +1,12 @@
 var Caravan = Caravan || {};
 
-Caravan.UI = {};
+Caravan.UI = {
+    logLength: 0,
+};
 
 //show a notification in the message area
 Caravan.UI.notify = function (message, type) {
-    var message = '<div class="update-' + type + '">'+R.strings.UI_DAY+' '+ Math.ceil(this.caravan.day) + ': ' + message+'</div>';
+    var message = '<div class="update-' + type + '">' + R.strings.UI_DAY + ' ' + Math.ceil(this.caravan.day) + ': ' + message + '</div>';
     this.addInnerHtml('updates-area', message);
 };
 
@@ -14,15 +16,15 @@ Caravan.UI.addInnerHtml = function (id, html) {
 };
 
 Caravan.UI.getById = function (id) {
-    return ;
+    return;
 };
 
 Caravan.UI.show = function (id, html) {
-    document.getElementById(id).innerHTML = ""+html;
+    document.getElementById(id).innerHTML = "" + html;
 };
 
 //refresh visual caravan stats
-Caravan.UI.update = function(worldState) {
+Caravan.UI.update = function (worldState) {
     //modify the dom
     var idS = 'stat-day';
     this.show('stat-day', Math.ceil(worldState.day));
@@ -36,10 +38,31 @@ Caravan.UI.update = function(worldState) {
 
     //update caravan position
     document.getElementById('caravan').style.left = (380 * worldState.distance / Caravan.FINAL_DISTANCE) + 'px';
+
+    // update log
+    if (this.logLength < worldState.log.length) {
+        this.refreshLog(worldState.log);
+    }
+};
+
+Caravan.UI.refreshLog = function (log) {
+    var messageLog = "", index;
+    for (index = 0; index < log.length; index++) {
+        messageLog += this.formatMessage(log[index]);
+    }
+    this.show('updates-area', messageLog);
+    // todo delete
+    console.log("log refreshes, log size: "+log.length);
+    this.logLength = log.length;
+};
+
+Caravan.UI.formatMessage = function (message) {
+    var formatted = '<div class="update-' + message.type + '">' + R.strings.UI_DAY + ' ' + Math.ceil(message.day) + ': ' + message.message + '</div>';
+    return formatted;
 };
 
 //refresh visual caravan stats
-Caravan.UI.refreshStats = function() {
+Caravan.UI.refreshStats = function () {
     //modify the dom
     document.getElementById('stat-day').innerHTML = Math.ceil(this.caravan.day);
     document.getElementById('stat-distance').innerHTML = Math.floor(this.caravan.distance);
@@ -51,7 +74,7 @@ Caravan.UI.refreshStats = function() {
     document.getElementById('stat-weight').innerHTML = Math.ceil(this.caravan.weight) + '/' + this.caravan.capacity;
 
     //update caravan position
-    document.getElementById('caravan').style.left = (380 * this.caravan.distance/Caravan.FINAL_DISTANCE) + 'px';
+    document.getElementById('caravan').style.left = (380 * this.caravan.distance / Caravan.FINAL_DISTANCE) + 'px';
 };
 
 //show shop
@@ -78,10 +101,10 @@ Caravan.UI.showShop = function (products, caravan) {
             else if (target.tagName == 'DIV' && target.className.match(/product/)) {
 
                 Caravan.UI.buyProduct({
-                    item: target.getAttribute('data-item'),
-                    qty: target.getAttribute('data-qty'),
-                    price: target.getAttribute('data-price')
-                },
+                        item: target.getAttribute('data-item'),
+                        qty: target.getAttribute('data-qty'),
+                        price: target.getAttribute('data-price')
+                    },
                     caravan
                 );
 
@@ -114,8 +137,8 @@ Caravan.UI.buyProduct = function (product, caravan) {
     this.notify('Bought ' + product.qty + ' x ' + product.item, 'positive');
 
     /*Caravan.UI.caravan.money -= product.price;
-    Caravan.UI.caravan[product.item] += +product.qty;
-    Caravan.UI.caravan.updateWeight();*/
+     Caravan.UI.caravan[product.item] += +product.qty;
+     Caravan.UI.caravan.updateWeight();*/
     caravan.buy(product);
 
     //update visuals

@@ -39,7 +39,6 @@ World.prototype.updateSubscribers = function () {
     for (index = 0; index < len; index++) {
         this.subscribers[index].update(this.state);
     }
-    console.log("updateSubscribers, this.subscribers.length  = "+this.subscribers.length);
 };
 
 /*
@@ -92,6 +91,12 @@ World.prototype.decrement = function (param, value) {
 
 World.prototype.nextStep = function () {
     var state = this.state;
+    console.log("state day = "+state.day);
+    if(state.day == 0.0){
+        this.addMessage(R.strings.START_MESSAGE, 'positive');
+        // todo delete
+        console.log("log size = "+state.log.length);
+    }
     state.day += Caravan.DAY_PER_STEP;
 
     this.consumeFood(); //update food
@@ -145,7 +150,9 @@ World.prototype.updateWeight = function () {
     }
 
     if (droppedFood) {
-        this.ui.notify(R.strings.DROPPED_FOOD.withArg(droppedFood));
+        //state.log.push(R.strings.DROPPED_FOOD.withArg(droppedFood));
+        this.addMessage(R.strings.DROPPED_FOOD.withArg(droppedFood));
+        //this.ui.notify(R.strings.DROPPED_FOOD.withArg(droppedFood));
     }
 
     // Я сбрасываю сначала еду, так как еду можно пополнить с оружием в руках - eSTet
@@ -159,7 +166,8 @@ World.prototype.updateWeight = function () {
     }
 
     if (droppedGuns) {
-        this.ui.notify(R.strings.DROPPED_GUNS.withArg(droppedGuns));
+        this.addMessage(R.strings.DROPPED_GUNS.withArg(droppedFood));
+        //this.ui.notify(R.strings.DROPPED_GUNS.withArg(droppedGuns));
     }
 
 };
@@ -183,7 +191,9 @@ World.prototype.generateEvent = function () {
         this.game.pauseJourney();
 
         //notify user
-        this.ui.notify(eventData.text, eventData.notification);
+        state.log.push(R.strings.DROPPED_GUNS.withArg(droppedFood));
+        // this.ui.notify(eventData.text, eventData.notification);
+        addMessage(eventData.text, eventData.notification);
 
         //prepare event
         this.shopEvent(eventData);
@@ -195,9 +205,21 @@ World.prototype.generateEvent = function () {
         this.game.pauseJourney();
 
         //notify user
-        this.ui.notify(eventData.text, eventData.notification);
+        // this.ui.notify(eventData.text, eventData.notification);
+        addMessage(eventData.text, eventData.notification);
 
         //prepare event
         this.attackEvent(eventData);
     }
 };
+
+// ------------------------------------------------------------------------
+World.prototype.addMessage = function (message, type) {
+    this.state.log.push({
+        day: this.state.day,
+        message: message,
+        type: type
+    });
+};
+// ------------------------------------------------------------------------
+

@@ -8,19 +8,30 @@ Caravan.FIREPOWER_WEIGHT = 5;
 Caravan.GAME_SPEED = 800;
 Caravan.DAY_PER_STEP = 0.2;
 Caravan.FOOD_PER_PERSON = 0.02;
-Caravan.FULL_SPEED = 5;
-Caravan.SLOW_SPEED = 3;
-Caravan.FINAL_DISTANCE = 1000;
+//Caravan.FOOD_PER_PERSON = 1.02; // death check
+
+//Caravan.FULL_SPEED = 5;
+//Caravan.SLOW_SPEED = 3;
+
+Caravan.FULL_SPEED = 50;
+Caravan.SLOW_SPEED = 39;
+
 Caravan.EVENT_PROBABILITY = 0.15;
 Caravan.ENEMY_FIREPOWER_AVG = 5;
 Caravan.ENEMY_GOLD_AVG = 50;
 
-Caravan.Game = {};
 
-//initiate the game
-Caravan.Game.init = function () {
-    // new logic ----------------------
-    this.world = new World({
+function Game() {
+    this.plugins = [
+        new TimePlugin(this), // должен стоять первым
+        new DistancePlugin(this), // события связанные с преодоленной дистанцией
+        new RandomEventPlugin(this), // рандомные события
+        new ShopPlugin(this), // магазины
+    ];
+
+    // this.deathChecker = new DeathPlugin(this); // должен стоять последним
+
+    this.world = new WorldState({
         day: 0,
         distance: 0,
         crew: 30,
@@ -30,172 +41,83 @@ Caravan.Game.init = function () {
         firepower: 2
     });
 
-    this.ui = Caravan.UI;
-    this.world.subcribe(this.ui);
+    //this.log = new Log(this.world);
 
-    // old logic -----------------------
-    //reference ui
-    this.ui = Caravan.UI;
-
-    //reference event manager
-    this.eventManager = Caravan.Event;
-
-    //setup caravan
-    this.caravan = Caravan.Caravan;
-    this.caravan.init({
-        day: 0,
-        distance: 0,
-        crew: 30,
-        food: 80,
-        oxen: 2,
-        money: 300,
-        firepower: 2
-    });
-
-    /*this.world = new World({
-     day: 0,
-     distance: 0,
-     crew: 30,
-     food: 80,
-     oxen: 2,
-     money: 300,
-     firepower: 2
-     });*/
-
-    //pass references
-    this.caravan.ui = this.ui;
-    //this.world.subcribe(this.ui);
+    // объект для наблюдения за состоянием мира
+    // после группы изменений this.world
+    // следует вызвать  this.worldObservable.update();
+    // и тогда произойдут проверки на смерть, а затем обновления интерфейса
+    this.worldObservable = new Observable(this.world);
 
 
-    this.caravan.eventManager = this.eventManager;
+    // проверка на смерть должна вызываться после каждого изменения мира
+    // поэтому мы ее подписываем на изменение worldObservable
+    this.deathCheck = new DeathCheck();
+    this.worldObservable.subscribe(this.deathCheck);
 
-    this.ui.game = this;
-    this.ui.caravan = this.caravan;
-    this.ui.eventManager = this.eventManager;
+    // обновление веса и мощности
+    this.worldObservable.subscribe(new WeightCheck());
 
-    this.eventManager.game = this;
-    this.eventManager.caravan = this.caravan;
-    this.eventManager.ui = this.ui;
+    // обновление интерфейса должна вызываться последней, чтобы суметь отобразить и смерть
+    // поэтому мы ее подписываем на изменение worldObservable
+    this.ui = new UI();
+    this.worldObservable.subscribe(this.ui);
+    this.onWorldUpdate(); // обновляем мир при запуске
 
-    //begin adventure!
-    this.startJourney();
+    // инициализируем интерфейс
+    initActionUi(this.world, this);
+}
+
+// Пожалуй, это подходящее компромиссное решение для оповещения об изменениях
+Game.prototype.onWorldUpdate = function () {
+    this.worldObservable.update();
 };
 
-//start the journey and time starts running
-Caravan.Game.startJourney = function () {
-    this.gameActive = true;
-    this.previousTime = null;
-    // this.ui.notify(R.strings.START_MESSAGE, 'positive');
-    // message goes to world
+Game.prototype.resume = function () {
+    console.log("Game is resumed");
 
-    // this.step();
-    // setInterval for old Safari
-    this.startLoop();
+    this.world.paused = false;
+    this.time = 0;
+    this.previousTime = 0;
+
+    // использую setInterval для совместимости со старым Safari (так получилось)
+    this.interval = setInterval(this.step, Caravan.GAME_SPEED, this);
 };
 
-// start loop
-Caravan.Game.startLoop = function () {
-    Caravan.Game.interval = setInterval(Caravan.Game.step, Caravan.GAME_SPEED);
-    Caravan.Game.time = 0;
+Game.prototype.pause = function () {
+    console.log("Game is paused");
+    this.world.paused = true;
 };
 
-// end loop
-Caravan.Game.endLoop = function () {
-    clearInterval(Caravan.Game.interval);
-};
+// передаем аргумент game, так как this в данном вызове - window
+Game.prototype.step = function (game) {
+    game.time += Caravan.GAME_SPEED;
+    var delta = game.time - game.previousTime;
+    game.previousTime = game.time;
 
+    // запускаем генераторы событий, реагирующие на изменение мира
+    if (delta >= Caravan.GAME_SPEED) {
+        for (index = 0; index < game.plugins.length; index++) {
+            game.plugins[index].run(game.world);
 
-//game loop
-Caravan.Game.step = function () {
-    Caravan.Game.time += Caravan.GAME_SPEED;
+            // если плагин запросил остановку мира - выходим из цикла, обновляем интерфейс
+            if(game.world.paused){
+                break; //
+            }
+        }
+    }
+    // обновляем UI и всех прочих наблюдателей состояния мира
+    game.onWorldUpdate();
 
-    console.log("Caravan.Game.step!");
-    //starting, setup the previous time for the first time
-    if (!Caravan.Game.previousTime) {
-        Caravan.Game.previousTime = Caravan.Game.time;
-        Caravan.Game.updateGame();
+    // если событие вызывает паузу, останавливаем интервал
+    if (game.world.paused) {
+        clearInterval(game.interval);
     }
 
-    //time difference
-    var progress = Caravan.Game.time - Caravan.Game.previousTime;
-
-    //game update
-    console.log("progress: " + progress + " / Caravan.GAME_SPEED: " + Caravan.GAME_SPEED);
-    console.log("Caravan.Game.time: " + Caravan.Game.time);
-    if (progress >= Caravan.GAME_SPEED) {
-        Caravan.Game.previousTime = Caravan.Game.time;
-        Caravan.Game.world.nextStep();
-    }
-
-    //we use "bind" so that we can refer to the context "this" inside of the step method
-    // if(this.gameActive) window.requestAnimationFrame(this.step.bind(this));
-
-    if (!Caravan.Game.gameActive) {
-        Caravan.Game.endLoop();
-    }
-
+    console.log("Game.step!");
+    console.log("game.previousTime :" + game.previousTime);
+    console.log("game.time :" + game.time);
 };
 
-//update game stats
-Caravan.Game.updateGame = function () {
-    //day update
-    // this.caravan.day += Caravan.DAY_PER_STEP;
-
-    //food consumption
-    // this.caravan.consumeFood();
-
-    //update weight
-    // this.caravan.updateWeight();
-
-    //update progress
-    // this.caravan.updateDistance();
-
-    this.caravan.updateDay();
-
-    //show stats
-    this.ui.refreshStats();
-
-    //game over no food
-    if (this.caravan.food === 0) {
-        this.ui.notify(R.strings.DEATH_STARVED, 'negative');
-        this.gameActive = false;
-        return;
-    }
-
-    //check if everyone died
-    if (this.caravan.crew <= 0) {
-        this.caravan.crew = 0;
-        this.ui.notify(R.strings.DEATH_ALL, 'negative');
-        this.gameActive = false;
-        return;
-    }
-
-    //check win game
-    if (this.caravan.distance >= Caravan.FINAL_DISTANCE) {
-        this.ui.notify(R.strings.SUCCESS_HOME, 'positive');
-        this.gameActive = false;
-        return;
-    }
-
-
-    //random events
-    if (Math.random() <= Caravan.EVENT_PROBABILITY) {
-        this.eventManager.generateEvent();
-    }
-
-};
-
-//pause the journey
-Caravan.Game.pauseJourney = function () {
-    this.gameActive = false;
-};
-
-//resume the journey
-Caravan.Game.resumeJourney = function () {
-    this.gameActive = true;
-    Caravan.Game.startLoop();
-};
-
-
-//init game
-Caravan.Game.init();
+var newGame = new Game();
+newGame.resume();

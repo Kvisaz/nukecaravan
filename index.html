@@ -1,33 +1,43 @@
 <!DOCTYPE html>
 <html>
-  <head>
+<head>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <title>Караван</title>
     <link rel="stylesheet" href="css/style.css"/>
-  </head>
-  <body>
-    <div id="home"></div>
-    <div id="journey">
-     <div id="progress-area">
-        <img id="caravan" src="images/caravan.png" />
-        <img id="trees" src="images/trees.png" />
-      </div>
-      
-      <div class="updates-area" id="updates-area"></div>
-      
-      <div id="shop" class="hidden">
+</head>
+<body>
+<div id="home"></div>
+<div id="journey">
+    <div id="progress-area">
+        <img id="caravan" src="images/caravan.png"/>
+        <img id="trees" src="images/trees.png"/>
+    </div>
+
+    <div id="actions">
+        <button id="actions-dropweapon">Сбросить часть оружия</button>
+        <button id="actions-dropfood">Сбросить часть еды</button>
+        <!--
+            <button>Искать еду</button>
+        -->
+    </div>
+
+    <div class="updates-area" id="updates-area"></div>
+
+    <div id="shop" class="hidden">
         <div id="prods">
         </div>
         <button>Покинуть магазин</button>
-      </div>
-      <div id="attack" class="hidden">
+    </div>
+    <div id="attack" class="hidden">
         <div id="attack-description"></div>
         <button id="fight">Сражаться</button>
         <button id="runaway">Бежать</button>
-      </div>
-      
-      <div id="stats-area">
+    </div>
+
+
+
+    <div id="stats-area">
         <div class="stat">День <span id="stat-day" class="stat-value"></span></div>
         <div class="stat">Пройдено <span id="stat-distance" class="stat-value"></span></div>
         <div class="stat">Людей <span id="stat-crew" class="stat-value"></span></div>
@@ -35,26 +45,56 @@
         <div class="stat">Еда <span id="stat-food" class="stat-value"></span></div>
         <div class="stat">Деньги <span id="stat-money" class="stat-value"></span></div>
         <div class="stat">Оружие <span id="stat-firepower" class="stat-value"></span></div>
-        <div class="stat">Груз <span id="stat-weight" class="stat-value"></span><span id="stat-capacity" class="stat-value"></span></div>
-      </div>
-      
-      
-      
+        <div class="stat">Груз <span id="stat-weight" class="stat-value"></span><span id="stat-capacity"
+                                                                                      class="stat-value"></span></div>
     </div>
- 
-    <div id="event"></div>
-    <!--<script src="js/raf.js"></script> старый Сафари не работает RAF -->
-    <script src="js/Strings.js"></script>
-    <script src="js/Utils.js"></script>
-    <script src="js/data/Events.js"></script>
 
-    <!-- Новая модель : мир с караваном + observable для модели -->
-    <script src="js/world/WorldState.js"></script>
-    <script src="js/world/World.js"></script>
 
-    <script src="js/Caravan.js"></script>
-    <script src="js/UI.js"></script>
-    <script src="js/Game.js"></script>
-    <!--<script src="js/build.min.js"></script>-->
-  </body>
+</div>
+
+<div id="event"></div>
+
+<script src="js/Strings.js"></script>
+<script src="js/Utils.js"></script>
+<script src="js/Observable.js"></script>
+<script src="js/Goodness.js"></script>
+<script src="js/Log.js"></script>
+
+<!-- состояние мира игры + observable для модели -->
+<script src="js/world/WorldState.js"></script>
+
+<!-- Редактируемые данные - правила игры  -->
+<script src="js/data/DistanceRules.js"></script>
+<script src="js/data/RandomEvents.js"></script>
+<script src="js/data/ShopEvents.js"></script>
+<script src="js/data/DeathRules.js"></script>
+
+<!--
+    Наблюдатели за состоянием мира
+    - проверка смерти
+    - обновление интерфейса
+-->
+<script src="js/subscribers/DeathCheck.js"></script>
+<script src="js/subscribers/WeightCheck.js"></script>
+<script src="js/subscribers/UI.js"></script>
+
+<!-- активные модули интерфейса-->
+<script src="js/ui/ActionsUi.js"></script>
+
+<!-- плагины -->
+<script src="js/plugins/TimePlugin.js"></script>
+<script src="js/plugins/DistancePlugin.js"></script>
+<script src="js/plugins/RandomEventPlugin.js"></script>
+<script src="js/data/ShopConstants.js"></script>
+<script src="js/plugins/ShopPlugin.js"></script>
+
+<script src="js/Game.js"></script>
+
+
+
+<!-- 1. use http://esprima.org/demo/minify.html -->
+<!-- 2. shorten your own object / functions names // script needed -->
+<!--<script src="js/build.min.js"></script>-->
+
+</body>
 </html>

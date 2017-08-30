@@ -72,6 +72,10 @@ body {
   font-size: 12px;
   overflow-y: scroll;
 }
+
+#actions {
+  margin: 10px;
+}
  
 .update-positive {
   color: #669966;

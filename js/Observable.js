@@ -10,7 +10,7 @@ function Observable(data) {
     this.data = data;
     this.subscribers = [];
 }
-
+// добавляем подписчика
 Observable.prototype.subscribe = function (subscriber) {
     this.subscribers.push(subscriber);
 };

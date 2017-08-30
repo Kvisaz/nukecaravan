@@ -6,8 +6,6 @@ function Game() {
         new ShopPlugin(this), // магазины
     ];
 
-    // this.deathChecker = new DeathPlugin(this); // должен стоять последним
-
     this.world = new WorldState({
         day: 0,
         distance: 0,
@@ -18,22 +16,19 @@ function Game() {
         firepower: 2
     });
 
-    //this.log = new Log(this.world);
-
     // объект для наблюдения за состоянием мира
     // после группы изменений this.world
     // следует вызвать  this.worldObservable.update();
     // и тогда произойдут проверки на смерть, а затем обновления интерфейса
     this.worldObservable = new Observable(this.world);
 
+    // обновление вычисляемых параметров мира
+    this.worldObservable.subscribe(new WorldUpdater());
 
     // проверка на смерть должна вызываться после каждого изменения мира
     // поэтому мы ее подписываем на изменение worldObservable
     this.deathCheck = new DeathCheck();
     this.worldObservable.subscribe(this.deathCheck);
-
-    // обновление веса и мощности
-    this.worldObservable.subscribe(new WeightCheck());
 
     // обновление интерфейса должна вызываться последней, чтобы суметь отобразить и смерть
     // поэтому мы ее подписываем на изменение worldObservable

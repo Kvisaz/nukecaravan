@@ -93,7 +93,6 @@ body {
   background-color: white;
   margin: 10px;
   padding: 10px;
-  height: 90px;
   width: 100%;
 }
  
@@ -107,7 +106,7 @@ body {
  
 #shop button {
   clear: both;
-  float: left;
+  float: none;
   margin: 5px;
 }
  

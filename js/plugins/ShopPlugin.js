@@ -44,24 +44,27 @@ ShopPlugin.prototype.run = function (world) {
     var shop = this.shops.getRandom();
     this.products = this.generateProducts(shop);
 
-    // ставим игру на паузу, чтобы показать интерфейс
-    this.game.pause();
-    this.show(this.products);
+    this.game.pause(); // ставим игру на паузу
+    this.show(this.products, shop); // показываем магазин
+    addLogMessage(world, Goodness.neutral, shop.text); // добавляем сообщение о магазине в лог
+    this.game.onWorldUpdate(); // обновляем лог
 };
 
-ShopPlugin.prototype.show = function (products) {
-
-    console.log("ShopPlugin show");
-
-    //  Готовим вью
+ShopPlugin.prototype.show = function (products, shop) {
+    // находим div для интерфейса магазина
     var shopDiv = document.getElementById('shop');
     shopDiv.classList.remove('hidden');
 
+    // кастомизируем внешний вид магазина по его данным
+    document.getElementById('shop-exit-button').innerHTML = shop.exitText;
+    document.getElementById('shop-title').innerHTML = shop.text;
+
+    // добавляем функцию реакции на действия пользователя, если не добавлено
     if (!this.isListenerAdded) {
         this.addListeners(shopDiv);
         this.isListenerAdded = true;
     }
-    //clear existing content
+    // очищаем предыдущий набор продуктов
     var prodsDiv = document.getElementById('prods');
     prodsDiv.innerHTML = '';
 

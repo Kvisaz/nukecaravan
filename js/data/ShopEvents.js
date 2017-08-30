@@ -3,6 +3,7 @@
  */
 var ShopEvents = [{
     text: 'Вы нашли магазин в этой жуткой пустоши',
+    exitText: 'Покинуть магазин',
     products: [
         {item: 'food', qty: 20, price: 50},
         {item: 'oxen', qty: 1, price: 200},
@@ -12,6 +13,7 @@ var ShopEvents = [{
 },
     {
         text: 'Вы встретили другой караван!',
+        exitText: 'Пойти дальше',
         products: [
             {item: 'food', qty: 30, price: 50},
             {item: 'oxen', qty: 1, price: 200},
@@ -21,6 +23,7 @@ var ShopEvents = [{
     },
     {
         text: 'Следопыты встретили контрабандистов',
+        exitText: 'Оставить контрабандистов',
         products: [
             {item: 'food', qty: 20, price: 60},
             {item: 'oxen', qty: 1, price: 300},

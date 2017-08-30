@@ -10,7 +10,7 @@ function RandomEventPlugin(game) {
 RandomEventPlugin.prototype.run = function (world) {
     console.log("RandomEventPlugin run");
 
-    if (Math.random() > Caravan.EVENT_PROBABILITY) return; // проверка на выпадение события вообще
+    if (Math.random() > RandomEventConstants.EVENT_PROBABILITY) return; // проверка на выпадение события вообще
 
     var event = this.events.getRandom();
     var valueChange = event.value;
@@ -27,5 +27,4 @@ RandomEventPlugin.prototype.run = function (world) {
     world[event.stat] += valueChange;
     var message = event.text.withArg(valueChange);
     addLogMessage(world, event.goodness, message);
-
 };

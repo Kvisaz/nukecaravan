@@ -1,26 +1,3 @@
-var Caravan = Caravan || {};
-
-//constants
-Caravan.WEIGHT_PER_OX = 20;
-Caravan.WEIGHT_PER_PERSON = 2;
-Caravan.FOOD_WEIGHT = 0.6;
-Caravan.FIREPOWER_WEIGHT = 5;
-Caravan.GAME_SPEED = 800;
-Caravan.DAY_PER_STEP = 0.2;
-Caravan.FOOD_PER_PERSON = 0.02;
-//Caravan.FOOD_PER_PERSON = 1.02; // death check
-
-//Caravan.FULL_SPEED = 5;
-//Caravan.SLOW_SPEED = 3;
-
-Caravan.FULL_SPEED = 50;
-Caravan.SLOW_SPEED = 39;
-
-Caravan.EVENT_PROBABILITY = 0.15;
-Caravan.ENEMY_FIREPOWER_AVG = 5;
-Caravan.ENEMY_GOLD_AVG = 50;
-
-
 function Game() {
     this.plugins = [
         new TimePlugin(this), // должен стоять первым

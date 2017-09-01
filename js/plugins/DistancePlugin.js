@@ -16,8 +16,8 @@ function DistancePlugin(game) {
     // при повторном путешествии сегменты надо обнулить
 }
 
-DistancePlugin.prototype.run = function (world) {
-    var distancePercent = 100* world.distance / world.to.x;
+DistancePlugin.prototype.update = function (world) {
+    var distancePercent = 100 * world.distance / world.to.x;
 
     var i, rule, game = this.game;
     for (i = 0; i < this.rules.length; i++) {
@@ -25,9 +25,7 @@ DistancePlugin.prototype.run = function (world) {
         if (distancePercent >= rule.distance && rule.notVisited) {
             rule.notVisited = false;
             addLogMessage(world, Goodness.positive, rule.text);
-            if(rule.pause) {
-                game.pause();
-            }
+            world.stop = rule.pause;
             break;
         }
     }

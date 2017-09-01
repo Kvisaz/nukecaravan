@@ -56,12 +56,12 @@
 
 <script src="js/Strings.js"></script>
 <script src="js/Utils.js"></script>
-<script src="js/Observable.js"></script>
 <script src="js/Goodness.js"></script>
 <script src="js/Log.js"></script>
 
 <!-- состояние мира игры + observable для модели -->
 <script src="js/world/WorldState.js"></script>
+<script src="js/world/WorldUtils.js"></script>
 
 <!-- Редактируемые данные - правила игры  -->
 <script src="js/data/CaravanConstants.js"></script>
@@ -76,9 +76,8 @@
     - проверка смерти
     - обновление интерфейса
 -->
-<script src="js/subscribers/WorldUpdater.js"></script>
-<script src="js/subscribers/DeathCheck.js"></script>
-<script src="js/subscribers/UI.js"></script>
+<script src="js/plugins/DeathCheck.js"></script>
+<script src="js/plugins/UI.js"></script>
 
 <!-- активные модули интерфейса-->
 <script src="js/ui/ActionsUi.js"></script>

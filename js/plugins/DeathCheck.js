@@ -27,5 +27,5 @@ DeathCheck.prototype.update = function (world) {
 DeathCheck.prototype.onDeath = function (world, rule) {
     addLogMessage(world, Goodness.negative,rule.text);
     world.dead = true;
-    world.paused = true;
+    world.stop = true;
 };

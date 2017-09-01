@@ -14,7 +14,6 @@ type .\data\ShopEvents.js >> .\build.js
 type .\data\ShopConstants.js >> .\build.js
 
 type .\subscribers\DeathCheck.js >> .\build.js
-type .\subscribers\WorldUpdater.js >> .\build.js
 type .\subscribers\UI.js >> .\build.js
 
 type .\ui\ActionsUi.js >> .\build.js

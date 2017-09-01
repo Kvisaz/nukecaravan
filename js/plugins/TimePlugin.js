@@ -4,16 +4,19 @@
  *  - world передается как аргумент
  */
 
-function TimePlugin(game) {
-    this.game = game;
-}
+function TimePlugin() {}
 
-TimePlugin.prototype.run = function (world) {
+// todo ОТЛАДИТЬ ВРЕМЯ
+TimePlugin.prototype.update = function (world) {
     // приветствие нулевого дня
     if(world.day===0){
         addLogMessage(world, Goodness.positive,R.strings.START_MESSAGE);
     }
-    world.day += Caravan.DAY_PER_STEP;
+
+    // вынести в основной цикл игры???
+    var delta = 20; // миллисекунд прошло
+    var days = delta / Caravan.DAY_IN_MS; // дней прошло
+    world.day += Caravan.DAY_PER_STEP * days;
 
     // производим изменение параметров, связанных со временем
     this.consumeFood(world);
@@ -21,7 +24,7 @@ TimePlugin.prototype.run = function (world) {
     // в данной версии наступает смерть
     if (world.food > 0) {
         // this.updateWeight(world);  //update weight
-        this.updateDistance(world);  //update progress
+        this.updateDistance(delta, world);  //update progress
     }
 };
 
@@ -34,17 +37,19 @@ TimePlugin.prototype.consumeFood = function (world) {
 };
 
 // ------------------------------------------------------------------------
-TimePlugin.prototype.updateDistance = function (world) {
+TimePlugin.prototype.updateDistance = function (delta, world) {
     // перегруз (когда становится больше нуля - не можем идти)
-    var overweight = world.weight - world.capacity;
+    var maxWeight = getCaravanMaxWeight(world);
+    var weight = getCaravanWeight(world);
+    var overweight = weight - maxWeight;
 
     if(overweight>0){
         addLogMessage(world, Goodness.negative, "Караван перегружен и не может двигаться");
-        world.paused = true; // никаких событий не происходит, мы стоим на месте
+        world.stop = true;
         return;
     }
 
     // пока перевес отрицательный, мы можем двигаться (и чем больше отрицательный перевес - тем больше скорость)
-    var speed = Caravan.SLOW_SPEED - overweight/world.capacity * Caravan.FULL_SPEED;
-    world.distance += speed;
+    var speed = Caravan.SLOW_SPEED - overweight/maxWeight * Caravan.FULL_SPEED;
+    world.distance += speed*delta/Caravan.DAY_IN_MS;
 };

@@ -14,24 +14,28 @@ function initActionUi(world, game) {
     var dropFoodButton = document.getElementById('actions-dropfood');
 
     dropFoodButton.addEventListener('click', function (e) {
-        console.log("dropFoodButton clicked!"); // todo delete
-
+        if(world.food==0){ return; }
         world.food--;
-        world.weight -= Caravan.FOOD_WEIGHT;
+        if(world.food<=0){
+            addLogMessage(world, Goodness.neutral, R.strings.DROPPED_NO);
+            world.food = 0;
+        }
+        //world.weight -= Caravan.FOOD_WEIGHT;
         addLogMessage(world, Goodness.neutral, R.strings.DROPPED_FOOD.withArg(Caravan.FOOD_WEIGHT));
-        game.onWorldUpdate();
-        if(world.paused){ game.resume(); }
+
+        world.stop = false;
 
     });
 
     dropWeaponButton.addEventListener('click', function (e) {
-        console.log("dropWeaponButton clicked!"); // todo delete
-
+        if(world.firepower==0){ return; }
         world.firepower--;
-        world.weight -= Caravan.FIREPOWER_WEIGHT;
+        if(world.firepower<0){
+            addLogMessage(world, Goodness.neutral, R.strings.DROPPED_NO);
+            world.firepower = 0;
+        }
+        //world.weight -= Caravan.FIREPOWER_WEIGHT;
         addLogMessage(world, Goodness.neutral, R.strings.DROPPED_GUNS.withArg(Caravan.FIREPOWER_WEIGHT));
-
-        game.onWorldUpdate();
-        if(world.paused){ game.resume(); }
+        world.stop = false;
     });
 }

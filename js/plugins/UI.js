@@ -27,7 +27,10 @@ UI.prototype.update = function (worldState) {
     this.show('stat-food', Math.ceil(worldState.food));
     this.show('stat-money', worldState.money);
     this.show('stat-firepower', worldState.firepower);
-    this.show('stat-weight', Math.ceil(worldState.weight) + '/' + worldState.capacity);
+
+    var maxWeight = getCaravanMaxWeight(worldState);
+    var weight = getCaravanWeight(worldState);
+    this.show('stat-weight', Math.ceil(weight) + '/' + maxWeight);
 
     //update caravan position
     var caravanPosition = (364 * (worldState.distance / worldState.to.x)) + 'px';

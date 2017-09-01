@@ -29,7 +29,7 @@ function ShopPlugin(game) {
 }
 
 // Обязательная функция плагина -
-ShopPlugin.prototype.run = function (world) {
+ShopPlugin.prototype.update = function (world) {
     // Магазины не встречаются рядом с пустошами
     if (world.distance < 100 || world.distance > 900) return;
 
@@ -44,10 +44,9 @@ ShopPlugin.prototype.run = function (world) {
     var shop = this.shops.getRandom();
     this.products = this.generateProducts(shop);
 
-    this.game.pause(); // ставим игру на паузу
+    world.stop = true; // караван остановился
     this.show(this.products, shop); // показываем магазин
     addLogMessage(world, Goodness.neutral, shop.text); // добавляем сообщение о магазине в лог
-    this.game.onWorldUpdate(); // обновляем лог
 };
 
 ShopPlugin.prototype.show = function (products, shop) {

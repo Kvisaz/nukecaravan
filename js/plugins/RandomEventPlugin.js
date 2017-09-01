@@ -2,12 +2,11 @@
  * Плагин рандомных событий
  * - основного геймплея в оригинале игры с караваном
  */
-function RandomEventPlugin(game) {
-    this.game = game;
+function RandomEventPlugin() {
     this.events = RandomEvents;
 }
 
-RandomEventPlugin.prototype.run = function (world) {
+RandomEventPlugin.prototype.update = function (world) {
     console.log("RandomEventPlugin run");
 
     if (Math.random() > RandomEventConstants.EVENT_PROBABILITY) return; // проверка на выпадение события вообще

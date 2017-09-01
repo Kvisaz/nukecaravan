@@ -35,17 +35,14 @@ WorldView.prototype.update = function (world) {
     this.show('stat-money', world.money);
     this.show('stat-firepower', world.firepower);
 
+    //update weight
     var maxWeight = getCaravanMaxWeight(world);
     var weight = getCaravanWeight(world);
     this.show('stat-weight', Math.ceil(weight) + '/' + maxWeight);
 
     //update caravan position
-
     var caravanPosition = Math.abs(364 * (caravanDistance / world.to.x)) + 'px';
     document.getElementById('caravan').style.left = caravanPosition;
-    console.log("world.distance = "+caravanDistance);
-    console.log("caravanPosition = "+caravanPosition);
-
     this.refreshLog(world.log);
 };
 

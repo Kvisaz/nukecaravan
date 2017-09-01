@@ -28,6 +28,7 @@ function ShopPlugin(game) {
 
 // Обязательная функция плагина -
 ShopPlugin.prototype.update = function (world) {
+    this.world = world; // необходимо для листенера
     if (world.stop) return; // если стоим - никаких новых магазинов
 
     var caravanDistance = getCaravanDistance(world);
@@ -82,7 +83,7 @@ ShopPlugin.prototype.show = function (products, shop) {
 };
 
 
-ShopPlugin.prototype.addListeners = function (shopDiv) {
+ShopPlugin.prototype.addListeners = function (shopDiv, world) {
     var shopPlugin = this;
     shopDiv.addEventListener('click', function (e) {
         var target = e.target || e.src;
@@ -90,7 +91,7 @@ ShopPlugin.prototype.addListeners = function (shopDiv) {
         if (target.tagName == 'BUTTON') {  //exit button
             //resume journey
             shopDiv.classList.add('hidden');
-            shopPlugin.game.resume();
+            shopPlugin.world.stop = false; // продолжаем путешествие
         }
         else if (target.tagName == 'DIV' && target.className.match(/product/)) { //buy button
             var product = shopPlugin.products[target.getAttribute('data-index')];
@@ -134,7 +135,7 @@ ShopPlugin.prototype.buy = function (item, qty, price) {
     }
 
     world.money -= price;
-    world[item] += +qty;
+    world[item] += qty;
 
     addLogMessage(world, Goodness.positive, ShopEventConstants.SHOP_BUY_MESSAGE + ' ' + qty + ' x ' + item);
 };

@@ -11,6 +11,8 @@ function DeathCheck() {
 }
 
 DeathCheck.prototype.update = function (world) {
+    if(world.dead) return; // если уже мертвы, проверять бесполезно
+
     // проверка условий по массиву DeathRules
     var i, rule, sign, game = this.game, death = false;
     for (i = 0; i < this.rules.length; i++) {

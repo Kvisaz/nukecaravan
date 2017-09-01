@@ -6,8 +6,11 @@
 
 function TimePlugin() {}
 
-// todo ОТЛАДИТЬ ВРЕМЯ
+
 TimePlugin.prototype.update = function (world) {
+    if (world.stop) return; // если стоим - никаких изменений
+
+    // todo вынести в обновление расстояния
     // приветствие нулевого дня
     if(world.day===0){
         addLogMessage(world, Goodness.positive,R.strings.START_MESSAGE);
@@ -38,7 +41,6 @@ TimePlugin.prototype.consumeFood = function (world) {
 
 // ------------------------------------------------------------------------
 TimePlugin.prototype.updateDistance = function (delta, world) {
-    if (world.stop) return; // если стоим - никаких изменений
 
     // todo сделать проверку на условие достижения
 

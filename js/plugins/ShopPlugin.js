@@ -17,7 +17,7 @@
 function ShopPlugin(game) {
     this.game = game;
     this.isListenerAdded = false;
-    this.shops = ShopEvents.shops; // возможные случаи магазинов, основы для генерация конкретной встречи
+    this.shops = Shops; // возможные случаи магазинов, основы для генерация конкретной встречи
 
     // расстояние до предыдущего магазина - чтобы не слишком часто
 
@@ -36,10 +36,10 @@ ShopPlugin.prototype.update = function (world) {
 
     // между магазинами расстояние минимум 100
     var shopDistance = caravanDistance - this.previousShopDistance;
-    if (ShopEvents.SHOP_INTERVAL_MIN > shopDistance) return;
+    if (ShopEventConstants.SHOP_INTERVAL_MIN > shopDistance) return;
 
     // проверка на выпадение случайного магазина
-    if (Math.random() > ShopEvents.SHOP_PROBABILITY) return;
+    if (Math.random() > ShopEventConstants.SHOP_PROBABILITY) return;
 
     // стоп-условия выполнились, создаем и наполняем случайный магазин
     var shop = this.shops.getRandom();
@@ -129,12 +129,12 @@ ShopPlugin.prototype.buy = function (item, qty, price) {
     var world = this.game.world;
 
     if (price > world.money) {
-        addLogMessage(world, Goodness.negative,ShopEvents.SHOP_NO_MONEY_MESSAGE);
+        addLogMessage(world, Goodness.negative,ShopEventConstants.SHOP_NO_MONEY_MESSAGE);
         return false;
     }
 
     world.money -= price;
     world[item] += +qty;
 
-    addLogMessage(world, Goodness.positive, ShopEvents.SHOP_BUY_MESSAGE + ' ' + qty + ' x ' + item);
+    addLogMessage(world, Goodness.positive, ShopEventConstants.SHOP_BUY_MESSAGE + ' ' + qty + ' x ' + item);
 };

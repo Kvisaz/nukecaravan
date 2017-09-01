@@ -18,6 +18,9 @@ var Caravan = {
     FULL_SPEED: 50, // максимальная скорость каравана в день,
     SLOW_SPEED: 39, // минимальная скорость каравана в день,
 
+
+
+
     ENEMY_FIREPOWER_AVG: 5, // todo вынести в атаки
     ENEMY_GOLD_AVG: 50,  // todo вынести в атаки
 };

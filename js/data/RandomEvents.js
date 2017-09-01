@@ -5,6 +5,10 @@
 *
 *   $1  - используется для указание реального значения параметра
 * */
+var RandomEventConstants = {
+    EVENT_PROBABILITY: 0.15, // базовая вероятность случайного события в текущий шаг
+};
+
 var RandomEvents = [
     {
         goodness: Goodness.negative,

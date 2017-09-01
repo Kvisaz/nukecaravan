@@ -4,11 +4,12 @@
  *
  *  - каждый модуль интерфейса должен содержать функцию init(world, game)
  *  - в листенерах при изменении параметров world должен вызываться game.onWorldUpdate
- *
- *
  */
 
-// сначала попробуем обойтись просто функцией - todo delete
+// todo
+// не двигаться, если мертвы
+
+
 function initActionUi(world, game) {
     var dropWeaponButton = document.getElementById('actions-dropweapon');
     var dropFoodButton = document.getElementById('actions-dropfood');

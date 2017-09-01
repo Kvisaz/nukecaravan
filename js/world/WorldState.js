@@ -22,6 +22,6 @@ function WorldState(stats) {
     this.from = { x: 0, y: 0 };
     this.to = { x: 1000, y: 0 };
 
-    this.dead = false;  // состояние смерти
+    this.gameover = false;  // gameover
     this.stop = false;    // если true - караван не идет, возможно, переживает какое-то событие
 }

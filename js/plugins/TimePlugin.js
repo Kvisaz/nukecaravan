@@ -38,6 +38,10 @@ TimePlugin.prototype.consumeFood = function (world) {
 
 // ------------------------------------------------------------------------
 TimePlugin.prototype.updateDistance = function (delta, world) {
+    if (world.stop) return; // если стоим - никаких изменений
+
+    // todo сделать проверку на условие достижения
+
     // перегруз (когда становится больше нуля - не можем идти)
     var maxWeight = getCaravanMaxWeight(world);
     var weight = getCaravanWeight(world);
@@ -51,5 +55,9 @@ TimePlugin.prototype.updateDistance = function (delta, world) {
 
     // пока перевес отрицательный, мы можем двигаться (и чем больше отрицательный перевес - тем больше скорость)
     var speed = Caravan.SLOW_SPEED - overweight/maxWeight * Caravan.FULL_SPEED;
-    world.distance += speed*delta/Caravan.DAY_IN_MS;
+    var distanceDelta = speed*delta/Caravan.DAY_IN_MS;
+
+    var moveVector = getCaravanDirection(world);
+    world.x += moveVector.kx * distanceDelta;
+    world.y += moveVector.ky * distanceDelta;
 };

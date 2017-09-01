@@ -20,9 +20,7 @@ function ShopPlugin(game) {
     this.products = []; // продукты в конкретном магазине
 
     // координаты предыдущего магазина
-    this.previousShop = {
-        x: 0
-    };
+    this.previousShopDistance = 0;
 
     // список магазинов
     this.shops = ShopEvents;
@@ -30,12 +28,15 @@ function ShopPlugin(game) {
 
 // Обязательная функция плагина -
 ShopPlugin.prototype.update = function (world) {
-    // Магазины не встречаются рядом с пустошами
-    if (world.distance < 100 || world.distance > 900) return;
+    if (world.stop) return; // если стоим - никаких новых магазинов
+
+    var caravanDistance = getCaravanDistance(world);
+    // Магазины не встречаются рядом с городами
+    if (caravanDistance < 100 || caravanDistance > 900) return;
 
     // между магазинами расстояние минимум 100
-    var previousShopDistance = world.distance - this.previousShop.x;
-    if (ShopConstants.SHOP_INTERVAL_MIN > previousShopDistance) return;
+    var shopDistance = caravanDistance - this.previousShopDistance;
+    if (ShopConstants.SHOP_INTERVAL_MIN > shopDistance) return;
 
     // проверка на выпадение случайного магазина
     if (Math.random() > ShopConstants.SHOP_PROBABILITY) return;
@@ -45,6 +46,7 @@ ShopPlugin.prototype.update = function (world) {
     this.products = this.generateProducts(shop);
 
     world.stop = true; // караван остановился
+    this.previousShopDistance = caravanDistance;
     this.show(this.products, shop); // показываем магазин
     addLogMessage(world, Goodness.neutral, shop.text); // добавляем сообщение о магазине в лог
 };
@@ -125,21 +127,14 @@ ShopPlugin.prototype.generateProducts = function (shop) {
 
 ShopPlugin.prototype.buy = function (item, qty, price) {
     var world = this.game.world;
-    //check
+
     if (price > world.money) {
         addLogMessage(world, Goodness.negative,ShopConstants.SHOP_NO_MONEY_MESSAGE);
-        this.game.onWorldUpdate();
         return false;
     }
 
     world.money -= price;
     world[item] += +qty;
 
-    // todo КАК ОБНОВЛЯТЬ ВЕС КАРАВАНА???
-    // this.world.updateWeight(); // это надо бы предупреждать или выносить в отдельную функцию
-
     addLogMessage(world, Goodness.positive, ShopConstants.SHOP_BUY_MESSAGE + ' ' + qty + ' x ' + item);
-
-    // мир обновился, оповещаем интерфейс и других подписчиков модели
-    this.game.onWorldUpdate();
 };

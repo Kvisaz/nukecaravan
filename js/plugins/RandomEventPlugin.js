@@ -7,7 +7,7 @@ function RandomEventPlugin() {
 }
 
 RandomEventPlugin.prototype.update = function (world) {
-    console.log("RandomEventPlugin run");
+    if (world.stop) return; // если стоим на месте - рандомных событий нет
 
     if (Math.random() > RandomEventConstants.EVENT_PROBABILITY) return; // проверка на выпадение события вообще
 

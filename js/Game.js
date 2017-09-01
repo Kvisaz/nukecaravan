@@ -7,32 +7,31 @@ function Game() {
         new RandomEventPlugin(this), // рандомные события
         new ShopPlugin(this), // магазины
         new DeathCheck(), // проверка условий смерти
-        new UI(), // обновляем UI каждый цикл
+        new WorldView(), // обновляем WorldView каждый цикл
     ];
 
     this.world = new WorldState({
-        day: 0,
-        distance: 0,
         crew: 4,
-        food: 80,
         oxen: 2,
+        food: 80,
+        firepower: 3,
         money: 300,
-        firepower: 3
+        goods: 300,
     });
     // инициализируем интерфейс
     initActionUi(this.world, this);
 }
 
+// запуск цикла игры
+// использую setInterval для совместимости со старым Safari (так получилось)
+// bind позволяет привязать this объекта
+// так как по дефолту setInterval передает в функцию this от window
 Game.prototype.resume = function () {
-    // использую setInterval для совместимости со старым Safari (так получилось)
-    // bind позволяет привязать this объекта
-    // так как по дефолту setInterval передает в функцию this от window
-    this.interval = setInterval(this.step.bind(this), this.delta);
+    this.interval = setInterval(this.update.bind(this), this.delta);
 };
 
-// передаем аргумент game, так как this в данном вызове - window
-Game.prototype.step = function () {
-    if (this.world.stop) return;
+// игровой цикл
+Game.prototype.update = function () {
     for (index = 0; index < this.plugins.length; index++) {
         this.plugins[index].update(this.world);
     }

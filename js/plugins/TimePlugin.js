@@ -4,7 +4,8 @@
  *  - world передается как аргумент
  */
 
-function TimePlugin() {}
+function TimePlugin() {
+}
 
 
 TimePlugin.prototype.update = function (world) {
@@ -12,23 +13,17 @@ TimePlugin.prototype.update = function (world) {
 
     // todo вынести в обновление расстояния
     // приветствие нулевого дня
-    if(world.day===0){
-        addLogMessage(world, Goodness.positive,R.strings.START_MESSAGE);
+    if (world.day === 0) {
+        addLogMessage(world, Goodness.positive, R.strings.START_MESSAGE);
     }
 
     // вынести в основной цикл игры???
-    var delta = 20; // миллисекунд прошло
-    var days = delta / Caravan.DAY_IN_MS; // дней прошло
-    world.day += Caravan.DAY_PER_STEP * days;
+    var delta = GameConstants.STEP_IN_MS;
+    var dayDelta = delta / GameConstants.DAY_IN_MS;
+    world.day += dayDelta;
 
-    // производим изменение параметров, связанных со временем
     this.consumeFood(world);
-    // можно двигаться дальше только если есть еда
-    // в данной версии наступает смерть
-    if (world.food > 0) {
-        // this.updateWeight(world);  //update weight
-        this.updateDistance(delta, world);  //update progress
-    }
+    this.updateDistance(dayDelta, world);
 };
 
 // ---------------------------------------------------------------
@@ -40,7 +35,7 @@ TimePlugin.prototype.consumeFood = function (world) {
 };
 
 // ------------------------------------------------------------------------
-TimePlugin.prototype.updateDistance = function (delta, world) {
+TimePlugin.prototype.updateDistance = function (days, world) {
 
     // todo сделать проверку на условие достижения
 
@@ -49,15 +44,15 @@ TimePlugin.prototype.updateDistance = function (delta, world) {
     var weight = getCaravanWeight(world);
     var overweight = weight - maxWeight;
 
-    if(overweight>0){
+    if (overweight > 0) {
         addLogMessage(world, Goodness.negative, "Караван перегружен и не может двигаться");
         world.stop = true;
         return;
     }
 
     // пока перевес отрицательный, мы можем двигаться (и чем больше отрицательный перевес - тем больше скорость)
-    var speed = Caravan.SLOW_SPEED - overweight/maxWeight * Caravan.FULL_SPEED;
-    var distanceDelta = speed*delta/Caravan.DAY_IN_MS;
+    var speed = Caravan.SLOW_SPEED - overweight / maxWeight * Caravan.FULL_SPEED;
+    var distanceDelta = speed * days;
 
     var moveVector = getCaravanDirection(world);
     world.x += moveVector.kx * distanceDelta;

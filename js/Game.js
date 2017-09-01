@@ -1,8 +1,8 @@
 function Game() {
-    this.delta = 20;    // интервал в миллисекундах между шагами / обновлениями мира
+    this.delta = GameConstants.STEP_IN_MS;    // интервал в миллисекундах между шагами / обновлениями мира
 
     this.world = new WorldState({
-        crew: 4,
+        crew: 8,
         oxen: 2,
         food: 80,
         firepower: 3,

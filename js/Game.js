@@ -1,15 +1,6 @@
 function Game() {
     this.delta = 20;    // интервал в миллисекундах между шагами / обновлениями мира
 
-    this.plugins = [
-        new TimePlugin(this), // должен стоять первым
-        new DistancePlugin(this), // события связанные с преодоленной дистанцией
-        new RandomEventPlugin(this), // рандомные события
-        new ShopPlugin(this), // магазины
-        new DeathCheck(), // проверка условий смерти
-        new WorldView(), // обновляем WorldView каждый цикл
-    ];
-
     this.world = new WorldState({
         crew: 4,
         oxen: 2,
@@ -18,8 +9,17 @@ function Game() {
         money: 300,
         goods: 300,
     });
-    // инициализируем интерфейс
-    initActionUi(this.world, this);
+
+    this.plugins = [
+        new TimePlugin(this), // должен стоять первым
+        new DistancePlugin(this), // события связанные с преодоленной дистанцией
+        new RandomEventPlugin(this), // рандомные события
+        new ShopPlugin(this), // магазины
+        new DeathCheck(), // проверка условий смерти
+        new WorldView(), // обновляем WorldView каждый цикл
+        new UserActionPlugin()// инициализируем интерфейс пользователя
+    ];
+
 }
 
 // запуск цикла игры

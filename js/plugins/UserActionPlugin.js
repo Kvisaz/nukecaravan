@@ -19,12 +19,12 @@ function UserActionPlugin() {
 // если состояние изменилось на gameover
 // и наоборот
 UserActionPlugin.prototype.update = function (world) {
-    if (this.lastWorldGameOver == world.gameover) return; // никаких изменений, возвращаемся
-
     if(!this.isListenerAdded) {  // добавляем листенеры на реакцию пользователя
         this.addListeners(world);
         this.isListenerAdded = true;
     }
+
+    if (this.lastWorldGameOver == world.gameover) return; // никаких изменений, возвращаемся
 
     this.lastWorldGameOver = world.gameover; // сохраняем текущее состояние мира
 
@@ -43,7 +43,7 @@ UserActionPlugin.prototype.addListeners = function (world) {
     var dropFoodButton = document.getElementById('actions-dropfood');
 
     dropFoodButton.addEventListener('click', function (e) {
-        if (world.food == 0) {
+       if (world.food == 0) {
             return;
         }
         world.food--;
@@ -53,7 +53,6 @@ UserActionPlugin.prototype.addListeners = function (world) {
         }
 
         addLogMessage(world, Goodness.neutral, R.strings.DROPPED_FOOD.withArg(Caravan.FOOD_WEIGHT));
-        world.stop = false;
     });
 
     dropWeaponButton.addEventListener('click', function (e) {
@@ -67,6 +66,5 @@ UserActionPlugin.prototype.addListeners = function (world) {
         }
         //world.weight -= Caravan.FIREPOWER_WEIGHT;
         addLogMessage(world, Goodness.neutral, R.strings.DROPPED_GUNS.withArg(Caravan.FIREPOWER_WEIGHT));
-        world.stop = false;
     });
 };

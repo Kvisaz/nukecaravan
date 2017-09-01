@@ -78,7 +78,7 @@ ShopPlugin.prototype.show = function (products, shop) {
     var product;
     for (var i = 0; i < products.length; i++) {
         product = products[i];
-        prodsDiv.innerHTML += '<div class="product" data-index="'+i+'">' + product.qty + ' ' + product.item + ' - $' + product.price + '</div>';
+        prodsDiv.innerHTML += '<div class="product" data-index="'+i+'">' + product.qty + ' ' + product.text + ' - $' + product.price + '</div>';
     }
 };
 
@@ -118,6 +118,7 @@ ShopPlugin.prototype.generateProducts = function (shop) {
 
         products.push({
             item: shop.products[j].item,
+            text: shop.products[j].text,
             qty: shop.products[j].qty,
             price: Math.round(shop.products[j].price * priceFactor)
         });

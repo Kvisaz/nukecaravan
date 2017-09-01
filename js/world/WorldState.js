@@ -2,8 +2,7 @@
  *   Дата класс для хранения состояния мира игры
  * */
 function WorldState(stats) {
-    this.day = 0;                // текущий день
-    this.distance = 0;           // пройденное расстояние
+    this.day = 0;                // текущий день, с десятичными долям
     this.crew = stats.crew;
     this.oxen = stats.oxen;
     this.food = stats.food;

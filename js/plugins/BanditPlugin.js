@@ -1,10 +1,64 @@
 /**
  *  Столкновения с бандитами
  *
+ *
+ - встречи делятся на два этапа
+ - приблизиться // возможны разные варианты, смотри ниже
+ - бежать // вас атакуют в любом случае
+
+ - у бандитов есть параметры
+ - описание банды
+ - число оружия
+ - число человек
+ - голод  0..1
+
+ - бандиты нападают всегда, если у вас меньше оружия и людей (на 1 человека нападут всегда)
+
+ - бандиты могут захотеть примкнуть к вам, если у вас столько же оружия или больше,
+ есть еда и они голодны
+ - цена снижается
+
+ - бандитов можно перекупить, если у вас есть деньги
+ - цена зависит от количества стволов и человек
+ - цена высокая
+ - вы не получаете денег
+ *
  */
 
-function BanditPlugin(){
+function BanditPlugin() {
+
 }
+
+function Bandits(banditEvent) {
+    this.text = banditEvent.text;
+    // todo добавить случайный разброс
+    this.crew = banditEvent.crew;
+    this.firepower = banditEvent.firepower;
+    this.hunger = Math.random();
+}
+
+BanditPlugin.prototype.update = function (world) {
+    if (world.stop) return; // если стоим на месте - рандомных событий нет
+
+    if (Math.random() > BanditConstants.EVENT_PROBABILITY) return; // проверка на выпадение события вообще
+
+    addLogMessage(world, Goodness.negative, "Вы встретили бандитов!");
+
+    world.stop = true; // караван остановился
+    // начинается цепочка выборов вариантов
+    // генерируется случайная банда
+    var bandits = new Bandits(BanditEvents.getRandom());
+
+    // вычисляем степень вооружения бандитов
+    var banditFirePowerMid = bandits.firepower / bandits.crew;
+    if(banditFirePowerMid > 1) {
+        banditFirePowerMid = 1;
+    }
+    var index = BanditFirepowers.length - Math.abs((BanditFirepowers.length-1) * banditFirePowerMid);
+    var firepowerDesc = BanditFirepowers[index];
+    addLogMessage(world, Goodness.negative, "Это "+bandits.text + " числом " + bandits.crew + " и они " + firepowerDesc);
+
+};
 
 //show attack
 BanditPlugin.prototype.showAttack = function (firepower, gold) {

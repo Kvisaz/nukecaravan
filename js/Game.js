@@ -15,6 +15,7 @@ function Game() {
         new DistancePlugin(this), // события связанные с преодоленной дистанцией
         new RandomEventPlugin(this), // рандомные события
         new ShopPlugin(this), // магазины
+        new BanditPlugin(), // бандиты
         new DeathCheck(), // проверка условий смерти
         new WorldView(), // обновляем WorldView каждый цикл
         new UserActionPlugin()// инициализируем интерфейс пользователя

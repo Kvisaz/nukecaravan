@@ -6,10 +6,6 @@
  *  - в листенерах при изменении параметров world должен вызываться game.onWorldUpdate
  */
 
-// todo
-// сделать кнопки невидимыми если мертвы
-// не двигаться, если мертвы
-
 function UserActionPlugin() {
     this.lastWorldGameOver = false;
     this.isListenerAdded = false;

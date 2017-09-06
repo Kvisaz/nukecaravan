@@ -26,19 +26,20 @@ WorldView.prototype.update = function (world) {
     var caravanDistance = getCaravanDistance(world);
 
     //modify the dom
-    var idS = 'stat-day';
-    this.show('stat-day', Math.ceil(world.day));
-    this.show('stat-distance', Math.floor(caravanDistance));
-    this.show('stat-crew', world.crew);
-    this.show('stat-oxen', world.oxen);
-    this.show('stat-food', Math.ceil(world.food));
-    this.show('stat-money', world.money);
-    this.show('stat-firepower', world.firepower);
+    this.show('game-stat-day', Math.ceil(world.day));
+    this.show('game-stat-distance', Math.floor(caravanDistance));
+    this.show('game-stat-crew', world.crew);
+    this.show('game-stat-oxen', world.oxen);
+    this.show('game-stat-food', Math.ceil(world.food));
+    this.show('game-stat-money', world.money);
+    this.show('game-stat-firepower', world.firepower);
 
     //update weight
-    var maxWeight = getCaravanMaxWeight(world);
     var weight = getCaravanWeight(world);
-    this.show('stat-weight', Math.ceil(weight) + '/' + maxWeight);
+    var maxWeight = getCaravanMaxWeight(world);
+    var cargoStatEl = document.getElementById('game-stat-cargo');
+    this.show('game-stat-cargo', Math.ceil(weight));
+    this.show('game-stat-cargo-max', maxWeight);
 
     //update caravan position
     var endTownOnMapX = 832;

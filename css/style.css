@@ -86,15 +86,22 @@ body {
 }
 .game-stat-value {
     margin: 10px auto 0;
-    font-size: 18px;
+    font-size: 16px;
     color: black;
 }
 .game-stat-desc {
-    margin: 0 auto;
+    margin: -8px auto 0px;
     font-size: 16px;
     color: #dedede;
     text-transform: uppercase;
-    line-height: 4px;
+    line-height: 16px;
+}
+
+.game-stat-desc small {
+    display: block;
+    font-size: 12px;
+    font-weight: bold;
+    text-transform: lowercase;
 }
 
     /*  remove old styles*/

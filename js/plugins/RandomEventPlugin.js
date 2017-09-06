@@ -26,4 +26,6 @@ RandomEventPlugin.prototype.update = function (world) {
     world[event.stat] += valueChange;
     var message = event.text.withArg(Math.abs(valueChange));
     addLogMessage(world, event.goodness, message);
+
+    world.isChanged = true;
 };

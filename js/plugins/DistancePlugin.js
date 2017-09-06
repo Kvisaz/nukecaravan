@@ -29,4 +29,6 @@ DistancePlugin.prototype.update = function (world) {
             break;
         }
     }
+
+    world.isChanged = true;
 };

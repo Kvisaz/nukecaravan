@@ -17,10 +17,12 @@ function Game() {
         new ShopPlugin(this), // магазины
         new BanditPlugin(), // бандиты
         new DeathCheck(), // проверка условий смерти
-        new WorldView(), // обновляем WorldView каждый цикл
-        new UserActionPlugin()// инициализируем интерфейс пользователя
     ];
 
+    this.views = [
+        new WorldView(), // состояние мира
+        new UserActionPlugin()// интерфейс пользователя
+    ];
 }
 
 // запуск цикла игры
@@ -33,8 +35,16 @@ Game.prototype.resume = function () {
 
 // игровой цикл
 Game.prototype.update = function () {
+    var index;
     for (index = 0; index < this.plugins.length; index++) {
         this.plugins[index].update(this.world);
+    }
+
+    if (this.world.isChanged) {
+        for (index = 0; index < this.views.length; index++) {
+            this.views[index].update(this.world);
+        }
+        this.world.isChanged = false;
     }
 };
 

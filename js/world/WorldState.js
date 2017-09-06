@@ -24,4 +24,7 @@ function WorldState(stats) {
 
     this.gameover = false;  // gameover
     this.stop = false;    // если true - караван не идет, возможно, переживает какое-то событие
+
+    // флаг для обновления UI
+    this.isChanged = false;
 }

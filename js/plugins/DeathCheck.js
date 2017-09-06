@@ -11,7 +11,6 @@ function DeathCheck() {
 }
 
 DeathCheck.prototype.update = function (world) {
-    console.log("DeathCheck!")
     if(world.gameover) return; // если уже мертвы, проверять бесполезно
 
     // проверка условий по массиву DeathRules

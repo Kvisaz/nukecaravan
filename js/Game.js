@@ -10,13 +10,13 @@ function Game() {
         new RandomEventPlugin(this), // рандомные события
         new ShopPlugin(this), // магазины
         new BanditPlugin(), // бандиты
+        new DeathCheck(), // проверка условий смерти
     ];
 
     // реакция на события
-    this.reactionPlugins = [
+    this.viewPlugins = [
         new WorldView(), // состояние мира
         new UserActionPlugin(), // интерфейс пользователя
-        new DeathCheck(), // проверка условий смерти
     ];
 }
 
@@ -28,8 +28,8 @@ Game.prototype.update = function () {
     }
 
     if (this.world.isChanged) {
-        for (index = 0; index < this.reactionPlugins.length; index++) {
-            this.reactionPlugins[index].update(this.world);
+        for (index = 0; index < this.viewPlugins.length; index++) {
+            this.viewPlugins[index].update(this.world);
         }
         this.world.isChanged = false;
     }

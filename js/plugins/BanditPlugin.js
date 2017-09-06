@@ -53,8 +53,11 @@ BanditPlugin.prototype.update = function (world) {
     this.bandits = new Bandits(BanditEvents.getRandom());
 
     // описание вооруженности
-    var firepowerDesc = BanditFirepowers.getByDegree(this.bandits.hunger);
+    var firepowerDesc = BanditFirepowers.getByDegree(this.bandits.firepower / this.bandits.crew);
+    console.log("Bandits hunger: "+this.bandits.hunger + " / firepower:"+this.bandits.firepower);
     addLogMessage(world, Goodness.negative, "Это "+this.bandits.text + " числом " + this.bandits.crew + " и они " + firepowerDesc);
+
+   // this.showEvent(world);
 };
 
 BanditPlugin.prototype.showEvent = function (world) {

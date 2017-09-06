@@ -1,10 +1,17 @@
 /*
-*      Функция для отображения текущего состояния мира
-*       и анимации движения каравана на карте
-* */
+ *      Функция для отображения текущего состояния мира
+ *       и анимации движения каравана на карте
+ * */
 function WorldView() {
     // переменная для отслеживания длины лога, чтобы не обновлять его все время
     this.logLength = 0;
+
+    // ассоциативный массив для соответствия Goodness стилю css в логе
+    this.goodnessStyles = {
+        'positive': 'log-message-positive',
+        'negative': 'log-message-negative',
+        'neutral': 'log-message-neutral'
+    };
 }
 
 WorldView.prototype.notify = function (message, type) {
@@ -56,19 +63,14 @@ WorldView.prototype.refreshLog = function (log) {
     for (index = log.length - 1; index >= 0; index--) {
         messageLog += this.formatMessage(log[index]);
     }
-    this.show('updates-area', messageLog);
+    this.show('game-log', messageLog);
     // todo delete
     console.log("log refreshes, log size: " + log.length);
     this.logLength = log.length;
 };
 
 WorldView.prototype.formatMessage = function (message) {
-    var messageClass = this.getMessageClass(message);
+    var messageClass = this.goodnessStyles[message.goodness];
     var formatted = '<div class="' + messageClass + '">' + R.strings.UI_DAY + ' ' + Math.ceil(message.day) + ': ' + message.message + '</div>';
     return formatted;
-};
-
-WorldView.prototype.getMessageClass = function (message) {
-    var messageClass = "update-";
-    return messageClass+message.goodness;
 };

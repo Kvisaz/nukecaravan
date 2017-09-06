@@ -32,7 +32,7 @@ body {
     margin: 0px 24px 24px 24px;
 }
 
-#game-map-w{
+.frame_border {
     margin:0 auto;
     border: 8px inset #3c2b21;
     border-radius: 8px;
@@ -68,7 +68,7 @@ body {
 }
 
 #game-stats{
-    margin: 24px auto 0 auto;
+    margin: 24px auto 24px auto;
     width: 912px;
     display: flex;
     justify-content: space-between;
@@ -90,7 +90,7 @@ body {
     color: black;
 }
 .game-stat-desc {
-    margin: -8px auto 0px;
+    margin: -8px auto 0;
     font-size: 16px;
     color: #dedede;
     text-transform: uppercase;
@@ -103,6 +103,26 @@ body {
     font-weight: bold;
     text-transform: lowercase;
 }
+
+#game-log{
+    background: #130F09;
+    padding: 12px;
+    line-height: 150%;
+    font-size: 16px;
+}
+
+.log-message-positive {
+    color: #669966;
+}
+
+.log-message-negative {
+    color: #FF6633;
+}
+
+.log-message-neutral {
+    color: #90908F;
+}
+
 
     /*  remove old styles*/
 
@@ -157,17 +177,7 @@ body {
     margin: 10px;
 }
 
-.update-positive {
-    color: #669966;
-}
 
-.update-negative {
-    color: red;
-}
-
-.update-neutral {
-    color: #90908F;
-}
 
 #shop {
     background-color: white;

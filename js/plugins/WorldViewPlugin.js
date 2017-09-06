@@ -41,8 +41,9 @@ WorldView.prototype.update = function (world) {
     this.show('stat-weight', Math.ceil(weight) + '/' + maxWeight);
 
     //update caravan position
-    var caravanPosition = Math.abs(364 * (caravanDistance / world.to.x)) + 'px';
-    document.getElementById('caravan').style.left = caravanPosition;
+    var endTownOnMapX = 832;
+    var caravanPosition = Math.abs(endTownOnMapX * (caravanDistance / world.to.x)) + 'px';
+    document.getElementById('map-player').style.left = caravanPosition;
     this.refreshLog(world.log);
 };
 

@@ -57,13 +57,14 @@ body {
     width: 64px;
     height: 64px;
     background: url("../images/map-marker-player.png") center no-repeat;
+    position: absolute;
 }
 
-.startTown{
+#startTown{
     top: 0; left: 0;
 }
 
-.endTown {
+#endTown {
     top: 0; left: 832px;
 }
 

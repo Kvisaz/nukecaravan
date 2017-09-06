@@ -110,7 +110,6 @@ body {
     line-height: 150%;
     font-size: 16px;
     height: 480px;
-    overflow: auto;
 }
 
 .log-message-positive {

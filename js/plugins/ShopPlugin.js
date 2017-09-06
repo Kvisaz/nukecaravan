@@ -28,6 +28,8 @@ function ShopPlugin(game) {
 
 // Обязательная функция плагина -
 ShopPlugin.prototype.update = function (world) {
+    // todo delete
+    return;
     this.world = world; // необходимо для листенера
     if (world.stop) return; // если стоим - никаких новых магазинов
 

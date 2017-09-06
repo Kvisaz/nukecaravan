@@ -8,5 +8,5 @@ var StartWorldState = {
     food: 80, // еда на людей
     firepower: 3, // единиц оружия
     money: 300,  // денег в караване
-    goods: 300,  // товаров 
+    cargo: 300,  // товаров
 };

@@ -1,119 +1,163 @@
-html {
-  height: 100%;
+* {
+    padding: 0;
+    margin: 0;
+    border: 0;
 }
- 
+
 body {
-  padding: 0;
-  margin: 0;
-  border: 0;
-  height: 100%;
-  overflow: hidden;
-  font-family: Courier;
-	background-color: #5F9FFF;
+    height: 100%;
+    overflow: hidden;
+    font-family: Verdana, Arial, sans-serif;
+    background-color: #000;
 }
- 
+
 .hidden {
-  display: none;
+    display: none;
 }
- 
-#home {
-  background-color: red;
+
+#w {
+    width: 960px;
+    height: 100px;
+    margin: 0 auto;
+    background: url("../images/bg_001.jpg") center fixed;
+    background-size: cover;
+
+    border: 4px solid #3c2b21;
+    border-top: none;
+    border-radius: 0 0 12px 12px;
+
+    padding-top: 24px;
 }
- 
-#journey {
-  height: 100%;
-  width: 400px;
-  margin: 0 auto;	
-  background-color: #5F9FFF;
+
+#game {
+    margin: 0px 24px 24px 24px;
 }
- 
-#event {
-  background-color: magenta;
+
+#game-map-w{
+    margin:0 auto;
+    border: 8px inset #3c2b21;
+    border-radius: 8px;
 }
- 
-#progress-area {  
-  position: relative;
-  width: 400px;
-  margin: 10px;
+
+#game-map{
+    width: 896px;
+    height: 64px;
+    background: url("../images/map_line_001.png");
+    position: relative;
 }
- 
+
+.town{
+    width: 64px;
+    height: 64px;
+    background: url("../images/town_marker_green_001.png");
+    position: absolute;
+}
+
+#map-player {
+    width: 64px;
+    height: 64px;
+    background: url("../images/map-marker-player.png") center no-repeat;
+}
+
+.startTown{
+    top: 0; left: 0;
+}
+
+.endTown {
+    top: 0; left: 832px;
+}
+
+
+/*  remove old styles*/
+
+#game2 {
+    display: none;
+    width: 400px;
+    margin: 0 auto;
+    background-color: #5F9FFF;
+}
+
+#progress-area {
+    position: relative;
+    width: 400px;
+    margin: 10px;
+}
+
 #trees {
-  width: 100%;
-  image-rendering: pixelated;
+    width: 100%;
+    image-rendering: pixelated;
 }
- 
+
 #caravan {
-  position: absolute;
-  bottom: 30px;
-  left: 0;
+    position: absolute;
+    bottom: 30px;
+    left: 0;
 }
- 
+
 #stats-area {
-  background-color: white;  
-  height: 150px;
-  width: 156px;
-  margin: 10px;
-  padding: 10px;
-  font-size: 14px;
+    background-color: white;
+    height: 150px;
+    width: 156px;
+    margin: 10px;
+    padding: 10px;
+    font-size: 14px;
 }
- 
- 
- 
+
 .stat-value {
-  float: right;
+    float: right;
 }
- 
+
 #updates-area {
-  background-color: white;  
-  width: 350px;
-  margin: 10px;
-  height: 150px;
-  padding: 10px;
-  font-size: 12px;
-  overflow-y: scroll;
+    background-color: white;
+    width: 350px;
+    margin: 10px;
+    height: 150px;
+    padding: 10px;
+    font-size: 12px;
+    overflow-y: scroll;
 }
 
 #user-input {
-  margin: 10px;
+    margin: 10px;
 }
- 
+
 .update-positive {
-  color: #669966;
+    color: #669966;
 }
- 
+
 .update-negative {
-  color: red;
+    color: red;
 }
- 
+
 .update-neutral {
-  color: #90908F;
+    color: #90908F;
 }
- 
-#shop {  
-  background-color: white;
-  margin: 10px;
-  padding: 10px;
-  width: 100%;
+
+#shop {
+    background-color: white;
+    margin: 10px;
+    padding: 10px;
+    width: 100%;
 }
- 
+
 .product {
-  float: left;
-  margin: 5px;
-  padding: 2px;
-  border: 1px solid black;
-  font-size: 12px;
+    float: left;
+    margin: 5px;
+    padding: 2px;
+    border: 1px solid black;
+    font-size: 12px;
 }
- 
+
 #shop button {
-  clear: both;
-  float: none;
-  margin: 5px;
+    clear: both;
+    float: none;
+    margin: 5px;
 }
- 
-#attack {  
-  background-color: white;
-  margin: 10px;
-  padding: 10px;
-  height: 60px;
-  width: 100%;
+
+#attack {
+    background-color: white;
+    margin: 10px;
+    padding: 10px;
+    height: 60px;
+    width: 100%;
 }

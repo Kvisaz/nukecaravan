@@ -17,7 +17,6 @@ body {
 
 #w {
     width: 960px;
-    height: 100px;
     margin: 0 auto;
     background: url("../images/bg_001.jpg") center fixed;
     background-size: cover;
@@ -68,8 +67,37 @@ body {
     top: 0; left: 832px;
 }
 
+#game-stats{
+    margin: 24px auto 0 auto;
+    width: 912px;
+    display: flex;
+    justify-content: space-between;
+}
 
-/*  remove old styles*/
+#game-stats div {
+    width: 93px;
+    height: 76px;
+    background: url("../images/ui-stat-indikator.png") top center no-repeat;
+    text-align: center;
+}
+#game-stats span{
+    display: block;
+    height: 44px;
+}
+.game-stat-value {
+    margin: 10px auto 0;
+    font-size: 18px;
+    color: black;
+}
+.game-stat-desc {
+    margin: 0 auto;
+    font-size: 16px;
+    color: #dedede;
+    text-transform: uppercase;
+    line-height: 4px;
+}
+
+    /*  remove old styles*/
 
 #game2 {
     display: none;

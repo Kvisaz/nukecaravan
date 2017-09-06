@@ -1,4 +1,6 @@
 function Game() {
+    // создаем мир по стартовому состоянию
+    // все редактируемые переменные - в директории data
     this.world = new WorldState(StartWorldState);
 
     // генераторы событий
@@ -18,14 +20,6 @@ function Game() {
     ];
 }
 
-// запуск цикла игры
-// использую setInterval для совместимости со старым Safari (так получилось)
-// bind позволяет привязать this объекта
-// так как по дефолту setInterval передает в функцию this от window
-Game.prototype.resume = function () {
-    this.interval = setInterval(this.update.bind(this), GameConstants.STEP_IN_MS);
-};
-
 // игровой цикл
 Game.prototype.update = function () {
     var index;
@@ -42,4 +36,7 @@ Game.prototype.update = function () {
 };
 
 var newGame = new Game();
-newGame.resume();
+// запуск цикла игры, использую setInterval для совместимости со старым Safari
+// bind позволяет привязать this объекта
+// так как по дефолту setInterval передает в функцию this от window
+setInterval(newGame.update.bind(newGame), GameConstants.STEP_IN_MS);

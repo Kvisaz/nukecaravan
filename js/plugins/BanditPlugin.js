@@ -26,7 +26,8 @@
  */
 
 function BanditPlugin() {
-
+    this.bandits = {};
+    this.world = {};
 }
 
 function Bandits(banditEvent) {
@@ -38,25 +39,81 @@ function Bandits(banditEvent) {
 }
 
 BanditPlugin.prototype.update = function (world) {
+    this.world = world; // для обработки в листенере
     if (world.stop) return; // если стоим на месте - рандомных событий нет
 
-    if (Math.random() > BanditConstants.EVENT_PROBABILITY) return; // проверка на выпадение события вообще
+    // проверка на выпадение события вообще
+    if(!checkEventForStep(BanditConstants.EVENT_PROBABILITY)) return;
 
     addLogMessage(world, Goodness.negative, "Вы встретили бандитов!");
 
     world.stop = true; // караван остановился
     // начинается цепочка выборов вариантов
     // генерируется случайная банда
-    var bandits = new Bandits(BanditEvents.getRandom());
+    this.bandits = new Bandits(BanditEvents.getRandom());
 
+    // описание вооруженности
+    var firepowerDesc = BanditFirepowers.getByDegree(this.bandits.hunger);
+    addLogMessage(world, Goodness.negative, "Это "+this.bandits.text + " числом " + this.bandits.crew + " и они " + firepowerDesc);
+};
+
+BanditPlugin.prototype.showEvent = function (world) {
+    var bandits = this.bandits;
+    var containerView = document.getElementById('attack');
+    var descView = document.getElementById('attack-description');
+    var approachButton = document.getElementById('attack-approach');
+    var runButton = document.getElementById('attack-run');
+
+    // Описание бандитов ----------------------------
     // вычисляем степень вооружения бандитов
     var banditFirePowerMid = bandits.firepower / bandits.crew;
     if(banditFirePowerMid > 1) {
         banditFirePowerMid = 1;
     }
     var index = BanditFirepowers.length - Math.abs((BanditFirepowers.length-1) * banditFirePowerMid);
-    var firepowerDesc = BanditFirepowers[index];
-    addLogMessage(world, Goodness.negative, "Это "+bandits.text + " числом " + bandits.crew + " и они " + firepowerDesc);
+
+    // Бандиты
+    descView.innerHTML = "Это "+bandits.text + " числом " + bandits.crew + " и они " + BanditFirepowers[index];
+
+
+    // Варианты действий ----------------------------
+    approachButton.addEventListener('click', this.approach.bind(this));
+    runButton.addEventListener('click', this.run.bind(this));
+    containerView.classList.remove('hidden');
+};
+
+BanditPlugin.prototype.approach = function () {
+    var bandits = this.bandits;
+    var world = this.bandits;
+    /*
+    *  - бандиты могут захотеть примкнуть к вам, если у вас столько же оружия или больше,
+     есть еда и они голодны
+     - цена снижается
+
+     - бандитов можно перекупить, если у вас есть деньги
+     - цена зависит от количества стволов и человек
+     - цена высокая
+     - вы не получаете денег
+    * */
+
+    // firepower
+   if(world.firepower < bandits.firepower ) {
+       // todo attack!
+       addLogMessage(world, Goodness.negative, "Бандиты атакуют!");
+   }
+   else{
+       // фактор голода
+       // в команде достаточно еды (БАЛАНС!)
+       if(world.food / world.crew > bandits.hunger ){
+           addLogMessage(world, Goodness.positive, "Восхищенные вашими запасами еды, бандиты решили присоединиться к вам!");
+           // todo принять / отвергнуть
+           //
+       }
+       else {
+           addLogMessage(world, Goodness.neutral, "Бандиты настороженно смотрят на ваше оружие и еду, и требуют дань за проход");
+           // todo принять / отвергнуть
+       }
+   }
 
 };
 

@@ -8,8 +8,8 @@ function RandomEventPlugin() {
 
 RandomEventPlugin.prototype.update = function (world) {
     if (world.stop) return; // если стоим на месте - рандомных событий нет
-
-    if (Math.random() > RandomEventConstants.EVENT_PROBABILITY) return; // проверка на выпадение события вообще
+    // проверка на выпадение события вообще
+    if(!checkEventForStep(RandomEventConstants.EVENT_PROBABILITY)) return;
 
     var event = this.events.getRandom();
     var valueChange = event.value;

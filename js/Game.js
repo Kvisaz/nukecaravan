@@ -12,7 +12,7 @@ function Game() {
         new BanditPlugin(), // бандиты
     ];
 
-    // отражение событий перед пользователем
+    // реакция на события
     this.reactionPlugins = [
         new WorldView(), // состояние мира
         new UserActionPlugin(), // интерфейс пользователя

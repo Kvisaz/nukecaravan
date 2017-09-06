@@ -39,6 +39,8 @@ function Bandits(banditEvent) {
 }
 
 BanditPlugin.prototype.update = function (world) {
+    // todo delete
+    return;
     this.world = world; // для обработки в листенере
     if (world.stop) return; // если стоим на месте - рандомных событий нет
 
@@ -58,6 +60,8 @@ BanditPlugin.prototype.update = function (world) {
     addLogMessage(world, Goodness.negative, "Это "+this.bandits.text + " числом " + this.bandits.crew + " и они " + firepowerDesc);
 
    // this.showEvent(world);
+
+    world.isChanged = true;
 };
 
 BanditPlugin.prototype.showEvent = function (world) {

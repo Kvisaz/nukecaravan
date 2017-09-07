@@ -135,6 +135,6 @@ var RandomEvents = [
         goodness: Goodness.positive,
         stat: 'oxen',
         value: 1,
-        text: 'Найден одичалый брамин. Браминов: +1'
+        text: 'Найден одичалый брамин. Браминов: +$1'
     },
 ];

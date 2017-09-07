@@ -11,10 +11,6 @@ function Game() {
         new ShopPlugin(this), // магазины
         new BanditPlugin(), // бандиты
         new DeathCheck(), // проверка условий смерти
-    ];
-
-    // реакция на события
-    this.viewPlugins = [
         new WorldView(), // состояние мира
         new UserActionPlugin(), // интерфейс пользователя
     ];
@@ -25,13 +21,6 @@ Game.prototype.update = function () {
     var index;
     for (index = 0; index < this.eventPlugins.length; index++) {
         this.eventPlugins[index].update(this.world);
-    }
-
-    if (this.world.isChanged) {
-        for (index = 0; index < this.viewPlugins.length; index++) {
-            this.viewPlugins[index].update(this.world);
-        }
-        this.world.isChanged = false;
     }
 };
 

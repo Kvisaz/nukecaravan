@@ -30,5 +30,4 @@ DeathCheck.prototype.onDeath = function (world, rule) {
     addLogMessage(world, Goodness.negative,rule.text);
     world.gameover = true;
     world.stop = true;
-    world.isChanged = true;
 };

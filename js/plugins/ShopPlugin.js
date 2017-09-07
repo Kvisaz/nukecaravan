@@ -52,7 +52,6 @@ ShopPlugin.prototype.update = function (world) {
     this.previousShopDistance = caravanDistance;
     this.show(this.products, shop); // показываем магазин
     addLogMessage(world, Goodness.neutral, shop.text); // добавляем сообщение о магазине в лог
-    world.isChanged = true;
 };
 
 ShopPlugin.prototype.show = function (products, shop) {
@@ -135,7 +134,6 @@ ShopPlugin.prototype.buy = function (item, qty, price) {
 
     if (price > world.money) {
         addLogMessage(world, Goodness.negative,ShopEventConstants.SHOP_NO_MONEY_MESSAGE);
-        world.isChanged = true;
         return false;
     }
 
@@ -143,6 +141,4 @@ ShopPlugin.prototype.buy = function (item, qty, price) {
     world[item] += qty;
 
     addLogMessage(world, Goodness.positive, ShopEventConstants.SHOP_BUY_MESSAGE + ' ' + qty + ' x ' + item);
-
-    world.isChanged = true;
 };

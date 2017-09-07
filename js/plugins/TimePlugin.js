@@ -24,8 +24,6 @@ TimePlugin.prototype.update = function (world) {
 
     this.consumeFood(world);
     this.updateDistance(dayDelta, world);
-
-    world.isChanged = true;
 };
 
 // ---------------------------------------------------------------

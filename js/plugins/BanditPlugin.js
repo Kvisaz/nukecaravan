@@ -61,7 +61,6 @@ BanditPlugin.prototype.update = function (world) {
 
    // this.showEvent(world);
 
-    world.isChanged = true;
 };
 
 BanditPlugin.prototype.showEvent = function (world) {

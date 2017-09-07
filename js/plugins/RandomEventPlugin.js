@@ -18,6 +18,9 @@ RandomEventPlugin.prototype.update = function (world) {
 
     if (valueChange == 0) return; // если случайное значение выпало ноль - никаких изменений, событие отменяется
 
+    // если выпало отрицательное значение, а параметр уже нулевой - ничего не происходит
+    if (valueChange < 0 && world[event.stat] <= 0) return;
+
     // отрицательные значения не могут быть по модулю больше текущего параметра
     if (valueChange < 0 && Math.abs(valueChange) > world[event.stat]) {
         valueChange = Math.floor(world[event.stat]);

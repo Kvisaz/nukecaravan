@@ -5,28 +5,34 @@
  */
 
 function TimePlugin() {
+    this.time = 0; // общее время с начала игры, в миллисекундах
+    this.dayDelta = GameConstants.STEP_IN_MS / GameConstants.DAY_IN_MS; // сколько дней в одном шаге игру
+    this.lastDay = -1;  // отслеживанием наступление нового дня
 }
 
 
 TimePlugin.prototype.update = function (world) {
     if (world.stop) return; // если стоим - никаких изменений
+    this.time += GameConstants.STEP_IN_MS; // увеличение времени
+    world.day = Math.ceil(this.time / GameConstants.DAY_IN_MS); // текущий день, целый
+
+    // Движение каравана в зависимости от того, сколько дней прошло
+    this.updateDistance(this.dayDelta, world);
+
+    // события связанные с наступлением нового дня
+    if(this.lastDay!=world.day){
+        this.consumeFood(world);
+        this.lastDay = world.day;
+    }
 
     // todo вынести в обновление расстояния
     // приветствие нулевого дня
     if (world.day === 0) {
         addLogMessage(world, Goodness.positive, R.strings.START_MESSAGE);
     }
-
-    // вынести в основной цикл игры???
-    var delta = GameConstants.STEP_IN_MS;
-    var dayDelta = delta / GameConstants.DAY_IN_MS;
-    world.day += dayDelta;
-
-    this.consumeFood(world);
-    this.updateDistance(dayDelta, world);
 };
 
-// ---------------------------------------------------------------
+// еда выдается один раз в день
 TimePlugin.prototype.consumeFood = function (world) {
     world.food -= world.crew * Caravan.FOOD_PER_PERSON;
     if (world.food < 0) {
@@ -34,11 +40,10 @@ TimePlugin.prototype.consumeFood = function (world) {
     }
 };
 
-// ------------------------------------------------------------------------
-TimePlugin.prototype.updateDistance = function (days, world) {
+// обновить пройденный путь в зависимости от потраченного времени в днях
+TimePlugin.prototype.updateDistance = function (dayDelta, world) {
 
     // todo сделать проверку на условие достижения
-
     // перегруз (когда становится больше нуля - не можем идти)
     var maxWeight = getCaravanMaxWeight(world);
     var weight = getCaravanWeight(world);
@@ -49,11 +54,9 @@ TimePlugin.prototype.updateDistance = function (days, world) {
         world.stop = true;
         return;
     }
-
     // пока перевес отрицательный, мы можем двигаться (и чем больше отрицательный перевес - тем больше скорость)
     var speed = Caravan.SLOW_SPEED - overweight / maxWeight * Caravan.FULL_SPEED;
-    var distanceDelta = speed * days;
-
+    var distanceDelta = speed * dayDelta;
     var moveVector = getCaravanDirection(world);
     world.x += moveVector.kx * distanceDelta;
     world.y += moveVector.ky * distanceDelta;

@@ -11,7 +11,7 @@ function Game() {
         new ShopPlugin(this), // магазины
         new BanditPlugin(), // бандиты
         new DeathCheck(), // проверка условий смерти
-        new WorldView(), // состояние мира
+        new WorldView(), // внешний вид мира
         new UserActionPlugin(), // интерфейс пользователя
     ];
 }

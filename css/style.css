@@ -30,6 +30,7 @@ body {
 
 #game {
     margin: 0px 24px 24px 24px;
+    position: relative;
 }
 
 .frame_border {
@@ -125,87 +126,14 @@ body {
     color: #90908F;
 }
 
-
-    /*  remove old styles*/
-
-#game2 {
-    display: none;
-    width: 400px;
-    margin: 0 auto;
+#popup_common {
     background-color: #5F9FFF;
-}
-
-#progress-area {
-    position: relative;
-    width: 400px;
-    margin: 10px;
-}
-
-#trees {
-    width: 100%;
-    image-rendering: pixelated;
-}
-
-#caravan {
+    margin: auto;
     position: absolute;
-    bottom: 30px;
-    left: 0;
-}
-
-#stats-area {
-    background-color: white;
-    height: 150px;
-    width: 156px;
-    margin: 10px;
-    padding: 10px;
-    font-size: 14px;
-}
-
-.stat-value {
-    float: right;
-}
-
-#updates-area {
-    background-color: white;
-    width: 350px;
-    margin: 10px;
-    height: 150px;
-    padding: 10px;
-    font-size: 12px;
-    overflow-y: scroll;
-}
-
-#user-input {
-    margin: 10px;
-}
-
-
-
-#shop {
-    background-color: white;
-    margin: 10px;
-    padding: 10px;
-    width: 100%;
-}
-
-.product {
-    float: left;
-    margin: 5px;
-    padding: 2px;
-    border: 1px solid black;
-    font-size: 12px;
-}
-
-#shop button {
-    clear: both;
-    float: none;
-    margin: 5px;
-}
-
-#attack {
-    background-color: white;
-    margin: 10px;
-    padding: 10px;
-    height: 60px;
-    width: 100%;
+    left:0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: 10px;
+    height: 10px;
 }

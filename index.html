@@ -75,35 +75,12 @@
         -->
     </div>
 
-    <div class="updates-area" id="updates-area"></div>
 
     <div id="shop" class="hidden">
         <div id="shop-title"></div>
         <div id="prods"></div><br />
         <button id="shop-exit-button">Покинуть магазин</button>
     </div>
-
-    <div id="attack" class="hidden">
-        <div id="attack-description"></div>
-        <button id="attack-approach">Приблизиться</button>
-        <button id="attack-run">Бежать</button>
-    </div>
-
-
-
-    <div id="stats-area">
-        <div class="stat">День <span id="stat-day" class="stat-value"></span></div>
-        <div class="stat">Пройдено <span id="stat-distance" class="stat-value"></span></div>
-        <div class="stat">Людей <span id="stat-crew" class="stat-value"></span></div>
-        <div class="stat">Волов <span id="stat-oxen" class="stat-value"></span></div>
-        <div class="stat">Еда <span id="stat-food" class="stat-value"></span></div>
-        <div class="stat">Деньги <span id="stat-money" class="stat-value"></span></div>
-        <div class="stat">Оружие <span id="stat-firepower" class="stat-value"></span></div>
-        <div class="stat">Груз <span id="stat-weight" class="stat-value"></span><span id="stat-capacity"
-                                                                                      class="stat-value"></span></div>
-    </div>
-
-
 </div>
 
 
@@ -122,14 +99,13 @@
 <script src="js/data/GameConstants.js"></script>
 <script src="js/data/CaravanConstants.js"></script>
 <script src="js/data/BanditEvents.js"></script>
-<script src="js/data/DistanceRules.js"></script>
 <script src="js/data/RandomEvents.js"></script>
 <script src="js/data/ShopEvents.js"></script>
 <script src="js/data/DeathRules.js"></script>
 
 <!-- плагины -->
-<script src="js/plugins/TimePlugin.js"></script>
-<script src="js/plugins/DistancePlugin.js"></script>
+<script src="js/plugins/CorePlugin.js"></script>
+<script src="js/plugins/MapPlugin.js"></script>
 <script src="js/plugins/RandomEventPlugin.js"></script>
 <script src="js/plugins/ShopPlugin.js"></script>
 <script src="js/plugins/BanditPlugin.js"></script>

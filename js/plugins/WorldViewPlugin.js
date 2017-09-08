@@ -1,6 +1,6 @@
 /*
  *      Функция для отображения текущего состояния мира
- *       и анимации движения каравана на карте
+ *       и лога событий
  * */
 function WorldView() {
     // модель для хранения состояния View: предыдущие отображаемые значения
@@ -21,7 +21,6 @@ function WorldView() {
 
     // элементы DOM находим сразу и запоминаем
     this.view = {};
-    this.view.mapPlayer = document.getElementById('map-player');
     this.view.distance = document.getElementById('game-stat-distance');
     this.view.days = document.getElementById('game-stat-day');
     this.view.crew = document.getElementById('game-stat-crew');
@@ -38,13 +37,9 @@ function WorldView() {
 // Обновляем параметры по текущему состоянию мира
 // если какой-то параметр не менялся - обновления для него не происходит
 WorldView.prototype.update = function (world) {
-    var caravanDistance = getCaravanDistance(world);
-    if(this.viewModel.distance != caravanDistance){
-        var endTownOnMapX = 832;
-        var caravanPosition = Math.abs(endTownOnMapX * (caravanDistance / world.to.x)) + 'px';
-        this.view.mapPlayer.style.left = caravanPosition; // сдвигаем маркер на карте
-        this.view.distance.innerHTML = Math.floor(caravanDistance); // обновляем числовой индикатор
-        this.viewModel.distance = caravanDistance;
+    if(this.viewModel.distance != world.distance){
+        this.view.distance.innerHTML = Math.floor(world.distance);
+        this.viewModel.distance = world.distance;
     }
 
     if(this.viewModel.day != world.day){

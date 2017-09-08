@@ -5,7 +5,6 @@
  *  1. модуль вызывается из Game
  *  2. модуль имеет функцию отображения своего интерфейса
  *  3. модуль  меняет состояние мира.
- *  4. после изменения состояни мира вызываем  game.onWorldUpdate(); для оповещения подписчиков
  *
  *
  *  Обязательные функции
@@ -14,8 +13,7 @@
  *
  */
 
-function ShopPlugin(game) {
-    this.game = game;
+function ShopPlugin() {
     this.isListenerAdded = false;
     this.shops = Shops; // возможные случаи магазинов, основы для генерация конкретной встречи
 
@@ -130,7 +128,7 @@ ShopPlugin.prototype.generateProducts = function (shop) {
 };
 
 ShopPlugin.prototype.buy = function (item, qty, price) {
-    var world = this.game.world;
+    var world = this.world;
 
     if (price > world.money) {
         addLogMessage(world, Goodness.negative,ShopEventConstants.SHOP_NO_MONEY_MESSAGE);

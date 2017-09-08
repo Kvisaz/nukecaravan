@@ -5,10 +5,10 @@ function Game() {
 
     // генераторы событий
     this.eventPlugins = [
-        new TimePlugin(this), // должен стоять первым
-        new DistancePlugin(this), // события связанные с преодоленной дистанцией
-        new RandomEventPlugin(this), // рандомные события
-        new ShopPlugin(this), // магазины
+        new CorePlugin(), // должен стоять первым
+        new MapPlugin(this.world),
+        new RandomEventPlugin(), // рандомные события
+        new ShopPlugin(), // магазины
         new BanditPlugin(), // бандиты
         new DeathCheck(), // проверка условий смерти
         new WorldView(), // внешний вид мира
@@ -18,6 +18,7 @@ function Game() {
 
 // игровой цикл
 Game.prototype.update = function () {
+    if (this.world.gameover) return; // никаких действий
     var index;
     for (index = 0; index < this.eventPlugins.length; index++) {
         this.eventPlugins[index].update(this.world);

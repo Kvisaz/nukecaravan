@@ -15,13 +15,15 @@ function WorldState(stats) {
     //  { day: "", message: "", goodness: "" }
     this.log = [];
 
+    this.distance = 0; // сколько всего пройдено
+
     // координаты каравана
-    this.x = 0;
+    this.caravan = { x: 0};
 
     // пункт отправления и назначения
-    this.from = { x: 0, y: 0 };
-    this.to = { x: 1000, y: 0 };
+    this.from = {x: 0};
+    this.to = {x: 0};
 
     this.gameover = false;  // gameover
-    this.stop = false;    // если true - караван не идет, возможно, переживает какое-то событие
+    this.stop = true;    // если true - караван не идет, возможно, переживает какое-то событие
 }

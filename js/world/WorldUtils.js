@@ -16,15 +16,3 @@ function getCaravanWeight(world) {
 function getCaravanDistance(world) {
     return Math.abs(world.x - world.from.x);
 }
-
-// вектор направления
-function getCaravanDirection(world) {
-    var dx = world.to.x - world.from.x;
-    var dy = world.to.y - world.from.y;
-    var dd = Math.sqrt(dx*dx + dy*dy);
-
-    var kx = dx / dd; // коэффициент смещения по x со знаком
-    var ky = dy / dd; // коэффициент смещения по y со знаком
-
-    return { kx: kx, ky: ky };
-}

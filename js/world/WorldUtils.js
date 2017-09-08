@@ -16,3 +16,12 @@ function getCaravanWeight(world) {
 function getCaravanDistance(world) {
     return Math.abs(world.x - world.from.x);
 }
+
+// добавляем сообщение в лог
+function addLogMessage(world, goodness, message) {
+    world.log.push({
+        day: world.day,
+        message: message,
+        goodness: goodness
+    });
+}

@@ -8,8 +8,8 @@ function Game() {
         new CorePlugin(), // должен стоять первым
         new MapPlugin(this.world),
         new RandomEventPlugin(), // рандомные события
-        new ShopPlugin(this.world), // магазины
-        new BanditPlugin(), // бандиты
+        // new ShopPlugin(this.world), // магазины
+        // new BanditPlugin(), // бандиты
         new DeathCheck(), // проверка условий смерти
         new WorldView(), // внешний вид мира
         new UserActionPlugin(), // интерфейс пользователя

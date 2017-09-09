@@ -48,11 +48,19 @@ CorePlugin.prototype.updateDistance = function (dayDelta, world) {
     }
     // пока перевес отрицательный, мы можем двигаться (и чем больше отрицательный перевес - тем больше скорость)
     var speed = Caravan.SLOW_SPEED - overweight / maxWeight * Caravan.FULL_SPEED;
+    var distanceDelta = speed * dayDelta; // расстояние, которое должен пройти караван
+
     var dx = world.to.x - world.caravan.x;
-    var sign = dx > 0 ? 1 : dx < 0 ? -1 : 0; // знак смещения, 1, 0 или -1
-    var distanceDelta = speed * dayDelta; // караван прошел путь за шаг игры
-    world.caravan.x += sign * distanceDelta; // новые координаты каравана
-    if (sign != 0) {  // если есть смещение - наращиваем дистанцию
+    var dy = world.to.y - world.caravan.y;
+    var angle = Math.atan2(dy, dx);
+
+    world.caravan.x += Math.cos(angle) * distanceDelta;
+    world.caravan.y -= Math.sin(angle) * distanceDelta;
+
+    var signX = getSign(dx); // знак смещения, 1, 0 или -1
+    var signY = getSign(dy); // знак смещения, 1, 0 или -1
+
+    if (dx != 0 && dy != 0) {  // если есть смещение - наращиваем дистанцию
         world.distance += distanceDelta;
     }
 };

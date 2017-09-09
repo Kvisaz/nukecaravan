@@ -4,9 +4,9 @@ function Game() {
     this.world = new WorldState(StartWorldState);
 
     // генераторы событий
-    this.eventPlugins = [
+    this.plugins = [
         new CorePlugin(), // должен стоять первым
-        new MapPlugin(this.world),
+        new Map2DPlugin(this.world),
         new RandomEventPlugin(), // рандомные события
         // new ShopPlugin(this.world), // магазины
         // new BanditPlugin(), // бандиты
@@ -20,8 +20,8 @@ function Game() {
 Game.prototype.update = function () {
     if (this.world.gameover) return; // никаких действий
     var index;
-    for (index = 0; index < this.eventPlugins.length; index++) {
-        this.eventPlugins[index].update(this.world);
+    for (index = 0; index < this.plugins.length; index++) {
+        this.plugins[index].update(this.world);
     }
 };
 

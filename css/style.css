@@ -37,10 +37,10 @@ body {
     border-radius: 8px;
 }
 
-#game-map{
+#game-map2d{
     width: 896px;
     height: 512px;
-    background: url("../images/map_line_001.png");
+    background: url("../images/map_texture_001.png");
     position: relative;
 }
 

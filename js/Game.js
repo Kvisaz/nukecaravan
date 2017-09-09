@@ -12,7 +12,7 @@ function Game() {
         // new BanditPlugin(), // бандиты
         new DeathCheck(), // проверка условий смерти
         new WorldView(), // внешний вид мира
-        new UserActionPlugin(), // интерфейс пользователя
+        // new UserActionPlugin(), // интерфейс пользователя
     ];
 }
 

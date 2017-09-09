@@ -55,10 +55,7 @@ CorePlugin.prototype.updateDistance = function (dayDelta, world) {
     var angle = Math.atan2(dy, dx);
 
     world.caravan.x += Math.cos(angle) * distanceDelta;
-    world.caravan.y -= Math.sin(angle) * distanceDelta;
-
-    var signX = getSign(dx); // знак смещения, 1, 0 или -1
-    var signY = getSign(dy); // знак смещения, 1, 0 или -1
+    world.caravan.y += Math.sin(angle) * distanceDelta;
 
     if (dx != 0 && dy != 0) {  // если есть смещение - наращиваем дистанцию
         world.distance += distanceDelta;

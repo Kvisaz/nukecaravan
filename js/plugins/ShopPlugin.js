@@ -50,7 +50,6 @@ ShopPlugin.prototype.update = function (world) {
 
     // проверяем расстояние до предыдущего магазина, чтобы не частили
     var prevShopDistance = Math.sqrt(Math.pow(world.caravan.x - this.lastShop.x, 2) + Math.pow(world.caravan.y - this.lastShop.y, 2));
-    console.log("prevShopDistance ="+prevShopDistance);
     if (prevShopDistance < ShopEventConstants.SHOP_DISTANCE_MIN) return;
 
     // проверка на выпадение случайного магазина

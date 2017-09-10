@@ -25,41 +25,52 @@
  *
  */
 
-function BanditPlugin() {
+function BanditPlugin(world) {
     this.bandits = {};
-    this.world = {};
-}
+    this.world = world;
 
-function Bandits(banditEvent) {
-    this.text = banditEvent.text;
-    // todo добавить случайный разброс
-    this.crew = banditEvent.crew;
-    this.firepower = banditEvent.firepower;
-    this.hunger = Math.random();
+    // DOM-элементы для отображения интерфейса
+    this.view = {};
+    this.view.containerView = document.getElementById('attack');
+    this.view.descView = document.getElementById('attack-description');
+    this.view.approachButton = document.getElementById('attack-approach');
+    this.view.runButton = document.getElementById('attack-run');
 }
 
 BanditPlugin.prototype.update = function (world) {
-    // todo delete
-    return;
-    this.world = world; // для обработки в листенере
-    if (world.stop) return; // если стоим на месте - рандомных событий нет
-
+    // если стоим на месте - бандиты не появляются
+    if (world.stop) return;
     // проверка на выпадение события вообще
-    if(!checkEventForStep(BanditConstants.EVENT_PROBABILITY)) return;
-
-    addLogMessage(world, Goodness.negative, "Вы встретили бандитов!");
-
-    world.stop = true; // караван остановился
-    // начинается цепочка выборов вариантов
+    // я использую стоп-условие, так как оно позволяет избегать лесенки c if
+    // но вы можете использовать классический блок if
+    // todo uncomment
+    //if(!checkEventForStep(BanditConstants.EVENT_PROBABILITY)) return;
+    // ну, понеслась! пишем в лог
+    addLogMessage(world, Goodness.negative, BanditConstants.NOTICE_MESSAGE);
+    // караван останавливается
+    world.stop = true;
+    // флаг для блокировки UI в других плагинах включается
+    world.uiLock = true; // todo не забудь выключить при выходе
     // генерируется случайная банда
-    this.bandits = new Bandits(BanditEvents.getRandom());
+    this.bandits = BanditEvents.getRandom();
+    // она голодная по рандому от 0 до 1
+    this.bandits.hunger = Math.random();
+    // показываем окно с выбором "Встретиться / Бежать"
+    this.showMeetUpView();
+};
 
-    // описание вооруженности
+BanditPlugin.prototype.showMeetUpView = function () {
+    var bandits = this.bandits;
+
+    // видимую силу их оружия задаем как численность войск в Героях Магии и Меча
+    // - то есть не прямым числом, а неконкретным описанием (слабо, сильно вооружены)
+    // getByDegree - это функция из Utils.js, выбирает из массива по числу между 0 и 1 - чем больше, тем дальше от начала
+    // это позволяет иметь массив описаний произвольной длины
     var firepowerDesc = BanditFirepowers.getByDegree(this.bandits.firepower / this.bandits.crew);
-    console.log("Bandits hunger: "+this.bandits.hunger + " / firepower:"+this.bandits.firepower);
     addLogMessage(world, Goodness.negative, "Это "+this.bandits.text + " числом " + this.bandits.crew + " и они " + firepowerDesc);
 
-   // this.showEvent(world);
+    // todo delete
+    console.log("Bandits hunger: "+this.bandits.hunger + " / firepower:"+this.bandits.firepower);
 
 };
 

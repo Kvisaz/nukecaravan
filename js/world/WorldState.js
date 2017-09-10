@@ -24,6 +24,7 @@ function WorldState(stats) {
     this.from = {x: 0, y: 0};
     this.to = {x: 0, y: 0};
 
-    this.gameover = false;  // gameover
-    this.stop = true;    // если true - караван не идет, возможно, переживает какое-то событие
+    this.gameover = false;  // game over
+    this.stop = true;    // маркер для обозначения движения
+    this.uiLock = false; // маркер для обозначения, что данный плагин перехватывает все действия пользователя, или не должен реагировать, если кто-то перехватил
 }

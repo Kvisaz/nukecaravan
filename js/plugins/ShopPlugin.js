@@ -17,11 +17,7 @@ function ShopPlugin(world) {
     this.world = world; // необходимо для листенера
     this.shops = Shops; // возможные случаи магазинов, основы для генерация конкретной встречи
 
-    // координаты предыдущего магазина - чтобы не слишком часто
-    this.lastShop = {
-        x:0
-    };
-
+    this.lastShop = { x:0, y:0 }; // координаты предыдущего магазина - чтобы не слишком часто
     this.products = []; // продукты в конкретном магазине, генерируем
 
     // элементы интерфейса
@@ -37,8 +33,9 @@ function ShopPlugin(world) {
     shopView.addEventListener('click', function (e) {
         var target = e.target || e.src;
         if (target.tagName == 'BUTTON') {  // клик на кнопке выхода
-            shopView.classList.add('hidden');
-            shopView.world.stop = false; // продолжаем путешествие
+            shopView.classList.add('hidden');  // скрываем магазин
+            world.uiLock = false; // снимаем захват с действий пользователя
+            world.stop = false; // продолжаем путешествие
         }
         else if (target.tagName == 'DIV' && target.className.match(/product/)) { //buy button
             // в атрибуте data-index при открытии магазина записывает индекс продукта
@@ -57,28 +54,26 @@ ShopPlugin.prototype.update = function (world) {
     if (world.stop) return; // если стоим - никаких новых магазинов
 
     // проверяем расстояние до предыдущего магазина, чтобы не частили
-    var prevShopDistance = Math.abs(world.caravan.x - this.lastShop.x);
-    if (ShopEventConstants.SHOP_DISTANCE_MIN < prevShopDistance) return;
+    //var prevShopDistance = Math.abs(world.caravan.x - this.lastShop.x);
+    //if (ShopEventConstants.SHOP_DISTANCE_MIN < prevShopDistance) return;
 
     // проверка на выпадение случайного магазина
-    if (Math.random() > ShopEventConstants.SHOP_PROBABILITY) return;
+    //if (Math.random() > ShopEventConstants.SHOP_PROBABILITY) return;
 
     // стоп-условия выполнились
     world.stop = true; // караван остановился
     this.lastShop.x = world.caravan.x;  // запоминаем магазинчик
     this.show(this.shops.getRandom()); // показываем магазин
+    world.uiLock = true; // обозначаем, что действия пользователя теперь исключительно наши, пример: чтобы караван случайно не пошел по карте, если кликнем по ней при работе с магазином
 };
 
 ShopPlugin.prototype.show = function (shop) {
-    this.view.shop.classList.remove('hidden'); // показываем сам магазин
-    this.view.exitButton.innerHTML = shop.exitText; // текст на кнопке
+    this.view.shop.classList.remove('hidden'); // показываем сам магазин в попапе
     this.view.shopTitle.innerHTML = shop.text; // описание магазина
     this.view.products.innerHTML = ''; // очищаем предыдущий набор продуктов
 
     addLogMessage(this.world, Goodness.neutral, shop.text); // добавляем сообщение о магазине в лог
-
-    // генерируем случайный набор продуктов по ассортименту данного магазина
-    this.products = this.generateProducts(shop);
+    this.products = this.generateProducts(shop); // случайный набор продуктов по ассортименту данного магазина
 
     /*
      *   Сохраняем индекс продукта в атрибутах тега,
@@ -87,7 +82,7 @@ ShopPlugin.prototype.show = function (shop) {
      * */
     var productsView = this.view.products;
     this.products.forEach(function (product, i) {
-        productsView.innerHTML += '<div class="product" data-index="' + i + '">' + product.qty + ' ' + product.text + ' - $' + product.price + '</div>';
+        productsView.innerHTML += '<div class="shop-product" data-index="' + i + '">' + product.qty + ' ' + product.text + ' - $' + product.price + '</div>';
     });
 };
 

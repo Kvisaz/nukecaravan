@@ -24,11 +24,11 @@ body {
     border-radius: 0 0 12px 12px;
 
     padding-top: 24px;
+    position: relative;
 }
 
 #game {
     margin: 0px 24px 24px 24px;
-    position: relative;
 }
 
 .frame_border {
@@ -116,14 +116,66 @@ body {
     color: #90908F;
 }
 
-#popup_common {
-    background-color: #5F9FFF;
-    margin: auto;
+#shop {
+    background-color: rgba(0, 0, 0, 0.6);
+    margin: 0 auto;
     position: absolute;
-    left:0;
-    right: 0;
-    top: 0;
-    bottom: 0;
-    width: 10px;
-    height: 10px;
+    width: 904px;
+    height: 520px;
+    top: 24px;
+    left: 28px;
+}
+
+
+#shop-win {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 4px outset #3c2b21;
+    border-radius: 12px;
+    background: url("../images/bg_001.jpg");
+    position: absolute;
+    width: 440px;
+    top: 64px;
+    left: 210px;
+    padding: 16px;
+}
+
+#shop-title {
+    font-size: 18px;
+    margin-bottom: 16px;
+    color: #cbcbcb;
+}
+
+.shop-product{
+    display: block;
+    color: #cbcbcb;
+    border: 2px outset #3c2b21;
+    border-radius: 8px;
+    background: #130F09;
+    width: 200px;
+    padding: 8px;
+    margin-bottom: 8px;
+}
+
+.red-button{
+    border-radius: 12px;
+    background: url("../images/button_01.png") top left no-repeat;
+    display: block;
+    height: 49px;
+    width:200px;
+    color: #cbcbcb;
+    font-weight: bold;
+    font-size: 16px;
+    text-transform: uppercase;
+    outline:none;
+}
+
+.red-button, .shop-product {
+    box-shadow: 0 4px rgba(22,22,22,0.5);
+}
+
+.red-button:active, .shop-product:active {
+    transform: translateY(4px);
+    box-shadow: 0 0px rgba(22, 22,22,0.5);
 }

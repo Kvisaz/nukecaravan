@@ -11,7 +11,6 @@ var ShopEventConstants = {
 //  описания возможных магазинов
 var Shops = [{
     text: 'Вы нашли магазин в этой жуткой пустоши',
-    exitText: 'Покинуть магазин',
     products: [
         {item: 'food', text: 'Еда', qty: 20, price: 50},
         {item: 'oxen', text: 'Волы', qty: 1, price: 200},
@@ -20,7 +19,6 @@ var Shops = [{
 },
     {
         text: 'Вы встретили другой караван!',
-        exitText: 'Пойти дальше',
         products: [
             {item: 'food', text: 'Еда', qty: 30, price: 50},
             {item: 'oxen', text: 'Волы',qty: 1, price: 200},
@@ -30,7 +28,6 @@ var Shops = [{
     },
     {
         text: 'Следопыты встретили контрабандистов',
-        exitText: 'Оставить контрабандистов',
         products: [
             {item: 'food', text: 'Еда', qty: 20, price: 60},
             {item: 'oxen', text: 'Волы', qty: 1, price: 300},

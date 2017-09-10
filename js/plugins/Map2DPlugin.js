@@ -16,7 +16,7 @@ function Map2DPlugin(world) {
     var i;
     for (i = 0; i < this.view.towns.length; i++) {
         this.view.towns[i].addEventListener("click", function (e) {
-            if (!world.stop) return; // если караван уже идет - направление не меняем
+            if (world.uiLock) return; // если какой-то плагин перехватил работу с пользователем, то есть открыто модальное окно, не реагируем на действия пользователя
             var element = e.target || e.srcElement;
             world.from.x = world.caravan.x;
             world.from.y = world.caravan.y;

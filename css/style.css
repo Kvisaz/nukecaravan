@@ -142,9 +142,16 @@ body {
 }
 
 #shop-title {
-    font-size: 18px;
-    margin-bottom: 16px;
+    text-align: center;
+    font-size: 24px;
+    margin-bottom: 12px;
     color: #cbcbcb;
+}
+
+#shop-hint {
+    font-size: 12px;
+    color: #cbcbcb;
+    margin-bottom: 4px;
 }
 
 .shop-product{
@@ -153,7 +160,7 @@ body {
     border: 2px outset #3c2b21;
     border-radius: 8px;
     background: #130F09;
-    width: 200px;
+    width: 300px;
     padding: 8px;
     margin-bottom: 8px;
 }

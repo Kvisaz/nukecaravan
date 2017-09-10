@@ -54,11 +54,11 @@ ShopPlugin.prototype.update = function (world) {
     if (world.stop) return; // если стоим - никаких новых магазинов
 
     // проверяем расстояние до предыдущего магазина, чтобы не частили
-    //var prevShopDistance = Math.abs(world.caravan.x - this.lastShop.x);
-    //if (ShopEventConstants.SHOP_DISTANCE_MIN < prevShopDistance) return;
+    /*var prevShopDistance = Math.sqrt(Math.pow(world.caravan.x - this.lastShop.x, 2) + Math.pow(world.caravan.y - this.lastShop.y, 2));
+    if (ShopEventConstants.SHOP_DISTANCE_MIN < prevShopDistance) return;
 
     // проверка на выпадение случайного магазина
-    //if (Math.random() > ShopEventConstants.SHOP_PROBABILITY) return;
+    if (Math.random() > ShopEventConstants.SHOP_PROBABILITY) return;*/
 
     // стоп-условия выполнились
     world.stop = true; // караван остановился
@@ -82,7 +82,7 @@ ShopPlugin.prototype.show = function (shop) {
      * */
     var productsView = this.view.products;
     this.products.forEach(function (product, i) {
-        productsView.innerHTML += '<div class="shop-product" data-index="' + i + '">' + product.qty + ' ' + product.text + ' - $' + product.price + '</div>';
+        productsView.innerHTML += '<div class="shop-product" data-index="' + i + '">' + product.text + ' [' + product.qty + '] за $' + product.price + '</div>';
     });
 };
 

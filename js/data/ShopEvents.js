@@ -13,7 +13,7 @@ var Shops = [{
     text: 'Вы нашли магазин в этой жуткой пустоши',
     products: [
         {item: 'food', text: 'Еда', qty: 20, price: 50},
-        {item: 'oxen', text: 'Волы', qty: 1, price: 200},
+        {item: 'oxen', text: 'Брамины', qty: 1, price: 200},
         {item: 'firepower', text: 'Оружие', qty: 2, price: 50},
     ]
 },
@@ -21,18 +21,18 @@ var Shops = [{
         text: 'Вы встретили другой караван!',
         products: [
             {item: 'food', text: 'Еда', qty: 30, price: 50},
-            {item: 'oxen', text: 'Волы',qty: 1, price: 200},
+            {item: 'oxen', text: 'Брамины',qty: 1, price: 200},
             {item: 'firepower', text: 'Оружие',qty: 2, price: 20},
-            {item: 'crew', text: 'Наемники',qty: 10, price: 80}
+            {item: 'crew', text: 'Наемники',qty: 1, price: 200}
         ]
     },
     {
         text: 'Следопыты встретили контрабандистов',
         products: [
             {item: 'food', text: 'Еда', qty: 20, price: 60},
-            {item: 'oxen', text: 'Волы', qty: 1, price: 300},
+            {item: 'oxen', text: 'Брамины', qty: 1, price: 300},
             {item: 'firepower', text: 'Оружие', qty: 2, price: 80},
-            {item: 'crew', text: 'Контрабандисты', qty: 5, price: 60}
+            {item: 'crew', text: 'Наемники', qty: 1, price: 300}
         ]
     },
 ];

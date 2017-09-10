@@ -40,29 +40,27 @@ function ShopPlugin(world) {
         else if (target.tagName == 'DIV' && target.className.match(/product/)) { //buy button
             // в атрибуте data-index при открытии магазина записывает индекс продукта
             var product = shopPlugin.products[target.getAttribute('data-index')];
-            shopPlugin.buy(
-                product.item,  // item
-                product.qty, // qty
-                product.price // price
-            );
+            shopPlugin.buy(product);
         }
     });
 }
 
-// Обязательная функция плагина -
 ShopPlugin.prototype.update = function (world) {
     if (world.stop) return; // если стоим - никаких новых магазинов
 
     // проверяем расстояние до предыдущего магазина, чтобы не частили
-    /*var prevShopDistance = Math.sqrt(Math.pow(world.caravan.x - this.lastShop.x, 2) + Math.pow(world.caravan.y - this.lastShop.y, 2));
-    if (ShopEventConstants.SHOP_DISTANCE_MIN < prevShopDistance) return;
+    var prevShopDistance = Math.sqrt(Math.pow(world.caravan.x - this.lastShop.x, 2) + Math.pow(world.caravan.y - this.lastShop.y, 2));
+    console.log("prevShopDistance ="+prevShopDistance);
+    if (prevShopDistance < ShopEventConstants.SHOP_DISTANCE_MIN) return;
 
     // проверка на выпадение случайного магазина
-    if (Math.random() > ShopEventConstants.SHOP_PROBABILITY) return;*/
+    if (!checkEventForStep(ShopEventConstants.SHOP_PROBABILITY)) return;
 
     // стоп-условия выполнились
     world.stop = true; // караван остановился
     this.lastShop.x = world.caravan.x;  // запоминаем магазинчик
+    this.lastShop.y = world.caravan.y;
+
     this.show(this.shops.getRandom()); // показываем магазин
     world.uiLock = true; // обозначаем, что действия пользователя теперь исключительно наши, пример: чтобы караван случайно не пошел по карте, если кликнем по ней при работе с магазином
 };
@@ -106,13 +104,13 @@ ShopPlugin.prototype.generateProducts = function (shop) {
     return products;
 };
 
-ShopPlugin.prototype.buy = function (item, qty, price) {
+ShopPlugin.prototype.buy = function (product) {
     var world = this.world;
-    if (price > world.money) {
+    if (product.price > world.money) {
         addLogMessage(world, Goodness.negative, ShopEventConstants.SHOP_NO_MONEY_MESSAGE);
         return false;
     }
-    world.money -= price;
-    world[item] += qty;
-    addLogMessage(world, Goodness.positive, ShopEventConstants.SHOP_BUY_MESSAGE + ' ' + qty + ' x ' + item);
+    world.money -= product.price;
+    world[product.item] += product.qty;
+    addLogMessage(world, Goodness.positive, ShopEventConstants.SHOP_BUY_MESSAGE + ' ' + product.text + ' +' + product.qty );
 };

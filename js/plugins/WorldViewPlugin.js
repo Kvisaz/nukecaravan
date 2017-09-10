@@ -80,8 +80,8 @@ WorldView.prototype.update = function (world) {
 
     var maxWeight = getCaravanMaxWeight(world);
     if(this.viewModel.maxWeight != maxWeight){
-        this.view.maxWeight = maxWeight;
         this.viewModel.maxWeight = maxWeight;
+        this.view.maxWeight.innerHTML = Math.ceil(maxWeight);
     }
 
     if (this.viewModel.logLength != world.log.length) {

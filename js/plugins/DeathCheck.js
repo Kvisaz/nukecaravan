@@ -18,7 +18,7 @@ DeathCheck.prototype.update = function (world) {
     for (i = 0; i < this.rules.length; i++) {
         rule = this.rules[i];
         sign = (rule.live - rule.death) / Math.abs(rule.live - rule.death);
-        if (world[rule.param] == rule.death || world[rule.param] * sign < rule.death) {
+        if (world[rule.param] == rule.death || world[rule.param] * sign <= rule.death) {
             this.onDeath(world, rule);
             break;
         }

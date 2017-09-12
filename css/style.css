@@ -32,19 +32,19 @@ body {
 }
 
 .frame_border {
-    margin:0 auto;
+    margin: 0 auto;
     border: 8px inset #3c2b21;
     border-radius: 8px;
 }
 
-#game-map2d{
+#game-map2d {
     width: 896px;
     height: 512px;
     background: url("../images/map_texture_001.png");
     position: relative;
 }
 
-.town{
+.town {
     width: 64px;
     height: 64px;
     background: url("../images/town_marker_green_001.png");
@@ -58,7 +58,7 @@ body {
     position: absolute;
 }
 
-#game-stats{
+#game-stats {
     margin: 24px auto 24px auto;
     width: 912px;
     display: flex;
@@ -71,15 +71,18 @@ body {
     background: url("../images/ui-stat-indikator.png") top center no-repeat;
     text-align: center;
 }
-#game-stats span{
+
+#game-stats span {
     display: block;
     height: 44px;
 }
+
 .game-stat-value {
     margin: 10px auto 0;
     font-size: 16px;
     color: black;
 }
+
 .game-stat-desc {
     margin: -8px auto 0;
     font-size: 16px;
@@ -95,7 +98,7 @@ body {
     text-transform: lowercase;
 }
 
-#game-log{
+#game-log {
     background: #130F09;
     padding: 12px;
     line-height: 150%;
@@ -116,7 +119,7 @@ body {
     color: #90908F;
 }
 
-#shop {
+#shop, #bandits {
     background-color: rgba(0, 0, 0, 0.6);
     margin: 0 auto;
     position: absolute;
@@ -126,8 +129,7 @@ body {
     left: 28px;
 }
 
-
-#shop-win {
+#shop-win, #bandits-win {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -141,20 +143,33 @@ body {
     padding: 16px;
 }
 
-#shop-title {
+#shop-title, #bandits-title {
     text-align: center;
     font-size: 24px;
     margin-bottom: 12px;
     color: #cbcbcb;
 }
 
-#shop-hint {
+.icon_bandits{
+    content:"";
+    display: block;
+    width: 63px;
+    height: 49px;
+    background: url("../images/icons_bandits.png") no-repeat;
+}
+
+.icon_bandits_peace{
+    background-position: -150px 0px;
+}
+
+
+#shop-hint, #bandits-hint {
     font-size: 12px;
     color: #cbcbcb;
     margin-bottom: 4px;
 }
 
-.shop-product{
+.shop-product, .bandits-choice {
     display: block;
     color: #cbcbcb;
     border: 2px outset #3c2b21;
@@ -165,24 +180,23 @@ body {
     margin-bottom: 8px;
 }
 
-.red-button{
+.red-button {
     border-radius: 12px;
     background: url("../images/button_01.png") top left no-repeat;
-    display: block;
     height: 49px;
-    width:200px;
+    width: 200px;
     color: #cbcbcb;
     font-weight: bold;
     font-size: 16px;
     text-transform: uppercase;
-    outline:none;
+    outline: none;
 }
 
-.red-button, .shop-product {
-    box-shadow: 0 4px rgba(22,22,22,0.5);
+.red-button, .shop-product, .bandits-choice {
+    box-shadow: 0 4px rgba(22, 22, 22, 0.5);
 }
 
-.red-button:active, .shop-product:active {
+.red-button:active, .shop-product:active, .bandits-choice:active {
     transform: translateY(4px);
-    box-shadow: 0 0px rgba(22, 22,22,0.5);
+    box-shadow: 0 0px rgba(22, 22, 22, 0.5);
 }

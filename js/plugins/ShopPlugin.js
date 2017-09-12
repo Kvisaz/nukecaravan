@@ -28,6 +28,7 @@ function ShopPlugin(world) {
     this.view.products = document.getElementById('prods');
 
     // добавляем общий слушатель кликов пользователя к магазину
+    // этот старый код почти целиком перекочевал из одномерного орегонского каравана для js13k
     var shopView = this.view.shop; // для передачи в листенер как переменную, а не как this
     var shopPlugin = this; // для передачи в листенер как переменную, а не как this
     shopView.addEventListener('click', function (e) {

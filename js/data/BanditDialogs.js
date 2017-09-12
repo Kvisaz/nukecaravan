@@ -42,7 +42,7 @@ var BanditDialogs = {
     "start": { //
         iconWar: true, // true для воинственной иконки, false для мирной
         title: "Вы наткнулись на бандитов!",
-        desc: "",
+        desc: "", // для старта у нас генерируется описание отдельно
 
         // массив выборов - может быть сколько угодно
         choices: [
@@ -68,23 +68,36 @@ var BanditDialogs = {
      *   todo
      * */
     "fight": { //
-        iconWar: true, // true для воинственной иконки, false для мирной
-        title: "",
-        desc: "",
-
-        // массив выборов - может быть сколько угодно
+        iconWar: true,
+        title: "Сражение!",
+        desc: "Наглые бастарды атаковали ваш караван с целью наживы",
         choices: [
-            {
-                text: "Подойти", // что показывается на кнопке
-                action: function (world, bandits) { // функция может содержать любые JavaScript вычисления, главное, чтобы она возвращала строку с идентификатором одного из диалогов
-                    if (bandits.firepower > world.firepower) return "fight"; // бандиты наглеют и лезут в бой
-                    if (bandits.hunger < BanditConstants.HUNGER_THRESHOLD) return "hungertalk"
+            {   // полновесная стычка, где побеждает тот, у кого больше стволов
+                text: "Открыть огонь из всех стволов!",
+                action: function (world, bandits) {
+                    // количество погибших в вашем отряде - зависит от перевеса в вооружении
+                    var damage = Math.ceil(Math.max(0, bandits.firepower * 2 * Math.random() - world.firepower));
+                    var isWin = damage > world.crew;
+                    return isWin ? "lost" : "win";
                 }
             },
-            {
-                text: "Бежать",
+            {   // осторожный бой, по сути активное бегство, теряем людей, но меньше, чем при обычном бое
+                text: "Отступаем и отстреливаемся",
                 action: function (world, bandits) {
-                    return "fight"; // если бежим - бандиты при любом раскладе атакуют, зато меньше потерь
+                    var damage = Math.ceil(Math.max(0, bandits.firepower * 2 * Math.random() - world.firepower)/ 2);
+                    var isWin = damage > world.crew;
+                    return isWin ? "lost" : "win";
+                }
+            },
+            {   // Караван, который пытается сбежать... грустное, должно быть, зрелище
+                // теряем меньше всего людей
+                // но неизбежно теряем какой-то процент браминов/волов/передвижных средств
+                // и еды
+                text: "Попытаться сбежать",
+                action: function (world, bandits) {
+                    var damage = Math.ceil(Math.max(0, bandits.firepower * Math.random() / 2));
+                    var isWin = damage > world.crew;
+                    return isWin ? "lost" : "run"; // или гибнем, или успешно бежим
                 }
             }
         ],

@@ -140,34 +140,14 @@ BanditPlugin.prototype.showDialog = function (dialogTag) {
         this.dialogActions[i] = choice.action; // запоминаем коллбэк под этой же функцией
     }
 
-    // показываем окно
-    this.view.bandits.classList.remove("hidden");
-};
+    if(dialog.exit){
+        this.view.exitButton.classList.remove("hidden");
+    }
+    else {
+        this.view.exitButton.classList.add("hidden");
+    }
 
-// Заметили бандитов, а они вас
-BanditPlugin.prototype.showNoticeView = function () {
-    var bandits = this.bandits;
-
-    // видимую силу их оружия задаем как численность войск в Героях Магии и Меча
-    // - то есть не прямым числом, а неконкретным описанием (слабо, сильно вооружены)
-    // getByDegree - это функция из Utils.js, выбирает из массива по числу между 0 и 1 - чем больше, тем дальше от начала
-    // это позволяет иметь массив описаний произвольной длины
-    var firepowerDesc = BanditFirepowers.getByDegree(this.bandits.firepower / this.bandits.crew);
-    // Что мы заметили у бандитов
-    var noticeDesc = "Это " + this.bandits.text + " числом " + this.bandits.crew + " и они " + firepowerDesc;
-    addLogMessage(this.world, Goodness.negative, noticeDesc);
-
-    // todo delete
-    console.log("Bandits hunger: " + this.bandits.hunger + " / firepower:" + this.bandits.firepower);
-
-    // наполняем элементы и показываем их
-    this.setTitle(BanditConstants.NOTICE_MESSAGE); // заголовок
-    // this.setPeaceIcon(false);
-    this.setDesc(noticeDesc);
-    this.clearChoices();
-    this.addChoice(BanditConstants.MEET_UP_CHOICE);
-    this.addChoice(BanditConstants.RUN_CHOICE);
-    this.view.bandits.classList.remove("hidden"); // показываем окно
+    this.view.bandits.classList.remove("hidden");  // показываем окно
 };
 
 // Сблизились с бандитами, может быть бой или разговор, зависит, больше ли у вас оружия и людей?

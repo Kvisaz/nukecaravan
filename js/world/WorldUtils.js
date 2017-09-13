@@ -14,6 +14,11 @@ function getCaravanWeight(world) {
         + world.cargo;
 }
 
+// не перегружен ли караван
+function hasCaravanOverweight(world) {
+    return getCaravanWeight(world) > getCaravanMaxWeight(world);
+}
+
 // Награда за прибытие в город - премия за сохраненный груз
 function sellCargo(world) {
     var cargo = world.cargo;

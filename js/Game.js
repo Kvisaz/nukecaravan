@@ -13,12 +13,12 @@ Game.init = function(){
         BanditPlugin, // бандиты
         DeathCheck, // проверка условий смерти
         WorldView, // внешний вид мира
-        // UserActionPlugin(), // интерфейс пользователя
+        DropPlugin // интерфейс для сброса груза
     ];
 
-    var index;
-    for (index = 0; index < this.plugins.length; index++) {
-        this.plugins[index].init(this.world);
+    var i;
+    for (i = 0; index < this.plugins.length; i++) {
+        this.plugins[i].init(this.world);
     }
 
     DialogWindow.init(); // инициализируем служебный виджет для диалогов

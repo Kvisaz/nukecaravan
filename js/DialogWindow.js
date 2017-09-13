@@ -1,5 +1,44 @@
 /**
  *  Простое универсальное диалоговое окно для магазинов, атак и дропа
+ *  1. один раз за игру вызываем init для привязки к DOM-элементам
+ *  2. в любом плагине создаем набор диалогов в формате
+ *  var SomeDialogs = {
+ *      "start": { // обязательный тег
+            icon: "ПУТЬ К ИКОНКЕ",
+            exit: false, // или true если надо показать кнопку закрытия диалога
+            title: "Заголовок диалога",
+            desc: "Описание диалога",
+            desc_action: function (arg1, arg2) { // любой набор операций, лишь бы возвращалась строка,
+                которая добавиться к описанию диалога},
+            choices: [ // массив объектов для операций выбора в формате
+                        {
+                            text: "Выбор первый",
+                            action: function(arg1, arg2) {
+                                // любой набор операций с объектами arg1 и arg2
+                                // и любыми глобальными объектами
+                            }
+
+                        },
+                        ...
+                        {...}
+                     ]
+ *  }
+ *
+ *  3. В плагине обязательно реализуем функцию для выполнения операций ПОСЛЕ закрытия диалога
+  *     для примера
+         SomePlugin.onDialogClose = function () {
+                this.world.uiLock = false; // снимаем захват с действий пользователя
+                this.world.stop = false; // продолжаем путешествие
+            };
+
+    4. Вызываем в плагине диалог в формате
+        this.world.uiLock = true; // снимаем захват с действий пользователя
+        this.world.stop = true; // продолжаем путешествие
+        dialogView.show(SomeDialogs, arg1, arg2, this);
+        где
+            SomeDialogs - подготовленный как указано выше ассоциативный массив диалогов
+            arg1, arg2 - любые объекты для операций в диалогах (обычно world и собственный дата-объект плагина)
+            this - ссылка на сам плагин, чтобы диалог при закрытии активировал onDialogClose
  */
 
 var DialogWindow = {};
@@ -15,8 +54,7 @@ DialogWindow.init = function () {
     // вызывающий объект
     this.parent = {};
 
-    // DOM-элементы для отображения интерфейса
-    // находим и сохраняем все элементы, необходимые для вывода информации
+    // находим и сохраняем все DOM-элементы, необходимые для вывода информации
     this.view = {};
     this.view.window = document.getElementById('dialog'); // по сути не само окно, а окно с большой тенью
     this.view.title = document.getElementById('dialog-title');
@@ -29,8 +67,6 @@ DialogWindow.init = function () {
     // класс для кнопки выбора
     this.CHOICE_CLASS_NAME = 'dialog-choice';
     this.CHOICE_ATTRIBUTE = 'choice';
-    this.ICON_PEACE_CLASS_NAME = 'icon_bandits_peace';
-
 
     // Добавляем реакцию на клик пользователя
     // используется универсальный listener для всего диалога
@@ -41,26 +77,20 @@ DialogWindow.init = function () {
 
 DialogWindow.listener = function (e) {
     var target = e.target || e.src;
-
     // клик на кнопке. Кнопка у нас - выход
     if (target.tagName == 'BUTTON') {
         this.close(); // выход
         return; // обработка закончилась
     }
-
     // клик на каком-то из выборов
     if (target.tagName == 'DIV' && target.className.indexOf(this.CHOICE_CLASS_NAME) !== -1) {
-
         // получаем из атрибута номер коллбэка
         var choiceIndex = target.getAttribute(this.CHOICE_ATTRIBUTE);
-
         // передаем этому коллбэку аргументы диалога
         // и получаем тег для следующего диалога
         var choiceTag = this.dialogActions[choiceIndex](this.arg1, this.arg2);
-
         console.log("choiceIndex = " + choiceIndex); // todo delete
         console.log("choiceTag = " + choiceTag); // todo delete
-
         this.showDialog(choiceTag);
         return; // обработка закончилась
     }
@@ -102,7 +132,15 @@ DialogWindow.showDialog = function (dialogTag) {
     }
     var dialog = this.dialogs[dialogTag];
     this.view.title.innerHTML = this.getString(dialog, "title"); // устанавливаем заголовок диалога
-    this.view.icon.setAttribute("src", this.getString(dialog, "icon")); // устанавливаем картинку
+    var imageSrc = this.getString(dialog, "icon");
+    if(imageSrc.length>0){
+        this.view.icon.setAttribute("src",imageSrc ); // устанавливаем картинку
+        this.view.icon.classList.remove("hidden");
+    }
+    else {
+        this.view.icon.classList.add("hidden");
+    }
+
 
     // Описание. С возможностью вычисляемых параметров.
     var description = this.getString(dialog, "desc"); // если есть базовое описание - ставим его

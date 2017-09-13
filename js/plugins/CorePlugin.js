@@ -39,24 +39,22 @@ CorePlugin.consumeFood = function (world) {
 
 // обновить пройденный путь в зависимости от потраченного времени в днях
 CorePlugin.updateDistance = function (dayDelta, world) {
-    // перегруз (когда становится больше нуля - не можем идти)
     var maxWeight = getCaravanMaxWeight(world);
     var weight = getCaravanWeight(world);
-    var overweight = weight - maxWeight;
 
-    if (overweight > 0) {
-        addLogMessage(world, Goodness.negative, "Караван перегружен и не может двигаться");
-        world.stop = true;
-        return;
-    }
-    // пока перевес отрицательный, мы можем двигаться (и чем больше отрицательный перевес - тем больше скорость)
-    var speed = Caravan.SLOW_SPEED - overweight / maxWeight * Caravan.FULL_SPEED;
-    var distanceDelta = speed * dayDelta; // расстояние, которое должен пройти караван
+    // при перевесе останавливаемся
+    var speed = Caravan.FULL_SPEED * Math.max(0, 1 - weight/maxWeight);
+    console.log("speed = "+ speed);
 
+    // расстояние, которое может пройти караван при такой скорости
+    var distanceDelta = speed * dayDelta;
+
+    // вычисляем угол направления
     var dx = world.to.x - world.caravan.x;
     var dy = world.to.y - world.caravan.y;
     var angle = Math.atan2(dy, dx);
 
+    // вычисляем угол направления
     world.caravan.x += Math.cos(angle) * distanceDelta;
     world.caravan.y += Math.sin(angle) * distanceDelta;
 

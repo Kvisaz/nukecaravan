@@ -39,8 +39,7 @@ BanditPlugin.update = function () {
     // я использую стоп-условие, так как оно позволяет избегать лесенки c if
     // но вы можете использовать классический блок if
 
-    // todo delete
-    //if (!checkEventForStep(BanditConstants.EVENT_PROBABILITY)) return;
+    if (!checkEventForStep(BanditConstants.EVENT_PROBABILITY)) return;
 
     // ну, понеслась!
     // караван останавливается

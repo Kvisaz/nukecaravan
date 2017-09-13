@@ -243,7 +243,7 @@ var BanditDialogs = {
         title: "Переговоры прошли успешно",
         desc_action: function (world, bandits) {
             var isAll = bandits.hired.crew == bandits.crew;
-            var message = isAll ? "К вам присоединились все бандиты" :"К вам присоединилась часть бандитов. ";
+            var message = isAll ? "К вам присоединились все бандиты. " :"К вам присоединилась часть бандитов. ";
             message += "Людей: +" + bandits.hired.crew + ". ";
             message += "Оружия: +" + bandits.hired.firepower + ". ";
 

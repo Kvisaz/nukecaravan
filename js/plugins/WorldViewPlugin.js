@@ -34,9 +34,11 @@ WorldView.init = function (world) {
     this.view.food = document.getElementById('game-stat-food');
     this.view.money = document.getElementById('game-stat-money');
     this.view.firepower = document.getElementById('game-stat-firepower');
-    this.view.weight = document.getElementById('game-stat-cargo');
-    this.view.maxWeight = document.getElementById('game-stat-cargo-max');
+    this.view.cargo = document.getElementById('game-stat-cargo');
     this.view.log = document.getElementById('game-log');
+    this.view.weightBarText = document.getElementById('game-weight-bartext');
+    this.view.weightBarFill = document.getElementById('game-weight-barfill');
+    this.view.weight = document.getElementById('game-stat-cargo');
 };
 
 // Обновляем параметры по текущему состоянию мира
@@ -78,21 +80,25 @@ WorldView.update = function () {
         this.viewModel.firepower = world.firepower;
     }
 
-    var weight = getCaravanWeight(world);
-    if(this.viewModel.weight != weight){
-        this.view.weight.innerHTML = Math.ceil(weight);
-        this.viewModel.weight = weight;
-    }
-
-    var maxWeight = getCaravanMaxWeight(world);
-    if(this.viewModel.maxWeight != maxWeight){
-        this.viewModel.maxWeight = maxWeight;
-        this.view.maxWeight.innerHTML = Math.ceil(maxWeight);
+    if(this.viewModel.cargo != world.cargo){
+        this.view.cargo.innerHTML = Math.ceil(world.cargo);
+        this.viewModel.cargo = world.cargo;
     }
 
     if (this.viewModel.logLength != world.log.length) {
         this.refreshLog(world.log);
         this.viewModel.logLength = world.log.length;
+    }
+
+    // todo индикатор перевеса
+    var weight = getCaravanWeight(world);
+    var maxWeight = getCaravanMaxWeight(world);
+    if(weight!=this.viewModel.weight || maxWeight!=this.viewModel.maxWeight){
+        var percent = Math.ceil(100*(Math.min(1, weight / maxWeight)));
+        this.view.weightBarFill.style.width = percent+"%";
+        this.view.weightBarText.innerHTML = "общий вес "+Math.ceil(weight) + " / максимальный вес " + Math.ceil(maxWeight);
+        this.viewModel.weight = weight;
+        this.viewModel.maxWeight = maxWeight;
     }
 };
 

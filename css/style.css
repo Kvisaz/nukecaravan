@@ -58,8 +58,34 @@ body {
     position: absolute;
 }
 
+#game-weight-bar {
+    width: 896px;
+    height: 32px;
+    margin: 8px auto 0 auto;
+    background: #0c0906;
+    border-radius: 8px;
+    border: #3c2b21 outset 4px;
+    overflow: hidden;
+}
+
+#game-weight-barfill {
+    height: 100%;
+    width: 50%;
+    background: #6d6d21;
+}
+
+#game-weight-bartext{
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    color: #201a06;
+    font-size: 14px;
+    line-height: 32px;
+    margin-top: -32px;
+}
+
 #game-stats {
-    margin: 24px auto 24px auto;
+    margin: 8px auto 8px auto;
     width: 912px;
     display: flex;
     justify-content: space-between;
@@ -127,10 +153,6 @@ body {
     height: 520px;
     top: 24px;
     left: 28px;
-}
-
-#dialog-icon {
-
 }
 
 #dialog-win, #shop-win {

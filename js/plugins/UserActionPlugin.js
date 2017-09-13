@@ -40,11 +40,11 @@ UserActionPlugin.addListeners = function (world) {
         }
         world.food--;
         if (world.food <= 0) {
-            addLogMessage(world, Goodness.neutral, R.strings.DROPPED_NO);
+            addLogMessage(world, Goodness.neutral, DropConstants.DROPPED_NO);
             world.food = 0;
         }
 
-        addLogMessage(world, Goodness.neutral, R.strings.DROPPED_FOOD.withArg(Caravan.FOOD_WEIGHT));
+        addLogMessage(world, Goodness.neutral, DropConstants.DROPPED_FOOD.withArg(Caravan.FOOD_WEIGHT));
     });
 
     dropWeaponButton.addEventListener('click', function (e) {
@@ -53,10 +53,10 @@ UserActionPlugin.addListeners = function (world) {
         }
         world.firepower--;
         if (world.firepower < 0) {
-            addLogMessage(world, Goodness.neutral, R.strings.DROPPED_NO);
+            addLogMessage(world, Goodness.neutral, DropConstants.DROPPED_NO);
             world.firepower = 0;
         }
         //world.weight -= Caravan.FIREPOWER_WEIGHT;
-        addLogMessage(world, Goodness.neutral, R.strings.DROPPED_GUNS.withArg(Caravan.FIREPOWER_WEIGHT));
+        addLogMessage(world, Goodness.neutral, DropConstants.DROPPED_GUNS.withArg(Caravan.FIREPOWER_WEIGHT));
     });
 };

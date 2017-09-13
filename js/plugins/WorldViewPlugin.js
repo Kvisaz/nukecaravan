@@ -18,10 +18,12 @@ var WorldView =  {
         weight: 0,
         maxWeight: 0,
     }
-}
+};
 
 WorldView.init = function (world) {
     this.world = world;
+
+    this.UI_DAY_TEXT = "День";
 
     // элементы DOM находим сразу и запоминаем
     this.view = {};
@@ -105,6 +107,6 @@ WorldView.refreshLog = function (log) {
 
 WorldView.formatMessage = function (message) {
     var messageClass = 'log-message-'+message.goodness;
-    var formatted = '<div class="' + messageClass + '">' + R.strings.UI_DAY + ' ' + Math.ceil(message.day) + ': ' + message.message + '</div>';
+    var formatted = '<div class="' + messageClass + '">' + this.UI_DAY_TEXT + ' ' + Math.ceil(message.day) + ': ' + message.message + '</div>';
     return formatted;
 };

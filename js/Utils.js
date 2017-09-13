@@ -29,8 +29,3 @@ function checkEventForStep(dayProbability) {
     var probability = dayProbability * GameConstants.STEP_IN_MS / GameConstants.DAY_IN_MS;
     return checkProbability(probability);
 }
-
-// определяем знак числа, -1 или 1. 0 если 0
-function getSign(number) {
-    return number > 0 ? 1 : number < 0 ? -1 : 0;
-}

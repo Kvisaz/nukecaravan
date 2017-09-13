@@ -9,7 +9,7 @@ var BanditDialogs = {
      *   Заготовка для диалога, копируйте и используйте для новых вариантов
      * */
     "none": { //
-        iconWin: false, // true для иконки переговоров или победы. Не обязательный параметр.
+        icon: "images/icon_bandit_peace.png", // true для иконки переговоров или победы. Не обязательный параметр.
         exit: false, // наличие кнопки выхода, после которой мы возвращаемся в обычную игру. Необязательный параметр.
         title: "Заголовок окна под иконкой",
         desc: "Возможно многословное описание ситуации мелким шрифтом. Можно пустую строку. Можно вообще не использовать параметр",
@@ -46,6 +46,7 @@ var BanditDialogs = {
      *   Стартовый диалог
      * */
     "start": {
+        icon: "images/icon_bandit_war.png",
         title: "Вы наткнулись на бандитов!",
         desc_action: function (world, bandits) {
             var desc = bandits.text + " " + BanditAtmospheric.getRandom() + ". ";
@@ -129,6 +130,7 @@ var BanditDialogs = {
     },
 
     "fight": { //
+        icon: "images/icon_bandit_war.png",
         title: "Сражение!",
         desc: "Наглые бастарды атаковали ваш караван с целью наживы",
         choices: [
@@ -166,7 +168,7 @@ var BanditDialogs = {
     },
 
     "hunger_talk": { //
-        iconWin: true, // true для воинственной иконки, false для мирной
+        icon: "images/icon_bandit_peace.png",
         title: "Бандиты хотят присоединиться!",
         desc: "Восхищенные вашим оружием и едой, голодные оборванцы хотят служить в вашем караване за минимальную цену!",
         desc_action: function (world, bandits) {
@@ -199,7 +201,7 @@ var BanditDialogs = {
     },
 
     "hire_talk": { //
-        iconWin: true,
+        icon: "images/icon_bandit_peace.png",
         title: "Разговор на равных",
         desc: "Бандиты выказывают респект вашему вооружению. Часть из них хочет примкнуть к вашему каравану.",
         desc_action: function (world, bandits) {
@@ -229,14 +231,14 @@ var BanditDialogs = {
     },
 
     "hire_decline": {
-        iconWin: true,
+        icon: "images/icon_bandit_peace.png",
         exit: true, // финал,
         title: "Бандиты подавлены",
         desc: "Они хотели бы служить у вас, но вы отказали им по своей причине. Уходя, вы слышите выстрел. Кажется, кто-то из неудачников застрелился."
     },
 
     "hire_success": {
-        iconWin: true,
+        icon: "images/icon_bandit_peace.png",
         exit: true, // финал
         title: "Переговоры прошли успешно",
         desc_action: function (world, bandits) {
@@ -253,20 +255,21 @@ var BanditDialogs = {
     },
 
     "hire_talk_nomoney": {
-        iconWin: true,
+        icon: "images/icon_bandit_peace.png",
         exit: true,
         title: "Бандиты разочарованы",
         desc: "Они хотели бы наняться к вам, но у вас слишком мало денег",
     },
 
     "no_hire": {
-        iconWin: true,
+        icon: "images/icon_bandit_peace.png",
         exit: true,
         title: "Разговор в пустыне",
         desc: "Бандиты рассказывают последние новости о том, кого ограбили и убили. Затем вы прощаетесь со странным чувством. По какой-то причине они не стали нападать. И наняться к вам тоже никто не захотел. Возможно, все дело в вашей харизме?",
     },
 
-    "run": { //
+    "run": {
+        icon: "images/icon_bandit_war.png",
         title: "Побег",
         exit: true, // возвращение к обычной игре
         desc: "Воодушевленные вашим отступлением, бандиты стреляют вам вслед и улюлюкают.",
@@ -297,6 +300,7 @@ var BanditDialogs = {
     },
 
     "lost": {
+        icon: "images/icon_bandit_war.png",
         exit: true,
         title: "Поражение!",
         desc_action: function (world, bandits) {
@@ -307,7 +311,7 @@ var BanditDialogs = {
     },
 
     "win": {
-        iconWin: true,
+        icon: "images/icon_bandit_peace.png",
         exit: true,
         title: "Победа!",
         desc_action: function (world, bandits) {
@@ -328,6 +332,7 @@ var BanditDialogs = {
     },
 
     "hunger_death_talk": {
+        icon: "images/icon_bandit_peace.png",
         title: "Бандиты просят принять их",
         desc:"Они готовы служить вам бесплатно. Вот что они говорят: ",
         desc_action: function (world, bandits) {

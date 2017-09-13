@@ -20,6 +20,8 @@ Game.init = function(){
     for (index = 0; index < this.plugins.length; index++) {
         this.plugins[index].init(this.world);
     }
+
+    DialogWindow.init(); // инициализируем служебный виджет для диалогов
 };
 
 // игровой цикл

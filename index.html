@@ -83,7 +83,7 @@
             <div id="shop-title"></div>
             <div id="shop-hint">можно приобрести</div>
             <div id="prods"></div>
-            <br />
+            <br/>
             <button class="red-button" id="shop-exit-button">Дальше</button>
         </div>
     </div>
@@ -94,14 +94,27 @@
             <div id="bandits-title"></div>
             <div id="bandits-hint"></div>
             <div id="bandits-choices"></div>
-            <br />
+            <br/>
             <button class="hidden red-button" id="bandits-exit-button">Дальше</button>
         </div>
     </div>
 
+    <div id="dialog" class="hidden">
+        <div id="dialog-win">
+            <img id="dialog-icon" />
+            <div id="dialog-title"></div>
+            <div id="dialog-hint"></div>
+            <div id="dialog-choices"></div>
+            <br/>
+            <button class="hidden red-button" id="dialog-exit-button">Дальше</button>
+        </div>
+    </div>
+
+
 </div>
 
 <script src="js/Utils.js"></script>
+<script src="js/DialogWindow.js"></script>
 
 <!-- состояние мира игры + observable для модели -->
 <script src="js/world/WorldState.js"></script>
@@ -126,6 +139,7 @@
 <script src="js/plugins/DeathCheck.js"></script>
 <script src="js/plugins/WorldViewPlugin.js"></script>
 <script src="js/plugins/UserActionPlugin.js"></script>
+
 <script src="js/Game.js"></script>
 
 <!-- 1. use http://esprima.org/demo/minify.html -->

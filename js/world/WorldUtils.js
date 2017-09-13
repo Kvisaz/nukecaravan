@@ -20,3 +20,13 @@ function addLogMessage(world, goodness, message) {
         goodness: goodness
     });
 }
+
+/**
+ *  Тип события для лога - положительный, отрицательный, нейтральный
+ */
+
+var Goodness = {
+    positive: 'positive',
+    negative: 'negative',
+    neutral: 'neutral'
+};

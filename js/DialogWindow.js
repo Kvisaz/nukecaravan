@@ -158,8 +158,6 @@ DialogWindow.showDialog = function (dialogTag) {
     for (i = 0; i < choices.length; i++) {
         choice = dialog.choices[i];
         this.addChoice(i, choice.text); // создаем div со специальным атрибутом с номером выполняемой функции
-        // todo delete
-        console.log(" i =" + i + "choice.text=" + choice.text);
         this.dialogActions[i] = choice.action; // запоминаем коллбэк под этой же функцией
     }
 

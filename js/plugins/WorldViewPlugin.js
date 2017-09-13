@@ -90,7 +90,6 @@ WorldView.update = function () {
         this.viewModel.logLength = world.log.length;
     }
 
-    // todo индикатор перевеса
     var weight = getCaravanWeight(world);
     var maxWeight = getCaravanMaxWeight(world);
     if(weight!=this.viewModel.weight || maxWeight!=this.viewModel.maxWeight){

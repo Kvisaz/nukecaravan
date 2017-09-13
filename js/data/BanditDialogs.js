@@ -269,32 +269,28 @@ var BanditDialogs = {
         exit: true, // возвращение к обычной игре
         desc: "Воодушевленные вашим отступлением, бандиты стреляют вам вслед и улюлюкают.",
         desc_action: function (world, bandits) {
-            // при побеге наносится ослабленный ущерб
-            var damage = Math.ceil(Math.max(0, bandits.firepower * Math.random() / 2));
-            var survivedBase = world.crew - damage; // предварительное число выживших
-            var survived = Math.max(BanditConstants.RUN_CREW_MIN, survivedBase); // гарантируем выживание при побеге.
-            var lostCrew = world.crew - survived;
-            world.crew = survived;
+            var damage = BanditMathUtils.getDamage(world, bandits);
+            damage = Math.ceil(damage*BanditConstants.RUN_DAMAGE_K); // как минимум 1 выживет, так как округляем вверх, и коэффициент не 1
 
-            // подсчитываем ущербы, они не должны быть больше имеющихся параметров
+
+            world.crew -= damage;
+
+            // караван несет потери
             var lostOxen = Math.min(world.oxen, Math.ceil(world.oxen * BanditConstants.RUN_OXES_LOST_K));
             var lostFood = Math.min(world.food, Math.ceil(world.food * BanditConstants.RUN_FOOD_LOST_K));
             var lostMoney = Math.min(world.money, Math.ceil(world.money * BanditConstants.RUN_GOLD_LOST_K));
-
-            // меняем мир
             world.oxen -= lostOxen;
             world.food -= lostFood;
             world.money -= lostMoney;
 
             // создаем описание
-            var desc = " Ваши потери: люди: " + lostCrew;
+            var desc = " Ваши потери: люди: " + damage;
             desc += " / браминов: " + lostOxen + " / eда: " + lostFood + ". Денег: " + lostMoney;
             addLogMessage(world, Goodness.negative, desc); // логируем описание
 
             return desc;
         }
     },
-
 
     "lost": {
         exit: true,
@@ -337,9 +333,9 @@ var BanditDialogs = {
             {
                 text:"Спасти оборванцев от голодной смерти",
                 action: function (world, bandits) {
-                    bandits.hired = {}; // добавляем в бандитов инфу о цене и количестве
-                    bandits.hired.crew = bandits.crew; // сытые хотят наниматься не все
-                    bandits.hired.price = 0;
+                    bandits.hired = {};
+                    bandits.hired.crew = bandits.crew; // смертельно голодные хотят наняться все
+                    bandits.hired.price = 0; // и бесплатно
                     bandits.hired.firepower = bandits.firepower;
                     return "hire_success";
                 }

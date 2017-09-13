@@ -13,8 +13,8 @@ var BanditMathUtils = {};
  *     5. ущерб имеет рандомный разброс
  * */
 BanditMathUtils.getDamage = function (world, bandits) {
-    // перевес каравана по оружию
-    var caravanOverpowered = Math.min(0, world.firepower - bandits.firepower);
+    // перевес каравана по оружию, минимум 0
+    var caravanOverpowered = Math.max(0, world.firepower - bandits.firepower);
 
     // по мере возрастания caravanOverpowered - caravanOverPowerK будет стремиться от 1 к нулю,
     // не уходя в него полностью.
@@ -26,7 +26,8 @@ BanditMathUtils.getDamage = function (world, bandits) {
 
     // получаем уменьшающийся с прокачкой дамаг. Иногда даже будет вылетать ноль
     // дамаг - это число погибшших у нас
-    var damage = Math.ceil(baseDamage * caravanOverPowerK);
+    var damage = Math.round(baseDamage * caravanOverPowerK);
+
     // не может погибнуть больше, чем в команде
     damage = Math.min(damage, world.crew);
 

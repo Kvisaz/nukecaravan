@@ -3,7 +3,7 @@
  *  логика в BanditPlugin
  */
 var BanditConstants = {
-    EVENT_PROBABILITY: 1, // базовая вероятность случайного события в текущий день
+    EVENT_PROBABILITY: 0.3, // базовая вероятность случайного события в текущий день
     ATTACK_PROBABILITY: 0.75, // вероятность атаки
 
     GOLD_PER_FIREPOWER: 5, // соотношение золота к количеству стволов - для генерации золота

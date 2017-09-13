@@ -217,6 +217,7 @@ BanditPlugin.getDamage = function (world, bandits) {
  * */
 BanditPlugin.getMaxHire = function (world, bandits) {
     // вычисляем по своему кошельку и их цене, или берем всех, если бандиты бесплатные
+    console.log( "world.money = "+world.money + " bandits.price = "+bandits.price);
     var max = bandits.price > 0 ? Math.floor(world.money / bandits.price) : bandits.crew;
     //
     return max;

@@ -31,7 +31,7 @@ function buyCargo(world) {
     var money = newCargo * Caravan.CARGO_BUY_PRICE;
     world.cargo += newCargo;
     world.money -= money;
-    return {money: money, cargo: cargo};
+    return {money: money, cargo: newCargo};
 }
 
 // добавляем сообщение в лог

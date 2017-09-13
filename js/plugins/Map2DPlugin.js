@@ -82,4 +82,5 @@ Map2DPlugin.cityMarket = function () {
     else{
         message = "Для покупки на рынке нужны деньги и быки, чтобы везти товар.";
     }
+    addLogMessage(this.world, Goodness.neutral, message);
 };

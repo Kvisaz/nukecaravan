@@ -70,7 +70,7 @@ var BanditDialogs = {
                     // if (bandits.firepower > world.firepower) return "fight"; // ...................
 
                     // поэтому оставили вариант с голым рандомом
-                    if (checkProbability(BanditConstants.ATTACK_PROBABILITY)) return "fight";
+                   if (checkProbability(BanditConstants.ATTACK_PROBABILITY)) return "fight";
 
                     // переменные для найма
                     var maxForHire;   // максимум нанимающихся
@@ -90,7 +90,7 @@ var BanditDialogs = {
                         bandits.hired.crew = Math.min(maxForHire, bandits.hired.crew);
                         console.log("bandits.hired.crew = "+bandits.hired.crew);
                         // вычисляем окончательную цену
-                        bandits.hired.price = Math.floor(BanditConstants.HIRE_PRICE_PER_PERSON * bandits.hired.crew);
+                        bandits.hired.price = Math.floor(bandits.price * bandits.hired.crew);
                         bandits.hired.firepower = Math.ceil(bandits.hired.crew * firepowerAvg);
                         return "hunger_talk";
                     }
@@ -104,8 +104,12 @@ var BanditDialogs = {
                         bandits.hired = {}; // добавляем в бандитов инфу о цене и количестве
                         bandits.hired.crew = Math.floor(Math.random() * bandits.crew * 0.5); // сытые хотят наниматься не все
                         bandits.hired.crew = Math.min(maxForHire, bandits.hired.crew); // гарантируем, что не нанимаем больше, чем у нас есть денег
+                        // если выпал ноль
+                        if(bandits.hired.crew == 0){
+                            return "no_hire";
+                        }
                         // вычисляем окончательную цену
-                        bandits.hired.price = Math.floor(BanditConstants.HIRE_PRICE_PER_PERSON * bandits.hired.crew);
+                        bandits.hired.price = Math.floor(bandits.price * bandits.hired.crew);
                         bandits.hired.firepower = Math.ceil(bandits.hired.crew * firepowerAvg);
                         return "hire_talk";
                     }
@@ -161,9 +165,6 @@ var BanditDialogs = {
         ],
     },
 
-    /*
-     *   todo
-     * */
     "hunger_talk": { //
         iconWin: true, // true для воинственной иконки, false для мирной
         title: "Бандиты хотят присоединиться!",
@@ -197,10 +198,6 @@ var BanditDialogs = {
         ],
     },
 
-
-    /*
-     *   todo
-     * */
     "hire_talk": { //
         iconWin: true,
         title: "Разговор на равных",
@@ -248,7 +245,7 @@ var BanditDialogs = {
             message += "Людей: +" + bandits.hired.crew + ". ";
             message += "Оружия: +" + bandits.hired.firepower + ". ";
 
-            var priceMessage = bandits.hired.price > 0 ? "Денег: -" + bandits.hired.price : "Это не стоил вам ничего";
+            var priceMessage = bandits.hired.price > 0 ? "Денег: -" + bandits.hired.price : " Это не стоило вам ничего";
             message += priceMessage;
             addLogMessage(world, Goodness.positive, message);
             return message;
@@ -260,7 +257,13 @@ var BanditDialogs = {
         exit: true,
         title: "Бандиты разочарованы",
         desc: "Они хотели бы наняться к вам, но у вас слишком мало денег",
-        choices: []
+    },
+
+    "no_hire": {
+        iconWin: true,
+        exit: true,
+        title: "Разговор в пустыне",
+        desc: "Бандиты рассказывают последние новости о том, кого ограбили и убили. Затем вы прощаетесь со странным чувством. По какой-то причине они не стали нападать. И наняться к вам тоже никто не захотел. Возможно, все дело в вашей харизме?",
     },
 
     "run": { //

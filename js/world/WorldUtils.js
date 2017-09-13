@@ -12,11 +12,6 @@ function getCaravanWeight(world) {
     return world.food * Caravan.FOOD_WEIGHT + world.firepower * Caravan.FIREPOWER_WEIGHT;
 }
 
-// пройденный путь в текущем маршруте
-function getCaravanDistance(world) {
-    return Math.abs(world.x - world.from.x);
-}
-
 // добавляем сообщение в лог
 function addLogMessage(world, goodness, message) {
     world.log.push({

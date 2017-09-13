@@ -2,12 +2,15 @@
  * Плагин рандомных событий
  * - основного геймплея в оригинале игры с караваном
  */
-function RandomEventPlugin() {
-    this.events = RandomEvents;
-}
+RandomEventPlugin = {};
 
-RandomEventPlugin.prototype.update = function (world) {
-    if (world.stop) return; // если стоим на месте - рандомных событий нет
+RandomEventPlugin.init = function (world) {
+    this.world = world;
+    this.events = RandomEvents;
+};
+
+RandomEventPlugin.update = function () {
+    if (this.world.stop) return; // если стоим на месте - рандомных событий нет
     // проверка на выпадение события вообще
     if(!checkEventForStep(RandomEventConstants.EVENT_PROBABILITY)) return;
 
@@ -19,14 +22,14 @@ RandomEventPlugin.prototype.update = function (world) {
     if (valueChange == 0) return; // если случайное значение выпало ноль - никаких изменений, событие отменяется
 
     // если выпало отрицательное значение, а параметр уже нулевой - ничего не происходит
-    if (valueChange < 0 && world[event.stat] <= 0) return;
+    if (valueChange < 0 && this.world[event.stat] <= 0) return;
 
     // отрицательные значения не могут быть по модулю больше текущего параметра
-    if (valueChange < 0 && Math.abs(valueChange) > world[event.stat]) {
-        valueChange = Math.floor(world[event.stat]);
+    if (valueChange < 0 && Math.abs(valueChange) > this.world[event.stat]) {
+        valueChange = Math.floor(this.world[event.stat]);
     }
 
-    world[event.stat] += valueChange;
+    this.world[event.stat] += valueChange;
     var message = event.text.withArg(Math.abs(valueChange));
-    addLogMessage(world, event.goodness, message);
+    addLogMessage(this.world, event.goodness, message);
 };

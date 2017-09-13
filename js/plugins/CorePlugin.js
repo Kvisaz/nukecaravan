@@ -5,29 +5,32 @@
  *  - перемещение к цели
  */
 
-function CorePlugin() {
+CorePlugin = {};
+
+CorePlugin.init = function (world) {
+    this.world = world;
     this.time = 0; // общее время с начала игры, в миллисекундах
     this.dayDelta = GameConstants.STEP_IN_MS / GameConstants.DAY_IN_MS; // сколько дней в одном шаге игру
     this.lastDay = -1;  // отслеживанием наступление нового дня
-}
+};
 
-CorePlugin.prototype.update = function (world) {
-    if (world.stop) return; // если стоим - никаких изменений
+CorePlugin.update = function () {
+    if (this.world.stop) return; // если стоим - никаких изменений
     this.time += GameConstants.STEP_IN_MS; // увеличение времени
-    world.day = Math.ceil(this.time / GameConstants.DAY_IN_MS); // текущий день, целый
+    this.world.day = Math.ceil(this.time / GameConstants.DAY_IN_MS); // текущий день, целый
 
     // Движение каравана в зависимости от того, сколько дней прошло
-    this.updateDistance(this.dayDelta, world);
+    this.updateDistance(this.dayDelta, this.world);
 
     // события связанные с наступлением нового дня
-    if (this.lastDay != world.day) {
-        this.consumeFood(world);
-        this.lastDay = world.day;
+    if (this.lastDay != this.world.day) {
+        this.consumeFood(this.world);
+        this.lastDay = this.world.day;
     }
 };
 
 // еда выдается один раз в день
-CorePlugin.prototype.consumeFood = function (world) {
+CorePlugin.consumeFood = function (world) {
     world.food -= world.crew * Caravan.FOOD_PER_PERSON;
     if (world.food < 0) {
         world.food = 0;
@@ -35,7 +38,7 @@ CorePlugin.prototype.consumeFood = function (world) {
 };
 
 // обновить пройденный путь в зависимости от потраченного времени в днях
-CorePlugin.prototype.updateDistance = function (dayDelta, world) {
+CorePlugin.updateDistance = function (dayDelta, world) {
     // перегруз (когда становится больше нуля - не можем идти)
     var maxWeight = getCaravanMaxWeight(world);
     var weight = getCaravanWeight(world);

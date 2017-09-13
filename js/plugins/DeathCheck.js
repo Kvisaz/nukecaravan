@@ -2,31 +2,33 @@
  *   Проверяет условия смерти
  *   по DeathRules
  *   если смерть
- *   - устанавливает world.death = true
- *   - устанавливает world.pause = true
+ *   - устанавливает world.gameover = true
+ *   - устанавливает world.stop = true
  */
 
-function DeathCheck() {
-    this.rules = DeathRules;
-}
+DeathCheck = {};
 
-DeathCheck.prototype.update = function (world) {
-    if(world.gameover) return; // если уже мертвы, проверять бесполезно
+DeathCheck.init = function (world) {
+    this.world = world;
+    this.rules = DeathRules;
+};
+
+DeathCheck.update = function () {
+    if(this.world.gameover) return; // если уже мертвы, проверять бесполезно
 
     // проверка условий по массиву DeathRules
-    var i, rule, sign, game = this.game, death = false;
+    var i, rule, sign;
     for (i = 0; i < this.rules.length; i++) {
         rule = this.rules[i];
         sign = (rule.live - rule.death) / Math.abs(rule.live - rule.death);
-        if (world[rule.param] == rule.death || world[rule.param] * sign <= rule.death) {
-            this.onDeath(world, rule);
+        if (this.world[rule.param] == rule.death || this.world[rule.param] * sign <= rule.death) {
+            this.onDeath(this.world, rule);
             break;
         }
     }
-    return death;
 };
 
-DeathCheck.prototype.onDeath = function (world, rule) {
+DeathCheck.onDeath = function (world, rule) {
     addLogMessage(world, Goodness.negative,rule.text);
     world.gameover = true;
     world.stop = true;

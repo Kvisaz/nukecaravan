@@ -2,10 +2,10 @@
  *      Функция для отображения текущего состояния мира
  *       и лога событий
  * */
-function WorldView() {
+var WorldView =  {
     // модель для хранения состояния View: предыдущие отображаемые значения
     // чтобы не дергать UI каждый раз, только при изменениях
-    this.viewModel = {
+    viewModel: {
         day: 0,
         crew: 0,
         oxen: 0,
@@ -17,7 +17,11 @@ function WorldView() {
         distance: 0,
         weight: 0,
         maxWeight: 0,
-    };
+    }
+}
+
+WorldView.init = function (world) {
+    this.world = world;
 
     // элементы DOM находим сразу и запоминаем
     this.view = {};
@@ -31,12 +35,12 @@ function WorldView() {
     this.view.weight = document.getElementById('game-stat-cargo');
     this.view.maxWeight = document.getElementById('game-stat-cargo-max');
     this.view.log = document.getElementById('game-log');
-
-}
+};
 
 // Обновляем параметры по текущему состоянию мира
 // если какой-то параметр не менялся - обновления для него не происходит
-WorldView.prototype.update = function (world) {
+WorldView.update = function () {
+    var world = this.world;
     if(this.viewModel.distance != world.distance){
         this.view.distance.innerHTML = Math.floor(world.distance);
         this.viewModel.distance = world.distance;
@@ -90,7 +94,7 @@ WorldView.prototype.update = function (world) {
     }
 };
 
-WorldView.prototype.refreshLog = function (log) {
+WorldView.refreshLog = function (log) {
     var messageLog = "", index;
     // лог показываем снизу вверх
     for (index = log.length - 1; index >= 0; index--) {
@@ -99,7 +103,7 @@ WorldView.prototype.refreshLog = function (log) {
     this.view.log.innerHTML = messageLog;
 };
 
-WorldView.prototype.formatMessage = function (message) {
+WorldView.formatMessage = function (message) {
     var messageClass = 'log-message-'+message.goodness;
     var formatted = '<div class="' + messageClass + '">' + R.strings.UI_DAY + ' ' + Math.ceil(message.day) + ': ' + message.message + '</div>';
     return formatted;

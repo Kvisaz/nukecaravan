@@ -25,7 +25,11 @@
  *
  */
 
-function BanditPlugin(world) {
+BanditPlugin = {};
+
+BanditPlugin.init = function (world) {
+    this.world = world;
+
     this.bandits = {};
     this.world = world;
     this.dialogs = BanditDialogs; // описания диалогов
@@ -71,23 +75,22 @@ function BanditPlugin(world) {
             return; // обработка закончилась
         }
     });
-}
+};
 
-BanditPlugin.prototype.update = function (world) {
+BanditPlugin.update = function () {
     // если стоим на месте - бандиты не появляются
-    if (world.stop || world.gameover) return;
+    if (this.world.stop || this.world.gameover) return;
     // проверка на выпадение события вообще
     // я использую стоп-условие, так как оно позволяет избегать лесенки c if
     // но вы можете использовать классический блок if
 
-    // todo uncomment
-    //if(!checkEventForStep(BanditConstants.EVENT_PROBABILITY)) return;
+    if(!checkEventForStep(BanditConstants.EVENT_PROBABILITY)) return;
 
     // ну, понеслась!
     // караван останавливается
-    world.stop = true;
+    this.world.stop = true;
     // флаг для блокировки UI в других плагинах включается
-    world.uiLock = true;
+    this.world.uiLock = true;
     // генерируется случайная банда
     this.bandits = BanditEvents.getRandom();
     // она голодная по рандому от 0 до 1, 0 - самый сильный, "смертельный", голод
@@ -103,7 +106,7 @@ BanditPlugin.prototype.update = function (world) {
 };
 
 // Показываем диалог. dialogTag - строка с названием BanditDialogs
-BanditPlugin.prototype.showDialog = function (dialogTag) {
+BanditPlugin.showDialog = function (dialogTag) {
 
     if (!this.dialogs.hasOwnProperty(dialogTag)) {
         console.log("!! BanditPlugin Error! Диалог с названием " + dialogTag + " не найден в BanditDialogs");
@@ -154,7 +157,7 @@ BanditPlugin.prototype.showDialog = function (dialogTag) {
 };
 
 // отправляемся дальше
-BanditPlugin.prototype.finish = function () {
+BanditPlugin.finish = function () {
     this.view.exitButton.classList.add('hidden'); // прячем финишную кнопку до следующего диалога
     this.view.bandits.classList.add('hidden'); // прячем окно
     this.world.uiLock = false; // снимаем захват с действий пользователя
@@ -162,7 +165,7 @@ BanditPlugin.prototype.finish = function () {
 };
 
 // делаем мирную иконку
-BanditPlugin.prototype.showPeaceIcon = function (isPeace) {
+BanditPlugin.showPeaceIcon = function (isPeace) {
     if (isPeace) {
         this.view.icon.classList.add(this.ICON_PEACE_CLASS_NAME);
     }
@@ -172,7 +175,7 @@ BanditPlugin.prototype.showPeaceIcon = function (isPeace) {
 };
 
 // добавляем 1 кнопку выбора действий в окно с текстом
-BanditPlugin.prototype.addChoice = function (index, text) {
+BanditPlugin.addChoice = function (index, text) {
     //this.view.choices.innerHTML += this.getChoiceCode(choice);
     this.view.choices.innerHTML += '<div class="bandits-choice" ' + this.CHOICE_ATTRIBUTE + '="' + index + '">' + text + '</div>';
 };

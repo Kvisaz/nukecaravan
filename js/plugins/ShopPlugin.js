@@ -13,8 +13,10 @@
  *
  */
 
-function ShopPlugin(world) {
-    this.world = world; // необходимо для листенера
+var ShopPlugin = {};
+
+ShopPlugin.init = function (world) {
+    this.world = world;
     this.shops = Shops; // возможные случаи магазинов, основы для генерация конкретной встречи
 
     this.lastShop = { x:0, y:0 }; // координаты предыдущего магазина - чтобы не слишком часто
@@ -44,9 +46,10 @@ function ShopPlugin(world) {
             shopPlugin.buy(product);
         }
     });
-}
+};
 
-ShopPlugin.prototype.update = function (world) {
+ShopPlugin.update = function () {
+    var world = this.world;
     if (world.stop) return; // если стоим - никаких новых магазинов
 
     // проверяем расстояние до предыдущего магазина, чтобы не частили
@@ -65,7 +68,7 @@ ShopPlugin.prototype.update = function (world) {
     world.uiLock = true; // обозначаем, что действия пользователя теперь исключительно наши, пример: чтобы караван случайно не пошел по карте, если кликнем по ней при работе с магазином
 };
 
-ShopPlugin.prototype.show = function (shop) {
+ShopPlugin.show = function (shop) {
     this.view.shop.classList.remove('hidden'); // показываем сам магазин в попапе
     this.view.shopTitle.innerHTML = shop.text; // описание магазина
     this.view.products.innerHTML = ''; // очищаем предыдущий набор продуктов
@@ -85,7 +88,7 @@ ShopPlugin.prototype.show = function (shop) {
 };
 
 // генерируем набор продуктов на основе базового
-ShopPlugin.prototype.generateProducts = function (shop) {
+ShopPlugin.generateProducts = function (shop) {
     var PRODUCTS_AMOUNT = 4;
     var numProds = Math.ceil(Math.random() * PRODUCTS_AMOUNT);
     var products = [];
@@ -104,7 +107,7 @@ ShopPlugin.prototype.generateProducts = function (shop) {
     return products;
 };
 
-ShopPlugin.prototype.buy = function (product) {
+ShopPlugin.buy = function (product) {
     var world = this.world;
     if (product.price > world.money) {
         addLogMessage(world, Goodness.negative, ShopEventConstants.SHOP_NO_MONEY_MESSAGE);

@@ -6,26 +6,22 @@
  *  - в листенерах при изменении параметров world должен вызываться game.onWorldUpdate
  */
 
-function UserActionPlugin() {
+var UserActionPlugin = {};
+
+UserActionPlugin.init = function (world) {
+    this.world = world;
     this.lastWorldGameOver = false;
-    this.isListenerAdded = false;
-}
+    this.addListeners(world);
+};
 
 // Основная функция - делать недоступными кнопки интерфейса,
 // если состояние изменилось на gameover
 // и наоборот
-UserActionPlugin.prototype.update = function (world) {
-    if(!this.isListenerAdded) {  // добавляем листенеры на реакцию пользователя
-        this.addListeners(world);
-        this.isListenerAdded = true;
-    }
-
+UserActionPlugin.update = function () {
+    var world = this.world;
     if (this.lastWorldGameOver == world.gameover) return; // никаких изменений, возвращаемся
-
     this.lastWorldGameOver = world.gameover; // сохраняем текущее состояние мира
-
     var userInputDiv = document.getElementById("user-input");
-
     if (this.lastWorldGameOver) {
         userInputDiv.classList.add('hidden');
     }
@@ -34,7 +30,7 @@ UserActionPlugin.prototype.update = function (world) {
     }
 };
 
-UserActionPlugin.prototype.addListeners = function (world) {
+UserActionPlugin.addListeners = function (world) {
     var dropWeaponButton = document.getElementById('actions-dropweapon');
     var dropFoodButton = document.getElementById('actions-dropfood');
 

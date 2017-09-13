@@ -119,7 +119,7 @@ body {
     color: #90908F;
 }
 
-#dialog, #shop, #bandits {
+#dialog, #shop {
     background-color: rgba(0, 0, 0, 0.6);
     margin: 0 auto;
     position: absolute;
@@ -133,7 +133,7 @@ body {
 
 }
 
-#dialog-win, #shop-win, #bandits-win {
+#dialog-win, #shop-win {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -147,33 +147,20 @@ body {
     padding: 16px;
 }
 
-#dialog-title, #shop-title, #bandits-title {
+#dialog-title, #shop-title{
     text-align: center;
     font-size: 24px;
     margin-bottom: 12px;
     color: #cbcbcb;
 }
 
-.icon_bandits{
-    content:"";
-    display: block;
-    width: 63px;
-    height: 49px;
-    background: url("../images/icons_bandits.png") no-repeat;
-}
-
-.icon_bandits_peace{
-    background-position: -150px 0px;
-}
-
-
-#dialog-hint, #shop-hint, #bandits-hint {
+#dialog-hint, #shop-hint {
     font-size: 12px;
     color: #cbcbcb;
     margin-bottom: 4px;
 }
 
-.dialog-choice, .shop-product, .bandits-choice {
+.dialog-choice, .shop-product {
     display: block;
     color: #cbcbcb;
     border: 2px outset #3c2b21;
@@ -196,11 +183,11 @@ body {
     outline: none;
 }
 
-.red-button, .shop-product, .bandits-choice {
+.red-button, .shop-product, .dialog-choice{
     box-shadow: 0 4px rgba(22, 22, 22, 0.5);
 }
 
-.red-button:active, .shop-product:active, .bandits-choice:active {
+.red-button:active, .shop-product:active, .dialog-choice:active {
     transform: translateY(4px);
     box-shadow: 0 0px rgba(22, 22, 22, 0.5);
 }

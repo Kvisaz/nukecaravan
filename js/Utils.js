@@ -19,10 +19,15 @@ Array.prototype.getByDegree = function (number) {
     return this[Math.floor(maxI * number)];
 };
 
+// функция проверки для выпадения случаного события с вероятностью от 0 до 1
+function checkProbability(probability) {
+    return Math.random() <= probability;
+}
+
 // функция для проверки выпадения случайного события на текущем шаге игры
 function checkEventForStep(dayProbability) {
     var probability = dayProbability * GameConstants.STEP_IN_MS / GameConstants.DAY_IN_MS;
-    return Math.random() <= probability;
+    return checkProbability(probability);
 }
 
 // определяем знак числа, -1 или 1. 0 если 0

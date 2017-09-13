@@ -93,7 +93,10 @@ BanditPlugin.prototype.update = function (world) {
     // она голодная по рандому от 0 до 1, 0 - самый сильный, "смертельный", голод
     this.bandits.hunger = Math.random();
     // количество денег у бандитов - это явно функция от количества стволов
-    this.bandits.gold = this.bandits.firepower * BanditConstants.GOLD_PER_FIREPOWER;
+    this.bandits.money = this.bandits.firepower * BanditConstants.GOLD_PER_FIREPOWER;
+
+    // коээффициент лута и потерь (будет менять от разных факторов)
+    this.bandits.lootK = 1;
 
     // показываем окно с первым диалогом
     this.showDialog("start");
@@ -111,7 +114,7 @@ BanditPlugin.prototype.showDialog = function (dialogTag) {
 
     // наполняем элементы и показываем их
     this.view.title.innerHTML = dialog.title;
-    if(dialog.hasOwnProperty("iconWin")){
+    if (dialog.hasOwnProperty("iconWin")) {
         this.showPeaceIcon(dialog.iconWin);
     }
 
@@ -120,21 +123,28 @@ BanditPlugin.prototype.showDialog = function (dialogTag) {
     var description = dialog.desc;
 
     // Вычисляем дополнительную инфу для диалога - если у него реализована функция desc_action
-    if(dialog.desc_action){ description += dialog.desc_action(this.world, this.bandits);}
+    if (dialog.desc_action) {
+        description += dialog.desc_action(this.world, this.bandits);
+    }
 
     this.view.hint.innerHTML = description; // описание
 
-    // Добавление выборов
+    // Очищаем предыдущие выборы
     this.dialogActions = []; // очищаем массив коллбэков
     this.view.choices.innerHTML = ''; // очищаем видимые элементы предыдущего выбора
-    var i, choice;
-    for (i = 0; i < dialog.choices.length; i++) {
-        choice = dialog.choices[i];
-        this.addChoice(i, choice.text); // создаем div со специальным атрибутом с номером выполняемой функции
-        this.dialogActions[i] = choice.action; // запоминаем коллбэк под этой же функцией
+
+    // если есть выборы - добавляем их
+    if(dialog.hasOwnProperty("choices")){
+        var i, choice;
+        for (i = 0; i < dialog.choices.length; i++) {
+            choice = dialog.choices[i];
+            this.addChoice(i, choice.text); // создаем div со специальным атрибутом с номером выполняемой функции
+            this.dialogActions[i] = choice.action; // запоминаем коллбэк под этой же функцией
+        }
     }
 
-    if (dialog.hasOwnProperty("exit")) {
+
+    if (dialog.hasOwnProperty("exit") && dialog.exit) {
         this.view.exitButton.classList.remove("hidden");
     }
     else {

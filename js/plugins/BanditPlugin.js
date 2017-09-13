@@ -118,9 +118,8 @@ BanditPlugin.prototype.showDialog = function (dialogTag) {
         this.showPeaceIcon(dialog.iconWin);
     }
 
-    // если передано описание - добавляем его
-    // необходимо было для реализации стартового описания
-    var description = dialog.desc;
+    // если есть базовое описание - ставим его
+    var description = dialog.hasOwnProperty("desc") ? dialog.desc : "";
 
     // Вычисляем дополнительную инфу для диалога - если у него реализована функция desc_action
     if (dialog.desc_action) {
@@ -134,7 +133,7 @@ BanditPlugin.prototype.showDialog = function (dialogTag) {
     this.view.choices.innerHTML = ''; // очищаем видимые элементы предыдущего выбора
 
     // если есть выборы - добавляем их
-    if(dialog.hasOwnProperty("choices")){
+    if (dialog.hasOwnProperty("choices")) {
         var i, choice;
         for (i = 0; i < dialog.choices.length; i++) {
             choice = dialog.choices[i];

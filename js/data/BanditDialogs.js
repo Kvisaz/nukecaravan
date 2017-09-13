@@ -1,11 +1,9 @@
 /**
  *  Описания диалогов с бандитами
  *  вся структура и логика переходов - здесь
+ *  Это объект, используемый как ассоциативный массив
+ *  названия полей служат для идентификации диалогов
  */
-
-// Это объект, используемый как ассоциативный массив
-// названия полей служат для идентификации диалогов
-
 var BanditDialogs = {
     /*
      *   Заготовка для диалога, копируйте и используйте для новых вариантов
@@ -14,7 +12,7 @@ var BanditDialogs = {
         iconWin: false, // true для иконки переговоров или победы. Не обязательный параметр.
         exit: false, // наличие кнопки выхода, после которой мы возвращаемся в обычную игру. Необязательный параметр.
         title: "Заголовок окна под иконкой",
-        desc: "Возможно многословное описание ситуации мелким шрифтом. Можно пустую строку.",
+        desc: "Возможно многословное описание ситуации мелким шрифтом. Можно пустую строку. Можно вообще не использовать параметр",
 
         // Необязательная функция. Можно в принципе не указывать
         // Позволяет добавлять вычисляемые параметры после desc.
@@ -49,7 +47,6 @@ var BanditDialogs = {
      * */
     "start": {
         title: "Вы наткнулись на бандитов!",
-        desc: "",
         desc_action: function (world, bandits) {
             var desc = bandits.text + " " + BanditAtmospheric.getRandom() + ". ";
             desc += "Они " + BanditFirepowers.getByDegree(bandits.firepower / bandits.crew) + ".";
@@ -246,7 +243,6 @@ var BanditDialogs = {
         iconWin: true,
         exit: true, // финал
         title: "Переговоры прошли успешно",
-        desc: "",
         desc_action: function (world, bandits) {
             var isAll = bandits.hired.crew == bandits.crew;
             var message = isAll ? "К вам присоединились все бандиты" :"К вам присоединилась часть бандитов. ";
@@ -303,7 +299,6 @@ var BanditDialogs = {
     "lost": {
         exit: true,
         title: "Поражение!",
-        desc: "",
         desc_action: function (world, bandits) {
             var desc = BanditLostMessages.getRandom();
             addLogMessage(world, Goodness.positive, desc);
@@ -315,7 +310,6 @@ var BanditDialogs = {
         iconWin: true,
         exit: true,
         title: "Победа!",
-        desc: "",
         desc_action: function (world, bandits) {
             var lootFirepower = Math.floor(bandits.lootK * bandits.firepower);
             var lootMoney = Math.floor(bandits.lootK * bandits.money);

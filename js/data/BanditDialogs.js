@@ -132,7 +132,7 @@ var BanditDialogs = {
             {   // полновесная стычка, где побеждает тот, у кого больше стволов
                 text: "Открыть огонь из всех стволов!",
                 action: function (world, bandits) {
-                    var damage = BanditMathUtils.getDamage(world, bandits);                            world.crew -= damage;
+                    var damage = BanditPlugin.getDamage(world, bandits);                            world.crew -= damage;
                     addLogMessage(world, Goodness.negative, 'В яростной атаке вы потеряли ' + damage + ' человек.');
                     var isWin = world.crew > 0;
                     return isWin ? "win" : "lost";
@@ -142,7 +142,7 @@ var BanditDialogs = {
                 text: "Занять круговую оборону и принять бой!",
                 action: function (world, bandits) {
                     bandits.lootK = BanditConstants.FIGHT_DEFENSE_K; // коээфициент лута и потерь
-                    var damage = BanditMathUtils.getDamage(world, bandits);
+                    var damage = BanditPlugin.getDamage(world, bandits);
                     damage = Math.floor(damage*bandits.lootK);
                     world.crew -= damage;
                     addLogMessage(world, Goodness.negative, 'В бою погибло ' + damage + ' человек.');
@@ -269,7 +269,7 @@ var BanditDialogs = {
         exit: true, // возвращение к обычной игре
         desc: "Воодушевленные вашим отступлением, бандиты стреляют вам вслед и улюлюкают.",
         desc_action: function (world, bandits) {
-            var damage = BanditMathUtils.getDamage(world, bandits);
+            var damage = BanditPlugin.getDamage(world, bandits);
             damage = Math.ceil(damage*BanditConstants.RUN_DAMAGE_K); // как минимум 1 выживет, так как округляем вверх, и коэффициент не 1
 
 

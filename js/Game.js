@@ -17,7 +17,7 @@ Game.init = function(){
     ];
 
     var i;
-    for (i = 0; index < this.plugins.length; i++) {
+    for (i = 0; i < this.plugins.length; i++) {
         this.plugins[i].init(this.world);
     }
 

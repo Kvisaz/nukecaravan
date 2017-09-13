@@ -89,8 +89,6 @@ DialogWindow.listener = function (e) {
         // передаем этому коллбэку аргументы диалога
         // и получаем тег для следующего диалога
         var choiceTag = this.dialogActions[choiceIndex](this.arg1, this.arg2);
-        console.log("choiceIndex = " + choiceIndex); // todo delete
-        console.log("choiceTag = " + choiceTag); // todo delete
         this.showDialog(choiceTag);
         return; // обработка закончилась
     }

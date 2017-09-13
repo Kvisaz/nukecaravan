@@ -12,6 +12,8 @@ CorePlugin.init = function (world) {
     this.time = 0; // общее время с начала игры, в миллисекундах
     this.dayDelta = GameConstants.STEP_IN_MS / GameConstants.DAY_IN_MS; // сколько дней в одном шаге игру
     this.lastDay = -1;  // отслеживанием наступление нового дня
+
+    this.speedDelta = Caravan.FULL_SPEED - Caravan.SLOW_SPEED; // разница между полной и минимальной скоростью
 };
 
 CorePlugin.update = function () {
@@ -43,8 +45,7 @@ CorePlugin.updateDistance = function (dayDelta, world) {
     var weight = getCaravanWeight(world);
 
     // при перевесе останавливаемся
-    var speed = Caravan.FULL_SPEED * Math.max(0, 1 - weight/maxWeight);
-    console.log("speed = "+ speed);
+    var speed = Caravan.SLOW_SPEED + (this.speedDelta) * Math.max(0, 1 - weight/maxWeight);
 
     // расстояние, которое может пройти караван при такой скорости
     var distanceDelta = speed * dayDelta;
@@ -57,8 +58,5 @@ CorePlugin.updateDistance = function (dayDelta, world) {
     // вычисляем угол направления
     world.caravan.x += Math.cos(angle) * distanceDelta;
     world.caravan.y += Math.sin(angle) * distanceDelta;
-
-    if (dx != 0 && dy != 0) {  // если есть смещение - наращиваем дистанцию
-        world.distance += distanceDelta;
-    }
+    world.distance += distanceDelta;
 };

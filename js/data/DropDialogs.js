@@ -56,6 +56,7 @@ var DropDialogs = {
                 text: "Сбросить 100 единиц груза",
                 action: function (world) {
                     world.cargo = Math.max(0, world.cargo - 100);
+                    console.log("world.cargo = "+world.cargo);
                     var next = hasCaravanOverweight(world) ? "drop" : "ok";
                     return next;
                 }
@@ -64,6 +65,7 @@ var DropDialogs = {
                 text: "Сбросить 10 единиц груза",
                 action: function (world) {
                     world.cargo = Math.max(0, world.cargo - 10);
+                    console.log("world.cargo = "+world.cargo);
                     var next = hasCaravanOverweight(world) ? "drop" : "ok";
                     return next;
                 }

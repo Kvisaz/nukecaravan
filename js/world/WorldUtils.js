@@ -9,7 +9,29 @@ function getCaravanMaxWeight(world) {
 
 // текущий вес, который тащит  караван
 function getCaravanWeight(world) {
-    return world.food * Caravan.FOOD_WEIGHT + world.firepower * Caravan.FIREPOWER_WEIGHT;
+    return world.food * Caravan.FOOD_WEIGHT
+        + world.firepower * Caravan.FIREPOWER_WEIGHT
+        + world.cargo;
+}
+
+// Награда за прибытие в город - премия за сохраненный груз
+function sellCargo(world) {
+    var cargo = world.cargo;
+    var money = cargo * Caravan.CARGO_PRICE;
+    world.money += money;
+    world.cargo = 0;
+    return {money: money, cargo: cargo};
+}
+
+// Покупка груза, учитывает вес уже купленного и наличие денег
+function buyCargo(world) {
+    var cargoMax = world.money / Caravan.CARGO_BUY_PRICE;
+    var newCargo = world.oxen * Caravan.CARGO_PER_OX - world.cargo; // сколько можем купить
+    newCargo = Math.min(cargoMax, newCargo); // вычисляем адекватную нагрузку по кошельку
+    var money = newCargo * Caravan.CARGO_BUY_PRICE;
+    world.cargo += newCargo;
+    world.money -= money;
+    return {money: money, cargo: cargo};
 }
 
 // добавляем сообщение в лог

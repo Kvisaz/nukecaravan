@@ -84,7 +84,7 @@ BanditPlugin.update = function () {
     // я использую стоп-условие, так как оно позволяет избегать лесенки c if
     // но вы можете использовать классический блок if
 
-    if(!checkEventForStep(BanditConstants.EVENT_PROBABILITY)) return;
+    if (!checkEventForStep(BanditConstants.EVENT_PROBABILITY)) return;
 
     // ну, понеслась!
     // караван останавливается
@@ -98,6 +98,8 @@ BanditPlugin.update = function () {
     // количество денег у бандитов - это явно функция от количества стволов
     this.bandits.money = this.bandits.firepower * BanditConstants.GOLD_PER_FIREPOWER;
 
+    // цена найма бандитов за 1 человека
+    this.bandits.price = BanditConstants.HIRE_PRICE_PER_PERSON;
     // коээффициент лута и потерь (будет менять от разных факторов)
     this.bandits.lootK = 1;
 
@@ -195,7 +197,7 @@ BanditPlugin.getDamage = function (world, bandits) {
     // по мере возрастания caravanOverpowered - caravanOverPowerK будет стремиться от 1 к нулю,
     // не уходя в него полностью.
     // получаем коэффицинт от 1 до 0.01, уменьшающий дамаг
-    var caravanOverPowerK = 1 / Math.sqrt(caravanOverpowered+1);
+    var caravanOverPowerK = 1 / Math.sqrt(caravanOverpowered + 1);
 
     // таки в среднем baseDamage будет колебаться около bandits.firepower
     var baseDamage = bandits.firepower * 2 * Math.random();
@@ -208,4 +210,14 @@ BanditPlugin.getDamage = function (world, bandits) {
     damage = Math.min(damage, world.crew);
 
     return damage;
+};
+
+/*
+ *  Вычисляем, сколько бандитов могут наняться к вам
+ * */
+BanditPlugin.getMaxHire = function (world, bandits) {
+    // вычисляем по своему кошельку и их цене, или берем всех, если бандиты бесплатные
+    var max = bandits.price > 0 ? Math.floor(world.money / bandits.price) : bandits.crew;
+    //
+    return max;
 };

@@ -73,16 +73,15 @@ var BanditDialogs = {
                     if (checkProbability(BanditConstants.ATTACK_PROBABILITY)) return "fight";
 
                     // переменные для найма
-                    var price = BanditConstants.HIRE_PRICE_PER_PERSON; // цена за 1 бандита
                     var maxForHire;   // максимум нанимающихся
                     var firepowerAvg = bandits.firepower / bandits.crew; // среднее количество оружия у 1 бандита
                     console.log("firepowerAvg = "+firepowerAvg);
 
                     // голодный найм,
                     if (bandits.hunger < BanditConstants.HUNGER_THRESHOLD) {
-                        price = Math.floor(price * bandits.hunger); // бандиты сбрасывают цену
+                        bandits.price = Math.floor(bandits.price * bandits.hunger); // бандиты сбрасывают цену
                         // защита от выпадения нуля
-                        maxForHire = price > 0 ? Math.floor(world.money / price) : bandits.crew;
+                        maxForHire = BanditPlugin.getMaxHire(world, bandits);
                         console.log("maxForHire = "+maxForHire);
                         bandits.hired = {}; // добавляем в бандитов инфу о цене и количестве
                         bandits.hired.crew = bandits.crew; // голодные хотят наняться все
@@ -100,8 +99,8 @@ var BanditDialogs = {
                     // обычный найм, если силы равны и никто не голоден, и у вас есть деньги
                     console.log("world.money = " + world.money);
                     console.log("BanditConstants.HIRE_PRICE_PER_PERSON = " + BanditConstants.HIRE_PRICE_PER_PERSON);
-                    if (world.money >= BanditConstants.HIRE_PRICE_PER_PERSON) {
-                        maxForHire = price > 0 ? Math.floor(world.money / price) : bandits.crew;
+                    maxForHire = BanditPlugin.getMaxHire(world, bandits);
+                    if (maxForHire > 0) {
                         bandits.hired = {}; // добавляем в бандитов инфу о цене и количестве
                         bandits.hired.crew = Math.floor(Math.random() * bandits.crew * 0.5); // сытые хотят наниматься не все
                         bandits.hired.crew = Math.min(maxForHire, bandits.hired.crew); // гарантируем, что не нанимаем больше, чем у нас есть денег
@@ -279,9 +278,11 @@ var BanditDialogs = {
             var lostOxen = Math.min(world.oxen, Math.ceil(world.oxen * BanditConstants.RUN_OXES_LOST_K));
             var lostFood = Math.min(world.food, Math.ceil(world.food * BanditConstants.RUN_FOOD_LOST_K));
             var lostMoney = Math.min(world.money, Math.ceil(world.money * BanditConstants.RUN_GOLD_LOST_K));
+            var lostCargo = Math.min(world.cargo, Math.ceil(world.cargo * BanditConstants.RUN_CARGO_LOST_K));
             world.oxen -= lostOxen;
             world.food -= lostFood;
             world.money -= lostMoney;
+            world.cargo -= lostCargo;
 
             // создаем описание
             var desc = " Ваши потери: люди: " + damage;

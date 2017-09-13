@@ -7,7 +7,7 @@ function WorldState(stats) {
     this.oxen = stats.oxen;
     this.food = stats.food;
     this.firepower = stats.firepower;
-    this.cargo = stats.cargo; // todo implement сброс и награду
+    this.cargo = stats.cargo;
     this.money = stats.money;
 
     // ---- лог не инициализируется, просто сохраняется

@@ -1,0 +1,8 @@
+CC0 Creative Commons
+
+Бесплатно для коммерческого использования
+Указание авторства не требуется 
+
+All code and images are public domain.
+I got images from pixabay.com 
+and use ideas from this tutorial - gamedevacademy.org/js13kgames-tutorial/

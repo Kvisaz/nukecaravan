@@ -7,6 +7,7 @@ var ShopEventConstants = {
     SHOP_NO_MONEY_MESSAGE: 'Не хватает денег!',   // сообщение о нехватке денег
     SHOP_BUY_MESSAGE: 'Получено: ',   // сообщение о нехватке денег
     SHOP_HINT: 'Можно купить: ',   // сообщение о нехватке денег
+    SHOP_PIC: "images/pic_welcome.jpg",   // относительный index.html путь к картинке
 };
 
 //  описания возможных магазинов

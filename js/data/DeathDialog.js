@@ -3,7 +3,7 @@
  */
 var DeathDialogs = {
     "start": {
-        icon: "images/death_picture.jpg",
+        icon: "images/pic_death.jpg",
         title: "Погибший в пустоши",
         desc: "Ваш караван погиб в радиоактивной пустоши. Может быть, следующим караванщикам повезет больше?",
         desc_action: function (world) {

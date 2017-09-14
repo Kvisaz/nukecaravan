@@ -45,7 +45,7 @@ ShopPlugin.show = function (shop) {
     // Создаем объект для отображения 1 диалога
     var ShopDialog = {
         start: {
-            icon: "", // пока у магазина никакой иконки
+            icon: ShopEventConstants.SHOP_PIC, // пока у магазина никакой иконки
             exit: true, // из этого диалога можно просто выйти
             title: shop.text,  // заголовок
             desc: ShopEventConstants.SHOP_HINT, // описание

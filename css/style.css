@@ -157,9 +157,14 @@ body {
     background: url("../images/bg_001.jpg");
     position: absolute;
     width: 440px;
-    top: 64px;
+    top: 8px;
     left: 210px;
     padding: 16px;
+}
+
+#dialog-icon {
+    border-radius: 8px;
+    border: 6px inset #3c2b21;
 }
 
 #dialog-title{

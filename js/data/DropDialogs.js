@@ -4,7 +4,7 @@
 
 var DropDialogs = {
     "start": {
-        icon: "",
+        icon: "images/pic_overweight.jpg",
         exit: false,
         title: "Слишком много груза",
         desc_action: function (world) {

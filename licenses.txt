@@ -4,5 +4,6 @@ CC0 Creative Commons
 ”казание авторства не требуетс€ 
 
 All code and images are public domain.
-I got images from pixabay.com 
-and use ideas from this tutorial - gamedevacademy.org/js13kgames-tutorial/
+photos images - from http://pixabay.com 
+wasteland sprites - from http://opengameart.org/content/dungeon-crawl-32x32-tiles
+some code and idea from this tutorial - http://gamedevacademy.org/js13kgames-tutorial/

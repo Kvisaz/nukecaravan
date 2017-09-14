@@ -23,8 +23,18 @@ body {
     border-top: none;
     border-radius: 0 0 12px 12px;
 
-    padding-top: 24px;
     position: relative;
+}
+
+#logo {
+    display: block;
+    width: 345px;
+    height: 58px;
+    margin-left: -12px;
+}
+
+a img {
+    border: none;
 }
 
 #game {

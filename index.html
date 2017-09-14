@@ -8,31 +8,10 @@
 </head>
 <body>
 <div id="w">
+
+    <a href="" id="logo" ><img src = "images/logo.png" /></a>
+
     <div id="game">
-        <!-- Модуль карты. Класс frame_border просто создает рамку -->
-        <div class="frame_border">
-            <!--
-                Города и маркер игрока позиционируются с помощью CSS-правил top и left.
-                Для этого в CSS было задано position: absolute для .town
-                и position: relative для контейра, то есть карты (#game-map2d)
-            -->
-            <div id="game-map2d">
-                <div class="town" style="top:64px;left:64px;"></div>
-                <div class="town" style="top:32px;left:744px;"></div>
-                <div class="town" style="top:384px;left:128px;"></div>
-                <div class="town" style="top:128px;left:488px;"></div>
-                <div class="town" style="top:332px;left:368px;"></div>
-                <div class="town" style="top:428px;left:802px;"></div>
-                <div id="map-player"></div>
-            </div>
-        </div>
-
-        <!--  Индикатор груза и перегруза -->
-        <div id="game-weight-bar">
-            <div id="game-weight-barfill"> </div>
-            <div id="game-weight-bartext">груз 344/ максимальный груз 560</div>
-        </div>
-
         <!--  Индикаторы характеристик каравана -->
         <div id="game-stats">
             <div>
@@ -68,6 +47,30 @@
                 <span id="game-stat-day" class="game-stat-value">0</span>
                 <span class="game-stat-desc">День</span>
             </div>
+        </div>
+
+        <!-- Модуль карты. Класс frame_border просто создает рамку -->
+        <div class="frame_border">
+            <!--
+                Города и маркер игрока позиционируются с помощью CSS-правил top и left.
+                Для этого в CSS было задано position: absolute для .town
+                и position: relative для контейра, то есть карты (#game-map2d)
+            -->
+            <div id="game-map2d">
+                <div class="town" style="top:64px;left:64px;"></div>
+                <div class="town" style="top:32px;left:744px;"></div>
+                <div class="town" style="top:384px;left:128px;"></div>
+                <div class="town" style="top:128px;left:488px;"></div>
+                <div class="town" style="top:332px;left:368px;"></div>
+                <div class="town" style="top:428px;left:802px;"></div>
+                <div id="map-player"></div>
+            </div>
+        </div>
+
+        <!--  Индикатор груза и перегруза -->
+        <div id="game-weight-bar">
+            <div id="game-weight-barfill"> </div>
+            <div id="game-weight-bartext">груз 344/ максимальный груз 560</div>
         </div>
 
         <!-- Лог событий. Завернут в .frame_border для рамки-->

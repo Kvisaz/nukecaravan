@@ -152,30 +152,24 @@ a img {
 }
 
 #dialog {
-    background-color: rgba(0, 0, 0, 0.6);
-    margin: 0 auto;
     position: absolute;
-    width: 100%;
-    height: 100%;
-    top: 0;
-    left: 0;
-}
+    top: 120px;
+    left: 50%;
+    margin-left: -220px;
+    width: 440px;
 
-#dialog-win {
-    margin: 120px auto;
     border: 4px outset #3c2b21;
     border-radius: 12px;
     background: url("../images/bg_001.jpg");
-    width: 440px;
+
     padding: 16px 16px 4px 16px;
     text-align: center;
 }
 
-#dialog-win div, #dialog-win img, #dialog-win button {
+#dialog div, #dialog img, #dialog button {
     text-align: center;
     margin: 0 auto 8px auto;
 }
-
 
 #dialog-icon {
     display: block;

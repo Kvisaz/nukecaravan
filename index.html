@@ -9,7 +9,13 @@
 <body>
 <div id="w">
     <div id="game">
+        <!-- Модуль карты. Класс frame_border просто создает рамку -->
         <div class="frame_border">
+            <!--
+                Города и маркер игрока позиционируются с помощью CSS-правил top и left.
+                Для этого в CSS было задано position: absolute для .town
+                и position: relative для контейра, то есть карты (#game-map2d)
+            -->
             <div id="game-map2d">
                 <div class="town" style="top:64px;left:64px;"></div>
                 <div class="town" style="top:32px;left:744px;"></div>
@@ -21,11 +27,13 @@
             </div>
         </div>
 
+        <!--  Индикатор груза и перегруза -->
         <div id="game-weight-bar">
             <div id="game-weight-barfill"> </div>
             <div id="game-weight-bartext">груз 344/ максимальный груз 560</div>
         </div>
 
+        <!--  Индикаторы характеристик каравана -->
         <div id="game-stats">
             <div>
                 <span id="game-stat-crew" class="game-stat-value">0</span>
@@ -46,7 +54,7 @@
             </div>
             <div>
                 <span id="game-stat-cargo" class="game-stat-value">0</span>
-                <span class="game-stat-desc">Груз <small><b id="game-stat-cargo-max">0</b> max</small></span>
+                <span class="game-stat-desc">Груз</span>
             </div>
             <div>
                 <span id="game-stat-money" class="game-stat-value">0</span>
@@ -62,25 +70,19 @@
             </div>
         </div>
 
+        <!-- Лог событий. Завернут в .frame_border для рамки-->
         <div class="frame_border">
             <div id="game-log">
 
             </div>
         </div>
-
     </div>
 
-
-    <div id="shop" class="hidden">
-        <div id="shop-win">
-            <div id="shop-title"></div>
-            <div id="shop-hint">можно приобрести</div>
-            <div id="prods"></div>
-            <br/>
-            <button class="red-button" id="shop-exit-button">Дальше</button>
-        </div>
-    </div>
-
+    <!--
+        Универсальное диалоговое окно,
+        класс .hidden в CSS позволяет прятать или показывать его,
+        просто убирая или добавляя этот класс у элемента
+    -->
 
     <div id="dialog" class="hidden">
         <div id="dialog-win">
@@ -92,7 +94,6 @@
             <button class="hidden red-button" id="dialog-exit-button">Дальше</button>
         </div>
     </div>
-
 
 </div>
 
@@ -112,6 +113,7 @@
 <script src="js/data/RandomEvents.js"></script>
 <script src="js/data/ShopEvents.js"></script>
 <script src="js/data/DeathRules.js"></script>
+<script src="js/data/DeathDialog.js"></script>
 <script src="js/data/DropDialogs.js"></script>
 
 <!-- плагины -->

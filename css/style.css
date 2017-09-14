@@ -71,14 +71,14 @@ body {
 #game-weight-barfill {
     height: 100%;
     width: 50%;
-    background: #6d6d21;
+    background: #484411;
 }
 
 #game-weight-bartext{
     width: 100%;
     height: 100%;
     text-align: center;
-    color: #201a06;
+    color: #90902c;
     font-size: 14px;
     line-height: 32px;
     margin-top: -32px;
@@ -117,13 +117,6 @@ body {
     line-height: 16px;
 }
 
-.game-stat-desc small {
-    display: block;
-    font-size: 12px;
-    font-weight: bold;
-    text-transform: lowercase;
-}
-
 #game-log {
     background: #130F09;
     padding: 12px;
@@ -145,7 +138,7 @@ body {
     color: #90908F;
 }
 
-#dialog, #shop {
+#dialog {
     background-color: rgba(0, 0, 0, 0.6);
     margin: 0 auto;
     position: absolute;
@@ -155,7 +148,7 @@ body {
     left: 28px;
 }
 
-#dialog-win, #shop-win {
+#dialog-win {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -169,20 +162,20 @@ body {
     padding: 16px;
 }
 
-#dialog-title, #shop-title{
+#dialog-title{
     text-align: center;
     font-size: 24px;
     margin-bottom: 12px;
     color: #cbcbcb;
 }
 
-#dialog-hint, #shop-hint {
+#dialog-hint {
     font-size: 12px;
     color: #cbcbcb;
     margin-bottom: 4px;
 }
 
-.dialog-choice, .shop-product {
+.dialog-choice {
     display: block;
     color: #cbcbcb;
     border: 2px outset #3c2b21;
@@ -205,11 +198,11 @@ body {
     outline: none;
 }
 
-.red-button, .shop-product, .dialog-choice{
+.red-button, .dialog-choice{
     box-shadow: 0 4px rgba(22, 22, 22, 0.5);
 }
 
-.red-button:active, .shop-product:active, .dialog-choice:active {
+.red-button:active, .dialog-choice:active {
     transform: translateY(4px);
     box-shadow: 0 0px rgba(22, 22, 22, 0.5);
 }

@@ -1,5 +1,5 @@
 Game = {};
-Game.init = function(){
+Game.init = function () {
     // создаем мир по стартовому состоянию
     // все редактируемые переменные - в директории data
     this.world = new WorldState(StartWorldState);
@@ -33,8 +33,21 @@ Game.update = function () {
     }
 };
 
-Game.init();
+
 // запуск цикла игры, использую setInterval для совместимости со старым Safari
 // bind позволяет привязать this объекта
 // так как по дефолту setInterval передает в функцию this от window
-setInterval(Game.update.bind(Game), GameConstants.STEP_IN_MS);
+Game.resume = function () {
+    this.interval = setInterval(this.update.bind(this), GameConstants.STEP_IN_MS);
+};
+
+Game.stop = function () {
+    clearInterval(this.interval);
+};
+
+Game.restart = function () {
+    this.init();
+    this.resume();
+};
+
+Game.restart();

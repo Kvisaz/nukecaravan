@@ -6,6 +6,7 @@ var ShopEventConstants = {
     SHOP_PROBABILITY: 0.5,   // шанс встретить магазин или караван в день
     SHOP_NO_MONEY_MESSAGE: 'Не хватает денег!',   // сообщение о нехватке денег
     SHOP_BUY_MESSAGE: 'Получено: ',   // сообщение о нехватке денег
+    SHOP_HINT: 'Можно купить: ',   // сообщение о нехватке денег
 };
 
 //  описания возможных магазинов
@@ -27,12 +28,12 @@ var Shops = [{
         ]
     },
     {
-        text: 'Следопыты встретили контрабандистов',
+        text: 'Следопыты встретили охотников',
         products: [
             {item: 'food', text: 'Еда', qty: 20, price: 60},
             {item: 'oxen', text: 'Брамины', qty: 1, price: 300},
             {item: 'firepower', text: 'Оружие', qty: 2, price: 80},
-            {item: 'crew', text: 'Наемники', qty: 1, price: 300}
+            {item: 'crew', text: 'Охотники', qty: 1, price: 300}
         ]
     },
 ];

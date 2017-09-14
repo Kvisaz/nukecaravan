@@ -6,11 +6,6 @@
  *  2. модуль имеет функцию отображения своего интерфейса
  *  3. модуль  меняет состояние мира.
  *
- *
- *  Обязательные функции
- *  show(pluginEvent) - получает данные о событии
- *
- *
  */
 
 var ShopPlugin = {};
@@ -19,33 +14,8 @@ ShopPlugin.init = function (world) {
     this.world = world;
     this.shops = Shops; // возможные случаи магазинов, основы для генерация конкретной встречи
 
-    this.lastShop = { x:0, y:0 }; // координаты предыдущего магазина - чтобы не слишком часто
+    this.lastShop = {x: 0, y: 0}; // координаты предыдущего магазина - чтобы не слишком часто
     this.products = []; // продукты в конкретном магазине, генерируем
-
-    // элементы интерфейса
-    this.view = {};
-    this.view.shop = document.getElementById('shop');
-    this.view.shopTitle = document.getElementById('shop-title');
-    this.view.exitButton = document.getElementById('shop-exit-button');
-    this.view.products = document.getElementById('prods');
-
-    // добавляем общий слушатель кликов пользователя к магазину
-    // этот старый код почти целиком перекочевал из одномерного орегонского каравана для js13k
-    var shopView = this.view.shop; // для передачи в листенер как переменную, а не как this
-    var shopPlugin = this; // для передачи в листенер как переменную, а не как this
-    shopView.addEventListener('click', function (e) {
-        var target = e.target || e.src;
-        if (target.tagName == 'BUTTON') {  // клик на кнопке выхода
-            shopView.classList.add('hidden');  // скрываем магазин
-            world.uiLock = false; // снимаем захват с действий пользователя
-            world.stop = false; // продолжаем путешествие
-        }
-        else if (target.tagName == 'DIV' && target.className.match(/product/)) { //buy button
-            // в атрибуте data-index при открытии магазина записывает индекс продукта
-            var product = shopPlugin.products[target.getAttribute('data-index')];
-            shopPlugin.buy(product);
-        }
-    });
 };
 
 ShopPlugin.update = function () {
@@ -61,30 +31,48 @@ ShopPlugin.update = function () {
 
     // стоп-условия выполнились
     world.stop = true; // караван остановился
-    this.lastShop.x = world.caravan.x;  // запоминаем магазинчик
-    this.lastShop.y = world.caravan.y;
-
-    this.show(this.shops.getRandom()); // показываем магазин
     world.uiLock = true; // обозначаем, что действия пользователя теперь исключительно наши, пример: чтобы караван случайно не пошел по карте, если кликнем по ней при работе с магазином
+
+    this.lastShop =  { x: world.caravan.x, y: world.caravan.y };  // запоминаем магазинчик
+    this.show(this.shops.getRandom()); // показываем магазин
 };
 
 ShopPlugin.show = function (shop) {
-    this.view.shop.classList.remove('hidden'); // показываем сам магазин в попапе
-    this.view.shopTitle.innerHTML = shop.text; // описание магазина
-    this.view.products.innerHTML = ''; // очищаем предыдущий набор продуктов
+    // добавляем сообщение о магазине в лог
+    addLogMessage(this.world, Goodness.neutral, shop.text);
+    // создаем набор продуктов по ассортименту данного магазина
+    this.products = this.generateProducts(shop);
 
-    addLogMessage(this.world, Goodness.neutral, shop.text); // добавляем сообщение о магазине в лог
-    this.products = this.generateProducts(shop); // случайный набор продуктов по ассортименту данного магазина
+    // Создаем объект для отображения 1 диалога
+    var ShopDialog = {};
+    ShopDialog.start = {
+        icon: "", // пока у магазина никакой иконки
+        exit: true, // из этого диалога можно просто выйти
+        title: shop.text,  // заголовок
+        desc: ShopEventConstants.SHOP_HINT, // описание
+        choices: [], // выбор продуктов и
+    };
 
-    /*
-     *   Сохраняем индекс продукта в атрибутах тега,
-     *   позже в листенере клика извлекает этот атрибут
-     *   и берем из модели this.products
-     * */
-    var productsView = this.view.products;
-    this.products.forEach(function (product, i) {
-        productsView.innerHTML += '<div class="shop-product" data-index="' + i + '">' + product.text + ' [' + product.qty + '] за $' + product.price + '</div>';
+    // генерируем набор кнопок для продуктов
+    var shopPlugin = this;
+    var buttonText; // временная переменная для создания текста на кнопке продукта
+    this.products.forEach(function (product) {
+        buttonText = product.text + ' [' + product.qty + '] за $' + product.price;
+        ShopDialog.start.choices.push({
+            text: buttonText,
+            action: function () {
+                console.log("product = buy " + product.text + " " + product.qty + "  " + product.price);
+                shopPlugin.buy(product);
+                return "start";
+            }
+        });
     });
+    DialogWindow.show(ShopDialog, null, null, this);
+};
+
+ShopPlugin.onDialogClose = function () {
+    this.world.uiLock = false; // снимаем захват с действий пользователя
+    this.world.stop = false; // продолжаем путешествие
 };
 
 // генерируем набор продуктов на основе базового
@@ -115,5 +103,5 @@ ShopPlugin.buy = function (product) {
     }
     world.money -= product.price;
     world[product.item] += product.qty;
-    addLogMessage(world, Goodness.positive, ShopEventConstants.SHOP_BUY_MESSAGE + ' ' + product.text + ' +' + product.qty );
+    addLogMessage(world, Goodness.positive, ShopEventConstants.SHOP_BUY_MESSAGE + ' ' + product.text + ' +' + product.qty);
 };

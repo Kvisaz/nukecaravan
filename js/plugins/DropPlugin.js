@@ -23,5 +23,6 @@ DropPlugin.update = function () {
     // Перевес! стопим караван
     this.world.uiLock = true; // стопим захват с действий пользователя
     this.world.stop = true; // стопим путешествие
-    DialogWindow.show(DropDialogs, this.world, null, this);
+    addLogMessage(world, Goodness.negative, desc); // логируем
+    DialogWindow.show(DropDialogs, this.world, null, this); // показываем диалог
 };

@@ -44,8 +44,9 @@ Map2DPlugin.update = function () {
     // проверяем достижение поставленной цели
     if (this.isAboutTarget(this.world)) {
         this.world.stop = true;
+        this.world.uiLock = true;
         addLogMessage(this.world, Goodness.positive, "Вы достигли города!");
-        this.cityMarket();
+        DialogWindow.show(TownDialogs,this.world, null, this);
     }
 };
 
@@ -60,27 +61,6 @@ Map2DPlugin.movePlayerViewTo = function (x, y) {
     this.view.player.style.top = y + "px"; // сдвигаем маркер на карте
 };
 
-// функция для прибытия в новый город
-Map2DPlugin.cityMarket = function () {
-    var message = "Вы входите на местный рынок";
-
-    addLogMessage(this.world, Goodness.neutral, message);
-
-    var sell = sellCargo(this.world);
-    if(sell.money>0){
-        message = "Продано $1 товаров на сумму $2".withArg(sell.cargo, sell.money);
-    }
-    else{
-        message = "Товаров нет, поэтому ничего продать не удалось";
-    }
-    addLogMessage(this.world, Goodness.neutral, message);
-
-    var buy = buyCargo(this.world);
-    if(buy.money>0){
-        message = "Куплено $1 товаров на сумму $2".withArg(buy.cargo, buy.money);
-    }
-    else{
-        message = "Для покупки на рынке нужны деньги и быки, чтобы везти товар.";
-    }
-    addLogMessage(this.world, Goodness.neutral, message);
+Map2DPlugin.onDialogClose = function () {
+    this.world.uiLock = false;
 };

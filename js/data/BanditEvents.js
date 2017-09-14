@@ -3,6 +3,7 @@
  *  логика в BanditPlugin
  */
 var BanditConstants = {
+    DISTANCE_MIN: 100, // минимальное расстояние между стычками и от городов
     EVENT_PROBABILITY: 0.1, // базовая вероятность случайного события в текущий день
     ATTACK_PROBABILITY: 0.75, // вероятность атаки
 

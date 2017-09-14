@@ -30,22 +30,36 @@ BanditPlugin = {};
 BanditPlugin.init = function (world) {
     this.world = world;
     this.dialogView = DialogWindow;
+    this.lastMeet = {x: -1, y: -1}; // координаты предыдущего стычки - чтобы не слишком часто
+    this.lastTown = {x: -1, y: -1}; // координаты предыдущего города - чтобы не встречать караван в том же сегменте
 };
 
 BanditPlugin.update = function () {
+    var world = this.world;
     // если стоим на месте - бандиты не появляются
-    if (this.world.stop || this.world.gameover) return;
+    if (world.stop || world.gameover) return;
     // проверка на выпадение события вообще
     // я использую стоп-условие, так как оно позволяет избегать лесенки c if
     // но вы можете использовать классический блок if
+
+    // проверяем, не были ли выхода из города - если да, то запоминаем его
+    if(this.lastTown.x != world.from.x || this.lastTown.y != world.from.y)
+    {
+        this.lastTown = { x: world.from.x, y: world.from.y };
+        this.lastMeet = { x: world.from.x, y: world.from.y };
+    }
+
+    // проверяем расстояние между последней стычкой и текущими координатами
+    var prevShopDistance = getDistance(world.caravan, this.lastMeet);
+    if (prevShopDistance < BanditConstants.DISTANCE_MIN) return;
 
     if (!checkEventForStep(BanditConstants.EVENT_PROBABILITY)) return;
 
     // ну, понеслась!
     // караван останавливается
-    this.world.stop = true;
+    world.stop = true;
     // флаг для блокировки UI в других плагинах включается
-    this.world.uiLock = true;
+    world.uiLock = true;
     // генерируется случайная банда
     var bandits = BanditEvents.getRandom();
     // она голодная по рандому от 0 до 1, 0 - самый сильный, "смертельный", голод
@@ -59,7 +73,7 @@ BanditPlugin.update = function () {
     bandits.lootK = 1;
     // показываем окно с первым диалогом
     // this.showDialog("start");
-    this.dialogView.show(BanditDialogs, this.world, bandits, this);
+    this.dialogView.show(BanditDialogs, world, bandits, this);
 };
 
 // отправляемся дальше

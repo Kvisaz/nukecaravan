@@ -2,6 +2,11 @@
  *  Функции для вычисления данных по параметрам мира
  */
 
+// расстояние между двумя точками (объектами с полями x и y)
+function getDistance(point1, point2) {
+    return Math.sqrt(Math.pow(point1.x - point2.x, 2) + Math.pow(point1.y - point2.y, 2));
+}
+
 // максимальный вес, который может нести караван
 function getCaravanMaxWeight(world) {
     return world.oxen * Caravan.WEIGHT_PER_OX + world.crew * Caravan.WEIGHT_PER_PERSON;

@@ -14,7 +14,8 @@ ShopPlugin.init = function (world) {
     this.world = world;
     this.shops = Shops; // возможные случаи магазинов, основы для генерация конкретной встречи
 
-    this.lastShop = {x: 0, y: 0}; // координаты предыдущего магазина - чтобы не слишком часто
+    this.lastShop = {x: -1, y: -1}; // координаты предыдущего магазина - чтобы не слишком часто
+    this.lastTown = {x: -1, y: -1}; // координаты предыдущего города - чтобы не встречать караван в том же сегменте
     this.products = []; // продукты в конкретном магазине, генерируем
 };
 
@@ -22,8 +23,15 @@ ShopPlugin.update = function () {
     var world = this.world;
     if (world.stop) return; // если стоим - никаких новых магазинов
 
+    // проверяем, не были ли выхода из города - если да, то запоминаем его
+    if(this.lastTown.x != world.from.x || this.lastTown.y != world.from.y)
+    {
+        this.lastTown = { x: world.from.x, y: world.from.y };
+        this.lastShop = { x: world.from.x, y: world.from.y };
+    }
+
     // проверяем расстояние до предыдущего магазина, чтобы не частили
-    var prevShopDistance = Math.sqrt(Math.pow(world.caravan.x - this.lastShop.x, 2) + Math.pow(world.caravan.y - this.lastShop.y, 2));
+    var prevShopDistance = getDistance(world.caravan, this.lastShop);
     if (prevShopDistance < ShopEventConstants.SHOP_DISTANCE_MIN) return;
 
     // проверка на выпадение случайного магазина

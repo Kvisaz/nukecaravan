@@ -14,7 +14,7 @@ DeathCheck.init = function (world) {
 };
 
 DeathCheck.update = function () {
-    if(this.world.gameover) return; // если уже мертвы, проверять бесполезно
+    if (this.world.gameover) return; // если уже мертвы, проверять бесполезно
 
     // проверка условий по массиву DeathRules
     var i, rule, sign;
@@ -29,7 +29,13 @@ DeathCheck.update = function () {
 };
 
 DeathCheck.onDeath = function (world, rule) {
-    addLogMessage(world, Goodness.negative,rule.text);
+    Game.stop();
+    addLogMessage(world, Goodness.negative, rule.text);
     world.gameover = true;
     world.stop = true;
+    DialogWindow.show(DeathDialogs, world, null, this);
+};
+
+DeathCheck.onDialogClose = function () {
+    Game.restart();
 };

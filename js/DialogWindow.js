@@ -41,7 +41,12 @@
             this - ссылка на сам плагин, чтобы диалог при закрытии активировал onDialogClose
  */
 
-var DialogWindow = {};
+var DialogWindow = {
+    // массив финишных тегов, которые служат маркерами для выхода
+    // они проверяются только в случае, если в описаниях диалогов нет таких диалогов
+    // таким образом, эти теги можно переопределять
+    finish_tags: [ "finish", "exit", "stop"]
+};
 
 DialogWindow.init = function () {
     // два аргумента, через которые при вызове диалога конкретны плагином, можно передавать данные для модификации
@@ -124,7 +129,14 @@ DialogWindow.close = function () {
  *   Показываем диалог с тегом.
  * */
 DialogWindow.showDialog = function (dialogTag) {
+    // если такого тега нет - проверяем выход или ошибку
     if (!this.dialogs.hasOwnProperty(dialogTag)) {
+        // если команда выхода - выходим
+        if(this.finish_tags.indexOf(dialogTag)){
+            this.close();
+            return;
+        }
+        // иначе сообщение об ошибке
         console.log("!! DialogWindow Error! Диалог с названием " + dialogTag + " не найден");
         return;
     }

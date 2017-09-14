@@ -11,8 +11,7 @@ CorePlugin.init = function (world) {
     this.world = world;
     this.time = 0; // общее время с начала игры, в миллисекундах
     this.dayDelta = GameConstants.STEP_IN_MS / GameConstants.DAY_IN_MS; // сколько дней в одном шаге игру
-    this.lastDay = -1;  // отслеживанием наступление нового дня
-
+    this.lastDay = -1;  // отслеживаем наступление нового дня
     this.speedDelta = Caravan.FULL_SPEED - Caravan.SLOW_SPEED; // разница между полной и минимальной скоростью
 };
 

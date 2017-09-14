@@ -10,21 +10,18 @@ function WorldState(stats) {
     this.cargo = stats.cargo;
     this.money = stats.money;
 
-    // ---- лог не инициализируется, просто сохраняется
-    // содержит события в формате
-    //  { day: "", message: "", goodness: "" }
+    // лог событий, содержит день, описание и характеристику
+    //  { day: 1, message: "Хорошо покушали", goodness: Goodness.positive}
     this.log = [];
 
-    this.distance = 0; // сколько всего пройдено
-
-    // координаты каравана
+    // координаты каравана, пункта отправления и назначения
     this.caravan = { x: 0, y: 0};
-
-    // пункт отправления и назначения
     this.from = {x: 0, y: 0};
     this.to = {x: 0, y: 0};
 
-    this.gameover = false;  // game over
-    this.stop = true;    // маркер для обозначения движения
-    this.uiLock = false; // маркер для обозначения, что данный плагин перехватывает все действия пользователя, или не должен реагировать, если кто-то перехватил
+    this.distance = 0; // сколько всего пройдено
+
+    this.gameover = false;  // gameover
+    this.stop = true;    // маркер для обозначения того, что караван стоит
+    this.uiLock = false; // маркер для блокировки интерфейса
 }

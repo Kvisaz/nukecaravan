@@ -42,15 +42,15 @@ ShopPlugin.show = function (shop) {
     addLogMessage(this.world, Goodness.neutral, shop.text);
     // создаем набор продуктов по ассортименту данного магазина
     this.products = this.generateProducts(shop);
-
     // Создаем объект для отображения 1 диалога
-    var ShopDialog = {};
-    ShopDialog.start = {
-        icon: "", // пока у магазина никакой иконки
-        exit: true, // из этого диалога можно просто выйти
-        title: shop.text,  // заголовок
-        desc: ShopEventConstants.SHOP_HINT, // описание
-        choices: [], // выбор продуктов и
+    var ShopDialog = {
+        start: {
+            icon: "", // пока у магазина никакой иконки
+            exit: true, // из этого диалога можно просто выйти
+            title: shop.text,  // заголовок
+            desc: ShopEventConstants.SHOP_HINT, // описание
+            choices: [], // выбор продуктов и
+        }
     };
 
     // генерируем набор кнопок для продуктов
@@ -61,7 +61,6 @@ ShopPlugin.show = function (shop) {
         ShopDialog.start.choices.push({
             text: buttonText,
             action: function () {
-                console.log("product = buy " + product.text + " " + product.qty + "  " + product.price);
                 shopPlugin.buy(product);
                 return "start";
             }
@@ -70,6 +69,7 @@ ShopPlugin.show = function (shop) {
     DialogWindow.show(ShopDialog, null, null, this);
 };
 
+// Обязательная функция при использовании диалогов - коллбэк, вызываемый при закрытии
 ShopPlugin.onDialogClose = function () {
     this.world.uiLock = false; // снимаем захват с действий пользователя
     this.world.stop = false; // продолжаем путешествие

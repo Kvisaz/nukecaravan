@@ -29,8 +29,9 @@ var TownDialogs = {
             desc += sellMessage;
 
             var income = sell.money - buy.money;
+            var signStr = income >= 0 ? "+" : "-";
             var goodness = income > 0 ? Goodness.positive : Goodness.negative;
-            var incomeMessage = "Прибыль от посещения города: $" + income;
+            var incomeMessage = "Прибыль от посещения города: "+signStr+"$" + Math.abs(income);
             addLogMessage(world, goodness, incomeMessage);
 
             desc += incomeMessage;

@@ -133,7 +133,7 @@ a img {
     padding: 12px;
     line-height: 150%;
     font-size: 16px;
-    height: 220px;
+    height: 200px;
     overflow: auto;
     border: #336626 solid 1px;
     border-radius: 8px;
@@ -186,6 +186,9 @@ a img {
 #dialog-hint {
     font-size: 14px;
     color: #cbcbcb;
+    padding: 4px;
+    border-radius: 2px;
+    background: rgba(11,11,11,0.6);
 }
 
 .dialog-choice {

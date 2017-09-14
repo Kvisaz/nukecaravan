@@ -68,6 +68,10 @@ ShopPlugin.show = function (shop) {
         ShopDialog.start.choices.push({
             text: buttonText,
             action: function () {
+                if (product.price > shopPlugin.world.money) {
+                    addLogMessage(shopPlugin.world, Goodness.negative, ShopEventConstants.SHOP_NO_MONEY_MESSAGE);
+                    return "stop";
+                }
                 shopPlugin.buy(product);
                 return "start";
             }
@@ -111,10 +115,6 @@ ShopPlugin.generateProducts = function (shop) {
 
 ShopPlugin.buy = function (product) {
     var world = this.world;
-    if (product.price > world.money) {
-        addLogMessage(world, Goodness.negative, ShopEventConstants.SHOP_NO_MONEY_MESSAGE);
-        return false;
-    }
     world.money -= product.price;
     world[product.item] += product.qty;
     addLogMessage(world, Goodness.positive, ShopEventConstants.SHOP_BUY_MESSAGE + ' ' + product.text + ' +' + product.qty);

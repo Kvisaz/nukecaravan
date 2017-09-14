@@ -135,6 +135,8 @@ a img {
     font-size: 16px;
     height: 480px;
     overflow: auto;
+    border: #336626 solid 1px;
+    border-radius: 8px;
 }
 
 .log-message-positive {

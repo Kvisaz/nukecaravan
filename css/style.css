@@ -164,17 +164,17 @@ a img {
     border-radius: 12px;
     background: url("../images/bg_001.jpg");
     width: 440px;
-    padding: 16px;
+    padding: 16px 16px 4px 16px;
 }
 
 #dialog-win div, #dialog-win img, #dialog-win button {
     text-align: center;
-    display: block;
     margin: 0 auto 8px auto;
 }
 
 
 #dialog-icon {
+    display: block;
     border-radius: 8px;
     border: 6px inset #3c2b21;
 }

@@ -46,7 +46,6 @@ ShopPlugin.show = function (shop) {
     var ShopDialog = {
         start: {
             icon: ShopEventConstants.SHOP_PIC, // пока у магазина никакой иконки
-            exit: true, // из этого диалога можно просто выйти
             title: shop.text,  // заголовок
             desc: ShopEventConstants.SHOP_HINT, // описание
             choices: [], // выбор продуктов и
@@ -66,6 +65,13 @@ ShopPlugin.show = function (shop) {
             }
         });
     });
+
+    // и добавляем кнопку для просто выхода
+    ShopDialog.start.choices.push({
+        text: ShopEventConstants.SHOP_EXIT,
+        action: function () { return "stop";}
+    });
+
     DialogWindow.show(ShopDialog, null, null, this);
 };
 

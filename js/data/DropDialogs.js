@@ -6,7 +6,7 @@ var DropDialogs = {
     "start": {
         icon: "images/pic_overweight.jpg",
         exit: false,
-        title: "Слишком много груза",
+        title: "Перевес",
         desc_action: function (world) {
             var desc = "Караван перегружен и не может двигаться";
             addLogMessage(world, Goodness.negative, desc);

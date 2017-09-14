@@ -33,7 +33,7 @@ DeathCheck.onDeath = function (world, rule) {
     addLogMessage(world, Goodness.negative, rule.text);
     world.gameover = true;
     world.stop = true;
-    DialogWindow.show(DeathDialogs, world, null, this);
+    DialogWindow.show(DeathDialogs, world, rule, this);
 };
 
 DeathCheck.onDialogClose = function () {

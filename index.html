@@ -11,6 +11,14 @@
 
     <a href="" id="logo" ><img src = "images/logo.png" /></a>
 
+    <!--  Индикатор груза и перегруза -->
+    <div id="game-weight-bar">
+        <div id="game-weight-barfill"> </div>
+        <div id="game-weight-bartext">груз 344/ максимальный груз 560</div>
+    </div>
+
+    <div class="endfloat"></div>
+
     <div id="game">
         <!--  Индикаторы характеристик каравана -->
         <div id="game-stats">
@@ -47,6 +55,7 @@
                 <span id="game-stat-day" class="game-stat-value">0</span>
                 <span class="game-stat-desc">День</span>
             </div>
+            <i class="endfloat"></i>
         </div>
 
         <!-- Модуль карты. Класс frame_border просто создает рамку -->
@@ -67,17 +76,8 @@
             </div>
         </div>
 
-        <!--  Индикатор груза и перегруза -->
-        <div id="game-weight-bar">
-            <div id="game-weight-barfill"> </div>
-            <div id="game-weight-bartext">груз 344/ максимальный груз 560</div>
-        </div>
-
-        <!-- Лог событий. Завернут в .frame_border для рамки-->
-        <div class="frame_border">
-            <div id="game-log">
-
-            </div>
+        <!-- Лог событий-->
+        <div id="game-log"></div>
         </div>
     </div>
 </div>

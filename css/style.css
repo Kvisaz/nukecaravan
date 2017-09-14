@@ -9,14 +9,13 @@ body {
     background-color: #000;
 }
 
-.hidden {
-    display: none;
-}
+.hidden { display: none; }
+.endfloat { float: none; clear: both; display: block; height: 0; }
 
 #w {
     width: 960px;
     margin: 0 auto;
-    background: url("../images/bg_001.jpg") center fixed;
+    background: url("../images/bg_001.jpg") center;
     background-size: cover;
 
     border: 4px solid #3c2b21;
@@ -28,6 +27,7 @@ body {
 
 #logo {
     display: block;
+    float: left;
     width: 345px;
     height: 58px;
     margin-left: -12px;
@@ -69,12 +69,13 @@ a img {
 }
 
 #game-weight-bar {
-    width: 896px;
+    float: right;
+    width: 430px;
     height: 32px;
-    margin: 8px auto 0 auto;
+    margin: 10px 24px 0 0;
     background: #0c0906;
     border-radius: 8px;
-    border: #3c2b21 outset 4px;
+    border: #3c2b21 inset 4px;
     overflow: hidden;
 }
 
@@ -95,15 +96,15 @@ a img {
 }
 
 #game-stats {
-    margin: 8px auto 8px auto;
+    margin: 6px auto 0 auto;
     width: 912px;
-    display: flex;
-    justify-content: space-between;
 }
 
 #game-stats div {
+    float: left;
     width: 93px;
     height: 76px;
+    margin-left: 18px;
     background: url("../images/ui-stat-indikator.png") top center no-repeat;
     text-align: center;
 }
@@ -165,6 +166,7 @@ a img {
     background: url("../images/bg_001.jpg");
     width: 440px;
     padding: 16px 16px 4px 16px;
+    text-align: center;
 }
 
 #dialog-win div, #dialog-win img, #dialog-win button {
@@ -201,6 +203,7 @@ a img {
 }
 
 .red-button {
+    margin: 0 auto;
     border-radius: 12px;
     background: url("../images/button_01.png") top left no-repeat;
     height: 49px;

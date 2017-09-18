@@ -9,6 +9,7 @@ var DropDialogs = {
         title: "Перевес",
         desc_action: function (world) {
             var desc = "Караван перегружен и не может двигаться";
+            addLogMessage(world, Goodness.negative, desc); // логируем
             return desc;
         },
         choices: [

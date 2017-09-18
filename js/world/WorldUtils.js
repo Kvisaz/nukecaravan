@@ -2,6 +2,12 @@
  *  Функции для вычисления данных по параметрам мира
  */
 
+// детекция, что точка 1 находится рядом с точкой 2
+// nearDistance - расстояние срабатывания
+function areNearPoints(point1, point2, nearDistance) {
+    return getDistance(point1, point2) <= nearDistance;
+}
+
 // расстояние между двумя точками (объектами с полями x и y)
 function getDistance(point1, point2) {
     return Math.sqrt(Math.pow(point1.x - point2.x, 2) + Math.pow(point1.y - point2.y, 2));

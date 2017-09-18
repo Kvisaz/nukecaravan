@@ -3,7 +3,13 @@
  *  - при клике на городе на карте - отправляет караван туда
  *  - в update проверяет прибытие в город
  */
-Map2DPlugin = {};
+Map2DPlugin = {
+    // чтобы не гонять DOM каждый раз - гоняем только когда обновляются координаты игрока
+    // для этогоп делаем проверку через это поле
+    lastPlayerPosition: {x: 0, y: 0},
+    // маркер "мы в городе" - соответствует "открыт диалог города"
+    inTown: false,
+};
 
 Map2DPlugin.init = function (world) {
     this.world = world;
@@ -16,14 +22,16 @@ Map2DPlugin.init = function (world) {
     this.view.towns = document.getElementsByClassName('town');
 
     // вешаем на города обработчики кликов, чтобы отправлять туда караван
-    var i;
+    var i, map2dPlugin = this;
     for (i = 0; i < this.view.towns.length; i++) {
         this.view.towns[i].addEventListener("click", function (e) {
             if (world.uiLock) return; // если какой-то плагин перехватил работу с пользователем, то есть открыто модальное окно, не реагируем на действия пользователя
             var element = e.target || e.srcElement;
-            world.from = { x: world.caravan.x, y: world.caravan.y };
+            world.from = {x: world.caravan.x, y: world.caravan.y};
             world.to = {x: element.offsetLeft, y: element.offsetTop};
             world.stop = false;
+            map2dPlugin.inTown = false; // все, покидаем город
+
             addLogMessage(world, Goodness.positive, "Путешествие через пустыню начинается!");
         });
     }
@@ -32,32 +40,39 @@ Map2DPlugin.init = function (world) {
     if (this.view.towns.length > 0) {
         world.caravan.x = this.view.towns[0].offsetLeft;
         world.caravan.y = this.view.towns[0].offsetTop;
+        world.stop = true; // чтобы не двигался
         this.movePlayerViewTo(world.caravan.x, world.caravan.y);
     }
 };
 
 Map2DPlugin.update = function () {
-    if (this.world.stop) return; // не двигаемся
-    this.movePlayerViewTo(this.world.caravan.x, this.world.caravan.y);
+    if (this.inTown) return; // если открыт диалог города - ничего не делаем
 
-    // проверяем достижение поставленной цели
-    if(this.world.isJustArrived){
-        addLogMessage(this.world, Goodness.positive, "Вы достигли города!");
-        DialogWindow.show(TownDialogs,this.world, null, this);
-        this.world.isJustArrived = false;
+
+    // обновляем DOM только когда есть изменения в координатах
+    if (this.lastPlayerPosition.x != this.world.caravan.x ||
+        this.lastPlayerPosition.y != this.world.caravan.y) {
+
+        console.log("Map2DPlugin DOM update");
+        this.movePlayerViewTo(this.world.caravan.x, this.world.caravan.y);
+
+        this.lastPlayerPosition.x = this.world.caravan.x;
+        this.lastPlayerPosition.y = this.world.caravan.y;
     }
 
-    /*if (this.isAboutTarget(this.world)) {
-        this.world.stop = true;
-        this.world.uiLock = true;
+    // проверяем достижение города на остановках
+    if (this.world.stop && this.isAboutTarget(this.world)) {
+        console.log("Map2DPlugin.isAboutTarget");
+        this.inTown = true;
+        this.world.uiLock = true; // маркируем интерфейс как блокированный
         addLogMessage(this.world, Goodness.positive, "Вы достигли города!");
-        DialogWindow.show(TownDialogs,this.world, null, this);
-    }*/
+        DialogWindow.show(TownDialogs, this.world, null, this);
+    }
 };
 
 // проверка, что координаты каравана около заданной цели
 Map2DPlugin.isAboutTarget = function (world) {
-    return getDistance(world.to, world.from) < Caravan.TOUCH_DISTANCE;
+    return areNearPoints(world.caravan, world.to, Caravan.TOUCH_DISTANCE);
 };
 
 Map2DPlugin.movePlayerViewTo = function (x, y) {

@@ -55,7 +55,7 @@ CorePlugin.updateDistance = function (dayDelta, world) {
     var dy = world.to.y - world.caravan.y;
 
     // если мы находимся около цели - останавливаемся
-    if(dx < Caravan.TOUCH_DISTANCE && dy < Caravan.TOUCH_DISTANCE) {
+    if(areNearPoints(world.caravan, world.to, Caravan.TOUCH_DISTANCE)){
         world.stop = true;
         return;
     }

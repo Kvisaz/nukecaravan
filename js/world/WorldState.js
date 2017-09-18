@@ -2,13 +2,13 @@
  *   Дата класс для хранения состояния мира игры
  * */
 function WorldState(stats) {
-    this.day = 0;                // текущий день, с десятичными долям
-    this.crew = stats.crew;
-    this.oxen = stats.oxen;
-    this.food = stats.food;
-    this.firepower = stats.firepower;
-    this.cargo = stats.cargo;
-    this.money = stats.money;
+    this.day = 0;           // текущий день, с десятичными долям
+    this.crew = stats.crew; // количество людей
+    this.oxen = stats.oxen; // количество быков
+    this.food = stats.food; // запасы еды
+    this.firepower = stats.firepower; // единиц оружия
+    this.cargo = stats.cargo;   // товаров для торговли
+    this.money = stats.money;   //деньги
 
     // лог событий, содержит день, описание и характеристику
     //  { day: 1, message: "Хорошо покушали", goodness: Goodness.positive}

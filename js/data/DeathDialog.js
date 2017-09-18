@@ -7,7 +7,7 @@ var DeathDialogs = {
         title: "Погибший в пустоши",
         desc: "",
         desc_action: function (world, rule) {
-            var desc = " Причина смерти: "+rule.text+". Вы сумели пройти "+Math.floor(world.distance) + " миль и накопить "+Math.floor(world.money) + " денег";
+            var desc = " Причина смерти: "+rule.text+". Вы сумели пройти "+Math.floor(world.distance) + " миль и накопить "+Math.floor(world.money) + " денег. ";
             desc += "Может быть, следующим караванщикам повезет больше?"
             return desc;
         },

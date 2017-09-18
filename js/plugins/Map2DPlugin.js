@@ -52,17 +52,13 @@ Map2DPlugin.update = function () {
     // обновляем DOM только когда есть изменения в координатах
     if (this.lastPlayerPosition.x != this.world.caravan.x ||
         this.lastPlayerPosition.y != this.world.caravan.y) {
-
-        console.log("Map2DPlugin DOM update");
         this.movePlayerViewTo(this.world.caravan.x, this.world.caravan.y);
-
         this.lastPlayerPosition.x = this.world.caravan.x;
         this.lastPlayerPosition.y = this.world.caravan.y;
     }
 
     // проверяем достижение города на остановках
     if (this.world.stop && this.isAboutTarget(this.world)) {
-        console.log("Map2DPlugin.isAboutTarget");
         this.inTown = true;
         this.world.uiLock = true; // маркируем интерфейс как блокированный
         addLogMessage(this.world, Goodness.positive, "Вы достигли города!");

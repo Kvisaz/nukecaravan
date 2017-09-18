@@ -54,9 +54,6 @@ var BanditDialogs = {
             desc += "Число людей в банде: " + BanditNumbers.getByDegree(bandits.crew / 10) + ".";
             addLogMessage(world, Goodness.negative, this.title); // логируем описание
             addLogMessage(world, Goodness.negative, desc); // логируем описание
-
-            console.log("bandits.firepower = "+bandits.firepower + " / crew: "+bandits.crew + " / money: "+bandits.money);
-
             return desc;
         },
         choices: [
@@ -76,20 +73,19 @@ var BanditDialogs = {
                     // переменные для найма
                     var maxForHire;   // максимум нанимающихся
                     var firepowerAvg = bandits.firepower / bandits.crew; // среднее количество оружия у 1 бандита
-                    console.log("firepowerAvg = "+firepowerAvg);
 
                     // голодный найм,
                     if (bandits.hunger < BanditConstants.HUNGER_THRESHOLD) {
                         bandits.price = Math.floor(bandits.price * bandits.hunger); // бандиты сбрасывают цену
                         // защита от выпадения нуля
                         maxForHire = BanditPlugin.getMaxHire(world, bandits);
-                        console.log("maxForHire = "+maxForHire);
+
                         bandits.hired = {}; // добавляем в бандитов инфу о цене и количестве
                         bandits.hired.crew = bandits.crew; // голодные хотят наняться все
                         // разумеется, нанять мы можем не больше, чем у нас есть денег
                         // условие наличия денег проверяется перед вызовом диалога
                         bandits.hired.crew = Math.min(maxForHire, bandits.hired.crew);
-                        console.log("bandits.hired.crew = "+bandits.hired.crew);
+
                         // вычисляем окончательную цену
                         bandits.hired.price = Math.floor(bandits.price * bandits.hired.crew);
                         bandits.hired.firepower = Math.ceil(bandits.hired.crew * firepowerAvg);
@@ -98,8 +94,6 @@ var BanditDialogs = {
 
 
                     // обычный найм, если силы равны и никто не голоден, и у вас есть деньги
-                    console.log("world.money = " + world.money);
-                    console.log("BanditConstants.HIRE_PRICE_PER_PERSON = " + BanditConstants.HIRE_PRICE_PER_PERSON);
                     maxForHire = BanditPlugin.getMaxHire(world, bandits);
                     if (maxForHire > 0) {
                         bandits.hired = {}; // добавляем в бандитов инфу о цене и количестве

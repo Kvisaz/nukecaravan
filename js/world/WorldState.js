@@ -22,6 +22,6 @@ function WorldState(stats) {
     this.distance = 0; // сколько всего пройдено
 
     this.gameover = false;  // gameover
-    this.stop = true;    // маркер для обозначения того, что караван стоит
+    this.stop = false;    // маркер для обозначения того, что караван стоит
     this.uiLock = false; // маркер для блокировки интерфейса
 }

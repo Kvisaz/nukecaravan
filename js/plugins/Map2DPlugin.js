@@ -14,7 +14,6 @@ Map2DPlugin.init = function (world) {
 
     // добавляем в них города - пока два
     this.view.towns = document.getElementsByClassName('town');
-    console.log("this.view.towns length = " + this.view.towns.length);
 
     // вешаем на города обработчики кликов, чтобы отправлять туда караван
     var i;
@@ -52,8 +51,7 @@ Map2DPlugin.update = function () {
 
 // проверка, что координаты каравана около заданной цели
 Map2DPlugin.isAboutTarget = function (world) {
-    var targetDistance = Math.sqrt(Math.pow((world.to.x - world.caravan.x), 2) + Math.pow((world.to.y - world.caravan.y), 2));
-    return targetDistance < 10;
+    return getDistance(world.to, world.from) < Caravan.TOUCH_DISTANCE;
 };
 
 Map2DPlugin.movePlayerViewTo = function (x, y) {

@@ -24,7 +24,7 @@ CorePlugin.update = function () {
     this.updateDistance(this.dayDelta, this.world);
 
     // события связанные с наступлением нового дня
-    if (this.lastDay != this.world.day) {
+    if (this.lastDay < this.world.day) {
         this.consumeFood(this.world);
         this.lastDay = this.world.day;
     }
@@ -43,18 +43,26 @@ CorePlugin.updateDistance = function (dayDelta, world) {
     var maxWeight = getCaravanMaxWeight(world);
     var weight = getCaravanWeight(world);
 
-    // при перевесе останавливаемся
+    // при перевесе - Caravan.SLOW_SPEED
+    // при 0 весе - Caravan.FULL_SPEED
     var speed = Caravan.SLOW_SPEED + (this.speedDelta) * Math.max(0, 1 - weight/maxWeight);
 
     // расстояние, которое может пройти караван при такой скорости
     var distanceDelta = speed * dayDelta;
 
-    // вычисляем угол направления
+    // вычисляем расстояние до цели
     var dx = world.to.x - world.caravan.x;
     var dy = world.to.y - world.caravan.y;
-    var angle = Math.atan2(dy, dx);
 
-    // вычисляем угол направления
+    // если мы находимся около цели - останавливаемся
+    if(dx < Caravan.TOUCH_DISTANCE && dy < Caravan.TOUCH_DISTANCE) {
+        world.stop = true;
+        return;
+    }
+
+    // до цели еще далеко - рассчитываем угол перемещения
+    // и получаем смещение по координатам
+    var angle = Math.atan2(dy, dx);
     world.caravan.x += Math.cos(angle) * distanceDelta;
     world.caravan.y += Math.sin(angle) * distanceDelta;
     world.distance += distanceDelta;

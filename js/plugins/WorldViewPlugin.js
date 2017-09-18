@@ -115,3 +115,5 @@ WorldView.formatMessage = function (message) {
     var formatted = '<div class="' + messageClass + '">' + this.UI_DAY_TEXT + ' ' + Math.ceil(message.day) + ': ' + message.message + '</div>';
     return formatted;
 };
+
+Game.addPlugin(WorldView);

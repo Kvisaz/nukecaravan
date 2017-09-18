@@ -67,3 +67,5 @@ CorePlugin.updateDistance = function (dayDelta, world) {
     world.caravan.y += Math.sin(angle) * distanceDelta;
     world.distance += distanceDelta;
 };
+
+Game.addPlugin(CorePlugin);

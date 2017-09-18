@@ -26,3 +26,5 @@ DropPlugin.update = function () {
     addLogMessage(world, Goodness.negative, desc); // логируем
     DialogWindow.show(DropDialogs, this.world, null, this); // показываем диалог
 };
+
+Game.addPlugin(DropPlugin);

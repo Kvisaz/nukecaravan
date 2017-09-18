@@ -113,3 +113,5 @@ BanditPlugin.getMaxHire = function (world, bandits) {
     var max = bandits.price > 0 ? Math.floor(world.money / bandits.price) : bandits.crew;
     return max;
 };
+
+Game.addPlugin(BanditPlugin);

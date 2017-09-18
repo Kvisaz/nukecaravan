@@ -41,12 +41,18 @@ Map2DPlugin.update = function () {
     this.movePlayerViewTo(this.world.caravan.x, this.world.caravan.y);
 
     // проверяем достижение поставленной цели
-    if (this.isAboutTarget(this.world)) {
+    if(this.world.isJustArrived){
+        addLogMessage(this.world, Goodness.positive, "Вы достигли города!");
+        DialogWindow.show(TownDialogs,this.world, null, this);
+        this.world.isJustArrived = false;
+    }
+
+    /*if (this.isAboutTarget(this.world)) {
         this.world.stop = true;
         this.world.uiLock = true;
         addLogMessage(this.world, Goodness.positive, "Вы достигли города!");
         DialogWindow.show(TownDialogs,this.world, null, this);
-    }
+    }*/
 };
 
 // проверка, что координаты каравана около заданной цели
@@ -62,3 +68,5 @@ Map2DPlugin.movePlayerViewTo = function (x, y) {
 Map2DPlugin.onDialogClose = function () {
     this.world.uiLock = false;
 };
+
+Game.addPlugin(Map2DPlugin);

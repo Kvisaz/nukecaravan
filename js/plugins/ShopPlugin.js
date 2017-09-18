@@ -119,3 +119,5 @@ ShopPlugin.buy = function (product) {
     world[product.item] += product.qty;
     addLogMessage(world, Goodness.positive, ShopEventConstants.SHOP_BUY_MESSAGE + ' ' + product.text + ' +' + product.qty);
 };
+
+Game.addPlugin(ShopPlugin);

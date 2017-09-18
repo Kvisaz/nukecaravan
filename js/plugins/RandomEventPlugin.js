@@ -33,3 +33,5 @@ RandomEventPlugin.update = function () {
     var message = event.text.withArg(Math.abs(valueChange));
     addLogMessage(this.world, event.goodness, message);
 };
+
+Game.addPlugin(RandomEventPlugin);

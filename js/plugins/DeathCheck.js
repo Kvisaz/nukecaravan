@@ -39,3 +39,5 @@ DeathCheck.onDeath = function (world, rule) {
 DeathCheck.onDialogClose = function () {
     Game.restart();
 };
+
+Game.addPlugin(DeathCheck);

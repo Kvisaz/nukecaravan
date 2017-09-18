@@ -18,6 +18,8 @@ type .\data\DeathDialog.js >> .\build.js
 type .\data\DropDialogs.js >> .\build.js
 type .\data\TownDialog.js >> .\build.js
 
+type .\Game.js >> .\build.js
+
 type .\plugins\CorePlugin.js >> .\build.js
 type .\plugins\Map2DPlugin.js >> .\build.js
 type .\plugins\RandomEventPlugin.js >> .\build.js
@@ -26,5 +28,3 @@ type .\plugins\BanditPlugin.js >> .\build.js
 type .\plugins\DeathCheck.js >> .\build.js
 type .\plugins\DropPlugin.js >> .\build.js
 type .\plugins\WorldViewPlugin.js >> .\build.js
-
-type .\Game.js >> .\build.js

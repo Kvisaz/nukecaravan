@@ -33,13 +33,15 @@ CorePlugin.update = function () {
 // еда выдается один раз в день
 CorePlugin.consumeFood = function (world) {
     var needFood = world.crew * Caravan.FOOD_PER_PERSON;
+    // автопоедание быков при минимальных запасах еды - временный фикс
     while(needFood > 0) {
         var eated = Math.min(needFood, world.food-1);
         needFood -= eated;
         world.food -= eated;
         if(needFood > 0 && world.oxen > 0) {
-            world.food += Caravan.MEAT_PER_BRAHMIN;
+            world.food += Caravan.MEAT_PER_OX;
             world.oxen --;
+            addLogMessage(world, Goodness.negative, "Кончились запасы еды. 1 брамин забит на мясо.")
         }
     }
     if (world.food < 0) {

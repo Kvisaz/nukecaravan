@@ -20,6 +20,9 @@ Map2DPlugin.init = function (world) {
 
     // добавляем в них города - пока два
     this.view.towns = document.getElementsByClassName('town');
+    for(var i=0; i<this.view.towns.length; ++i) {
+        this.view.towns[i].cityId = i;
+    }
 
     // вешаем на города обработчики кликов, чтобы отправлять туда караван
     var i, map2dPlugin = this;
@@ -28,7 +31,7 @@ Map2DPlugin.init = function (world) {
             if (world.uiLock) return; // если какой-то плагин перехватил работу с пользователем, то есть открыто модальное окно, не реагируем на действия пользователя
             var element = e.target || e.srcElement;
             world.from = {x: world.caravan.x, y: world.caravan.y};
-            world.to = {x: element.offsetLeft, y: element.offsetTop};
+            world.to = {x: element.offsetLeft, y: element.offsetTop, cityId: e.target.cityId};
             world.stop = false;
             map2dPlugin.inTown = false; // все, покидаем город
 
@@ -40,6 +43,7 @@ Map2DPlugin.init = function (world) {
     if (this.view.towns.length > 0) {
         world.caravan.x = this.view.towns[0].offsetLeft;
         world.caravan.y = this.view.towns[0].offsetTop;
+        world.caravan.lastCityId = this.view.towns[0].cityId;
         world.stop = true; // чтобы не двигался
         this.movePlayerViewTo(world.caravan.x, world.caravan.y);
     }
@@ -62,7 +66,9 @@ Map2DPlugin.update = function () {
         this.inTown = true;
         this.world.uiLock = true; // маркируем интерфейс как блокированный
         addLogMessage(this.world, Goodness.positive, "Вы достигли города!");
-        DialogWindow.show(TownDialogs, this.world, null, this);
+        var revisit = this.world.to.cityId === this.world.caravan.lastCityId;
+        this.world.caravan.lastCityId = this.world.to.cityId;
+        DialogWindow.show(TownDialogs, this.world, revisit, this);
     }
 };
 

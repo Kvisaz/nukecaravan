@@ -32,7 +32,16 @@ CorePlugin.update = function () {
 
 // еда выдается один раз в день
 CorePlugin.consumeFood = function (world) {
-    world.food -= world.crew * Caravan.FOOD_PER_PERSON;
+    var needFood = world.crew * Caravan.FOOD_PER_PERSON;
+    while(needFood > 0) {
+        var eated = Math.min(needFood, world.food-1);
+        needFood -= eated;
+        world.food -= eated;
+        if(needFood > 0 && world.oxen > 0) {
+            world.food += Caravan.MEAT_PER_BRAHMIN;
+            world.oxen --;
+        }
+    }
     if (world.food < 0) {
         world.food = 0;
     }

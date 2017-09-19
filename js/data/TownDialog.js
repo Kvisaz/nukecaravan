@@ -6,7 +6,10 @@ var TownDialogs = {
         icon: "images/pic_wagons.jpg",
         title: "Вы прибыли в город",
         desc: "",
-        desc_action: function (world) {
+        desc_action: function (world, revisit) {
+            if( revisit ) {
+                return "Вы уже были в этом городе.";
+            }
             var desc = "Вы входите на местный рынок. ";
             var sell = sellCargo(world);
             if (sell.money > 0) {

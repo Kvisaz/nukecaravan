@@ -66,7 +66,11 @@ Map2DPlugin.update = function () {
         this.inTown = true;
         this.world.uiLock = true; // маркируем интерфейс как блокированный
         addLogMessage(this.world, Goodness.positive, "Вы достигли города!");
-        var revisit = this.world.to.x === this.lastTown.x && this.world.to.y === this.lastTown.y;         DialogWindow.show(TownDialogs, this.world, revisit, this);
+        // проверка что мы были в этом городе
+        var revisit = this.world.to.x === this.lastTown.x && this.world.to.y === this.lastTown.y;
+        // запоминаем последений посещенный город
+        this.lastTown = { x: this.world.to.x, y: this.world.to.y};
+        DialogWindow.show(TownDialogs, this.world, revisit, this);
     }
 };
 
@@ -82,7 +86,6 @@ Map2DPlugin.movePlayerViewTo = function (x, y) {
 
 Map2DPlugin.onDialogClose = function () {
     // запоминаем этот город, как последний, чтобы не было чита с автоторговлей
-    this.lastTown = { x: this.world.caravan.x, y: this.world.caravan.y};
     this.world.uiLock = false;
 };
 

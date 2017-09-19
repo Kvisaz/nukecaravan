@@ -8,7 +8,7 @@ var TownDialogs = {
         desc: "",
         desc_action: function (world, revisit) {
             if( revisit ) {
-                return "Вы уже были в этом городе.";
+                return "Вы уже торговали в этом городе. Надо идти в другой.";
             }
             var desc = "Вы входите на местный рынок. ";
             var sell = sellCargo(world);

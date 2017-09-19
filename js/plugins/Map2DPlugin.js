@@ -9,6 +9,8 @@ Map2DPlugin = {
     lastPlayerPosition: {x: 0, y: 0},
     // маркер "мы в городе" - соответствует "открыт диалог города"
     inTown: false,
+    // последний посещенный город
+    lastTown: { x: -1, y: -1 },
 };
 
 Map2DPlugin.init = function (world) {
@@ -20,9 +22,6 @@ Map2DPlugin.init = function (world) {
 
     // добавляем в них города - пока два
     this.view.towns = document.getElementsByClassName('town');
-    for(var i=0; i<this.view.towns.length; ++i) {
-        this.view.towns[i].cityId = i;
-    }
 
     // вешаем на города обработчики кликов, чтобы отправлять туда караван
     var i, map2dPlugin = this;
@@ -31,7 +30,7 @@ Map2DPlugin.init = function (world) {
             if (world.uiLock) return; // если какой-то плагин перехватил работу с пользователем, то есть открыто модальное окно, не реагируем на действия пользователя
             var element = e.target || e.srcElement;
             world.from = {x: world.caravan.x, y: world.caravan.y};
-            world.to = {x: element.offsetLeft, y: element.offsetTop, cityId: e.target.cityId};
+            world.to = {x: element.offsetLeft, y: element.offsetTop};
             world.stop = false;
             map2dPlugin.inTown = false; // все, покидаем город
 
@@ -43,7 +42,8 @@ Map2DPlugin.init = function (world) {
     if (this.view.towns.length > 0) {
         world.caravan.x = this.view.towns[0].offsetLeft;
         world.caravan.y = this.view.towns[0].offsetTop;
-        world.caravan.lastCityId = this.view.towns[0].cityId;
+        // запоминаем его как последний, чтобы не торговать в нем же при быстром возвращении
+        this.lastTown = {x: world.caravan.x, y: world.caravan.y };
         world.stop = true; // чтобы не двигался
         this.movePlayerViewTo(world.caravan.x, world.caravan.y);
     }
@@ -66,9 +66,7 @@ Map2DPlugin.update = function () {
         this.inTown = true;
         this.world.uiLock = true; // маркируем интерфейс как блокированный
         addLogMessage(this.world, Goodness.positive, "Вы достигли города!");
-        var revisit = this.world.to.cityId === this.world.caravan.lastCityId;
-        this.world.caravan.lastCityId = this.world.to.cityId;
-        DialogWindow.show(TownDialogs, this.world, revisit, this);
+        var revisit = this.world.to.x === this.lastTown.x && this.world.to.y === this.lastTown.y;         DialogWindow.show(TownDialogs, this.world, revisit, this);
     }
 };
 
@@ -83,6 +81,8 @@ Map2DPlugin.movePlayerViewTo = function (x, y) {
 };
 
 Map2DPlugin.onDialogClose = function () {
+    // запоминаем этот город, как последний, чтобы не было чита с автоторговлей
+    this.lastTown = { x: this.world.caravan.x, y: this.world.caravan.y};
     this.world.uiLock = false;
 };
 

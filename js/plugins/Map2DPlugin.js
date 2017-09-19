@@ -67,6 +67,7 @@ Map2DPlugin.update = function () {
         this.world.uiLock = true; // маркируем интерфейс как блокированный
         addLogMessage(this.world, Goodness.positive, "Вы достигли города!");
         var revisit = this.world.to.cityId === this.world.caravan.lastCityId;
+        this.world.caravan.lastCityId = this.world.to.cityId;
         DialogWindow.show(TownDialogs, this.world, revisit, this);
     }
 };

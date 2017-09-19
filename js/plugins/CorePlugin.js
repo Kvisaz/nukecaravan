@@ -34,7 +34,7 @@ CorePlugin.update = function () {
 CorePlugin.consumeFood = function (world) {
     var needFood = world.crew * Caravan.FOOD_PER_PERSON;
     while(needFood > 0) {
-        var eated = Math.min(needFood, world.food);
+        var eated = Math.min(needFood, world.food-1);
         needFood -= eated;
         world.food -= eated;
         if(needFood > 0 && world.oxen > 0) {

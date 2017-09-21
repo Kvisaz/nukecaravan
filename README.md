@@ -3,7 +3,7 @@ Nuke Caravan sandbox game in pure JavaScript / HTML / Css
 ***
 Игра про  караван на чистом JavaScript / HTML / Css. 
 + [Описание на Хабре](https://habrahabr.ru/post/336724/).
-+ [Живое демо](skachat-besplatno.ru/gamelab/zoolander/).
++ [Живое демо](http://skachat-besplatno.ru/gamelab/zoolander/).
 ***
 Последние исправления
 

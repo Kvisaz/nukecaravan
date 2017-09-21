@@ -13,7 +13,7 @@ var WorldView =  {
         firepower: 0,
         cargo: 0,
         money: 0,
-        logLength: 0, // лог мониторим по размеру
+        lastMessage: "", // обновление лога мониторим по последнему сообщению, так как размер лога теперь ограничен
         distance: 0,
         weight: 0,
         maxWeight: 0,
@@ -85,9 +85,10 @@ WorldView.update = function () {
         this.viewModel.cargo = world.cargo;
     }
 
-    if (this.viewModel.logLength != world.log.length) {
+    var lastMessage = world.log[world.log.length-1];
+    if (this.viewModel.lastMessage != lastMessage) {
         this.refreshLog(world.log);
-        this.viewModel.logLength = world.log.length;
+        this.viewModel.lastMessage = lastMessage;
     }
 
     var weight = getCaravanWeight(world);

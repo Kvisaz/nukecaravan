@@ -57,6 +57,11 @@ function addLogMessage(world, goodness, message) {
         message: message,
         goodness: goodness
     });
+
+    // если лог превысил указанный размер, удаляем старые сообщения
+    if(Object.keys(world.log).length > GameConstants.MAX_LOG_MESSAGES){
+        world.log.shift();
+    }
 }
 
 /**

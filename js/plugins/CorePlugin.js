@@ -33,19 +33,16 @@ CorePlugin.update = function () {
 // еда выдается один раз в день
 CorePlugin.consumeFood = function (world) {
     var needFood = world.crew * Caravan.FOOD_PER_PERSON;
-    // автопоедание быков при минимальных запасах еды - временный фикс
-    while(needFood > 0) {
-        var eated = Math.min(needFood, world.food-1);
-        needFood -= eated;
-        world.food -= eated;
-        if(needFood > 0 && world.oxen > 0) {
+    var eated = Math.min(needFood, world.food); // съесть можем не больше того, что имеем
+    world.food -= eated; // съедаем запасы еды
+
+    if (world.food == 0) {
+        // автопоедание быков при минимальных запасах еды - временный фикс
+        if (world.oxen > 0) {
             world.food += Caravan.MEAT_PER_OX;
-            world.oxen --;
+            world.oxen--;
             addLogMessage(world, Goodness.negative, "Кончились запасы еды. 1 брамин забит на мясо.")
         }
-    }
-    if (world.food < 0) {
-        world.food = 0;
     }
 };
 
@@ -56,7 +53,7 @@ CorePlugin.updateDistance = function (dayDelta, world) {
 
     // при перевесе - Caravan.SLOW_SPEED
     // при 0 весе - Caravan.FULL_SPEED
-    var speed = Caravan.SLOW_SPEED + (this.speedDelta) * Math.max(0, 1 - weight/maxWeight);
+    var speed = Caravan.SLOW_SPEED + (this.speedDelta) * Math.max(0, 1 - weight / maxWeight);
 
     // расстояние, которое может пройти караван при такой скорости
     var distanceDelta = speed * dayDelta;
@@ -66,7 +63,7 @@ CorePlugin.updateDistance = function (dayDelta, world) {
     var dy = world.to.y - world.caravan.y;
 
     // если мы находимся около цели - останавливаемся
-    if(areNearPoints(world.caravan, world.to, Caravan.TOUCH_DISTANCE)){
+    if (areNearPoints(world.caravan, world.to, Caravan.TOUCH_DISTANCE)) {
         world.stop = true;
         return;
     }

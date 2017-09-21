@@ -1,0 +1,10 @@
+# Nuke caravan
+Nuke Caravan sandbox game in pure JavaScript / HTML / Css
+***
+Игра про  караван на чистом JavaScript / HTML / Css. 
++ [Описание на Хабре](https://habrahabr.ru/post/336724/).
++ [Живое демо](skachat-besplatno.ru/gamelab/zoolander/).
+***
+Последние исправления
+
+21.09.2017 - исправлен баг бесконечного цикла при забитии браминов, когда заканчивается еда, в Core Plugin
